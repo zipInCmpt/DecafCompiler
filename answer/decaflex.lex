@@ -30,8 +30,10 @@ true                       { return 44; }
 var                        { return 45; }
 void                       { return 46; }
 while                      { return 47; }
-\'\\.\'|\'[a-zA-Z0-9]\'            { return 48; }  // T_CHARCONSTNT
-\"[\\a-zA-Z0-9\_ ]+[a-zA-Z0-9\_ ]\"|\"\"        { return 51; }  // T_STRINGCONSTANT
+\'\'|\'[^\\]\'|\'[\\][^\s]\'  { return 48; }  // T_CHARCONSTNT
+\'[^\s\'][^\s\']+\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
+\'[^\s\']*[\\]\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
+\"[\\^\s\"]*[^\s\"]\"|\"\"        { return 51; }  // T_STRINGCONSTANT
 \/\/[ ]*[a-zA-Z0-9\_ ]*\n    { return 49; }  // T_COMMENT
 [0-9]+|0[x|X][0-9a-fA-F]+  { return 50; }  // T_INTCONSTANT
 [a-zA-Z\_][a-zA-Z\_0-9]*   { return 8; }   // T_ID
@@ -61,9 +63,10 @@ while                      { return 47; }
 \>\>                       { return 40; }
 \]                         { return 41; }
 \;                         { return 42; }
-[\r\t\v\f ]*\n[\r\t\v\f ]* { return 10; }
+[\n]+                      { return 10; }
+[\r\t\v\f ]*\n[\r\t\v\f ]* { return 56; }
 [\t\r\a\v\b ]+             { return 9; }   // T_WHITESPACE
-~                          { cerr << "Error: unexpected character in input" << endl; return -1; }
+
 
 %%
 
@@ -83,7 +86,15 @@ int main () {
 		case 7: cout << "T_RPAREN " << lexeme << endl; break;
 		case 8: cout << "T_ID " << lexeme << endl; break;
 		case 9: cout << "T_WHITESPACE " << lexeme << endl; break;
-		case 10: cout << "T_WHITESPACE \\n" << endl; break;
+		case 56: cout << "T_WHITESPACE \\n" << endl; break;
+		case 10: {
+		            cout << "T_WHITESPACE ";
+		            for(int i = 0; i < lexeme.length(); i++) {
+		                cout << "\\n";
+		            }
+		            cout << endl;
+		            break;
+		         }
 		case 11: cout << "T_AND " << lexeme << endl; break;
 		case 12: cout << "T_ASSIGN " << lexeme << endl; break;
 		case 13: cout << "T_BOOLTYPE " << lexeme << endl; break;

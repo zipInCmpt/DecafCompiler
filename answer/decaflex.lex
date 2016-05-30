@@ -31,11 +31,13 @@ var                        { return 45; }
 void                       { return 46; }
 while                      { return 47; }
 \'\'|\'[^\\]\'|\'[\\][^\s]\'  { return 48; }  // T_CHARCONSTNT
-\'[^\s\'][^\s\']+\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
-\'[^\s\']*[\\]\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
-\"[\"\s]\"                 { cerr << "Error: unexpected character in input" << endl; return -1; }
-\"([\\][^\s])*\"           { return 51; }
-\"[^\s\"]*[^\s\"]\"|\"\"   { return 51; }  // T_STRINGCONTANT
+\'[^\n\'][^\n\']+\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
+\'[^\n\']*[\\]\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
+\"[\"\n]\"   { cerr << "Error: unexpected character in input" << endl; return -1; }
+\"[\n]                     { cerr << "Error: unexpected character in input" << endl; return -1; }
+\"([\\][^\n])+\"           { return 51; }
+\"[\\]\"                   { cerr << "Error: unexpected character in input" << endl; return -1; }
+\"[^\n\"]*[^\n\"]\"|\"\"   { return 51; }  // T_STRINGCONTANT
 ~                  { cerr << "Error: unexpected character in input" << endl; return -1; }
 \/\/[ ]*[^\n]*\n  { return 49; }  // T_COMMENT
 [0-9]+|0[x|X][0-9a-fA-F]+  { return 50; }  // T_INTCONSTANT
@@ -136,7 +138,7 @@ int main () {
 		case 46: cout << "T_VOID " << lexeme << endl; break;
 		case 47: cout << "T_WHILE " << lexeme << endl; break;
 		case 48: cout << "T_CHARCONSTANT " << lexeme << endl; break;
-		case 49: cout << "T_COMMENT " << lexeme << endl; break;
+		case 49: cout << "T_COMMENT " << lexeme; break;
 		case 50: cout << "T_INTCONSTANT " << lexeme << endl; break;
 		case 51: cout << "T_STRINGCONSTANT " << lexeme << endl; break;
 		case 52: cout << "T_WHITESPACE \\r" << endl; break;

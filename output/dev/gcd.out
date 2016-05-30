@@ -91,7 +91,6 @@ T_SEMICOLON ;
 T_WHITESPACE \n\n
 T_WHITESPACE         
 T_COMMENT // print_int is part of the standard input-output library
-
 T_WHITESPACE         
 T_ID print_int
 T_LPAREN (
@@ -103,7 +102,6 @@ T_RCB }
 T_WHITESPACE \n\n
 T_WHITESPACE     
 T_COMMENT // function that computes the greatest common divisor
-
 T_WHITESPACE     
 T_FUNC func
 T_WHITESPACE  

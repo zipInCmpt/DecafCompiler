@@ -35,7 +35,7 @@ while                      { return 47; }
 \'[^\n\']*[\\\']\'         { cerr << "Error: unexpected character in input" << endl; return -1; }
 \'[^\n\'][^\n\']+\'        { cerr << "Error: unexpected character in input" << endl; return -1; }
 \"[\"\n]\"                 { cerr << "Error: unexpected character in input" << endl; return -1; }
-\"[.|\n][\n]               { cerr << "Error: unexpected character in input" << endl; return -1; }
+\"[^\"\n]*[\n]               { cerr << "Error: unexpected character in input" << endl; return -1; }
 \"[^\n]*([\\][abtnvfr\\\'\"])+[^\n]*\" { return 51; }
 \"[\\][^abtnvfr\\\'\"]*\"  { cerr << "Error: unexpected character in input" << endl; return -1; }
 \"[^\n\"]*[^\n\"]\"|\"\"   { return 51; }  // T_STRINGCONTANT

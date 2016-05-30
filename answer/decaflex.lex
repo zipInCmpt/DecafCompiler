@@ -30,11 +30,11 @@ true                       { return 44; }
 var                        { return 45; }
 void                       { return 46; }
 while                      { return 47; }
-\'\'|\'[^\\]\'|\'[\\][^\s]\'  { return 48; }  // T_CHARCONSTNT
-\'[^\n\'][^\n\']+\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
-\'[^\n\']*[\\]\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
-\"[\"\n]\"   { cerr << "Error: unexpected character in input" << endl; return -1; }
-\"[\n]                     { cerr << "Error: unexpected character in input" << endl; return -1; }
+\'\'|\'[^\\\']\'|\'[\\][^\n]\'  { return 48; }  // T_CHARCONSTNT
+\'[^\n\']*[\\\']\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
+\'[^\n\'][^\n\']+\'        { cerr << "Error: unexpected character in input" << endl; return -1; }
+\"[\"\n]\"                 { cerr << "Error: unexpected character in input" << endl; return -1; }
+\"[.|\n][\n]               { cerr << "Error: unexpected character in input" << endl; return -1; }
 \"([\\][^\n])+\"           { return 51; }
 \"[\\]\"                   { cerr << "Error: unexpected character in input" << endl; return -1; }
 \"[^\n\"]*[^\n\"]\"|\"\"   { return 51; }  // T_STRINGCONTANT
@@ -68,8 +68,8 @@ while                      { return 47; }
 \>\>                       { return 40; }
 \]                         { return 41; }
 \;                         { return 42; }
+[\r\t\v\f ]*\n[\n\t\f\r\a\v\b ]* { return 10; }
 [\n]+                      { return 10; }
-[\r\t\v\f ]*\n[\r\t\v\f ]* { return 56; }
 [\t\r\a\v\b ]+             { return 9; }   // T_WHITESPACE
 
 
@@ -93,12 +93,19 @@ int main () {
 		case 9: cout << "T_WHITESPACE " << lexeme << endl; break;
 		case 56: cout << "T_WHITESPACE \\n" << endl; break;
 		case 10: {
-		            cout << "T_WHITESPACE ";
-		            for(int i = 0; i < lexeme.length(); i++) {
+		             cout << "T_WHITESPACE ";
+		             int flag = lexeme.find("\n");
+		             while(flag != -1) {
 		                cout << "\\n";
-		            }
-		            cout << endl;
-		            break;
+		                if(lexeme.length() > 1) {
+		                   lexeme = lexeme.substr(flag+1, lexeme.length());
+		                   flag = lexeme.find("\n");
+		                } else {
+		                    break;
+		                }
+		             }
+		             cout << endl;
+		             break;
 		         }
 		case 11: cout << "T_AND " << lexeme << endl; break;
 		case 12: cout << "T_ASSIGN " << lexeme << endl; break;
@@ -138,7 +145,16 @@ int main () {
 		case 46: cout << "T_VOID " << lexeme << endl; break;
 		case 47: cout << "T_WHILE " << lexeme << endl; break;
 		case 48: cout << "T_CHARCONSTANT " << lexeme << endl; break;
-		case 49: cout << "T_COMMENT " << lexeme; break;
+		case 49: {
+		            if (lexeme.rfind("\n") == lexeme.length()-1) {
+		                cout << "T_COMMENT " << lexeme.substr(0, lexeme.length() - 1);
+		                cout << "\\n";
+		            } else {
+		                cout << "T_COMMENT " << lexeme;
+		            }
+		            cout << endl;
+		            break;
+		}
 		case 50: cout << "T_INTCONSTANT " << lexeme << endl; break;
 		case 51: cout << "T_STRINGCONSTANT " << lexeme << endl; break;
 		case 52: cout << "T_WHITESPACE \\r" << endl; break;

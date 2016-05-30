@@ -17,7 +17,6 @@ T_ID Error2
 T_WHITESPACE  
 T_LCB {
 T_WHITESPACE \n\n
-T_WHITESPACE     
 T_FUNC func
 T_WHITESPACE  
 T_ID main
@@ -42,8 +41,7 @@ T_WHITESPACE
 T_INTCONSTANT 10
 T_SEMICOLON ;
 T_WHITESPACE \n\n
-T_WHITESPACE        
-T_COMMENT // print_string is part of the standard input-output library
+T_COMMENT // print_string is part of the standard input-output library\n
 T_WHITESPACE        
 T_ID print_string
 T_LPAREN (

@@ -28,12 +28,8 @@ T_LCB {
 T_WHITESPACE \n
 T_ID print_string
 T_LPAREN (
-"T_ID hello
-T_COMMA ,
-T_WHITESPACE  
-T_ID world
-\T_ID n
-"T_RPAREN )
+T_STRINGCONSTANT "hello, world\n"
+T_RPAREN )
 T_SEMICOLON ;
 T_WHITESPACE \n
 T_RCB }

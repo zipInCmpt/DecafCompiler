@@ -90,27 +90,9 @@ T_RPAREN )
 T_SEMICOLON ;
 T_WHITESPACE \n\n
 T_WHITESPACE         
-T_DIV /
-T_DIV /
-T_WHITESPACE  
-T_ID print_int
-T_WHITESPACE  
-T_ID is
-T_WHITESPACE  
-T_ID part
-T_WHITESPACE  
-T_ID of
-T_WHITESPACE  
-T_ID the
-T_WHITESPACE  
-T_ID standard
-T_WHITESPACE  
-T_ID input
-T_MINUS -
-T_ID output
-T_WHITESPACE  
-T_ID library
-T_WHITESPACE \n
+T_COMMENT // print_int is part of the standard input-output library
+
+T_WHITESPACE         
 T_ID print_int
 T_LPAREN (
 T_ID z

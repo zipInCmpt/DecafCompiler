@@ -33,8 +33,11 @@ while                      { return 47; }
 \'\'|\'[^\\]\'|\'[\\][^\s]\'  { return 48; }  // T_CHARCONSTNT
 \'[^\s\'][^\s\']+\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
 \'[^\s\']*[\\]\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
-\"[\\^\s\"]*[^\s\"]\"|\"\"        { return 51; }  // T_STRINGCONSTANT
-\/\/[ ]*[a-zA-Z0-9\_ ]*\n    { return 49; }  // T_COMMENT
+\"[\"\s]\"                 { cerr << "Error: unexpected character in input" << endl; return -1; }
+\"([\\][^\s])*\"           { return 51; }
+\"[^\s\"]*[^\s\"]\"|\"\"   { return 51; }  // T_STRINGCONTANT
+~                  { cerr << "Error: unexpected character in input" << endl; return -1; }
+\/\/[ ]*[^\n]*\n  { return 49; }  // T_COMMENT
 [0-9]+|0[x|X][0-9a-fA-F]+  { return 50; }  // T_INTCONSTANT
 [a-zA-Z\_][a-zA-Z\_0-9]*   { return 8; }   // T_ID
 \{                         { return 4; }

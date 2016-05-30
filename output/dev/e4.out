@@ -43,27 +43,9 @@ T_INTCONSTANT 10
 T_SEMICOLON ;
 T_WHITESPACE \n\n
 T_WHITESPACE        
-T_DIV /
-T_DIV /
-T_WHITESPACE  
-T_ID print_string
-T_WHITESPACE  
-T_ID is
-T_WHITESPACE  
-T_ID part
-T_WHITESPACE  
-T_ID of
-T_WHITESPACE  
-T_ID the
-T_WHITESPACE  
-T_ID standard
-T_WHITESPACE  
-T_ID input
-T_MINUS -
-T_ID output
-T_WHITESPACE  
-T_ID library
-T_WHITESPACE \n
+T_COMMENT // print_string is part of the standard input-output library
+
+T_WHITESPACE        
 T_ID print_string
 T_LPAREN (
 T_STRINGCONSTANT "

@@ -39,7 +39,7 @@ while                      { return 47; }
 \"[\\]\"                   { cerr << "Error: unexpected character in input" << endl; return -1; }
 \"[^\n\"]*[^\n\"]\"|\"\"   { return 51; }  // T_STRINGCONTANT
 ~                  { cerr << "Error: unexpected character in input" << endl; return -1; }
-\/\/[ ]*[^\n]*\n  { return 49; }  // T_COMMENT
+\/\/[ ]*[^\n]*[\n]*  { return 49; }  // T_COMMENT
 [0-9]+|0[x|X][0-9a-fA-F]+  { return 50; }  // T_INTCONSTANT
 [a-zA-Z\_][a-zA-Z\_0-9]*   { return 8; }   // T_ID
 \{                         { return 4; }
@@ -146,11 +146,28 @@ int main () {
 		case 47: cout << "T_WHILE " << lexeme << endl; break;
 		case 48: cout << "T_CHARCONSTANT " << lexeme << endl; break;
 		case 49: {
-		            if (lexeme.rfind("\n") == lexeme.length()-1) {
+		            /*if (lexeme.find("\n") != lexeme.length()-1) {
 		                cout << "T_COMMENT " << lexeme.substr(0, lexeme.length() - 1);
 		                cout << "\\n";
 		            } else {
 		                cout << "T_COMMENT " << lexeme;
+		            }*/
+		            int flag = lexeme.find("\n");
+		            if(flag == -1) {
+		                 cout << "T_COMMENT " << lexeme;
+		            } else {
+		                 lexeme = lexeme.substr(0, flag);
+		                 cout << "T_COMMENT " << lexeme << "\\n";
+		                 flag = lexeme.find("\n");
+		                 while(flag != -1) {
+                            cout << "\\n";
+                         	if(lexeme.length() > 1) {
+                         		 lexeme = lexeme.substr(flag+1, lexeme.length());
+                         		 flag = lexeme.find("\n");
+                         	} else {
+                         		 break;
+                         	}
+                         }
 		            }
 		            cout << endl;
 		            break;

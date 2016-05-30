@@ -30,7 +30,7 @@ true                       { return 44; }
 var                        { return 45; }
 void                       { return 46; }
 while                      { return 47; }
-\'\\*[a-zA-Z\_]\'            { return 48; }  // T_CHARCONSTNT
+\'\\.\'|\'[a-zA-Z0-9]\'            { return 48; }  // T_CHARCONSTNT
 \"[\\a-zA-Z0-9\_ ]+[a-zA-Z0-9\_ ]\"|\"\"        { return 51; }  // T_STRINGCONSTANT
 \/\/[ ]*[a-zA-Z0-9\_ ]*\n    { return 49; }  // T_COMMENT
 [0-9]+|0[x|X][0-9a-fA-F]+  { return 50; }  // T_INTCONSTANT

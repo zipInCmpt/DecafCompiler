@@ -30,8 +30,8 @@ true                       { return 44; }
 var                        { return 45; }
 void                       { return 46; }
 while                      { return 47; }
-\'\'|\'[^\\\']\'|\'[\\][abtnvfr\\\'\"]\'  { return 48; }  // T_CHARCONSTNT
-\'[\\][^abtnvfr\\\'\"]\'   { cerr << "Error: unexpected character in input" << endl; return -1; }
+\'[^\\\']\'|\'[\\][abtnvfr\\\'\"]\'  { return 48; }  // T_CHARCONSTNT
+\'\'|\'[\\][^abtnvfr\\\'\"]\'   { cerr << "Error: unexpected character in input" << endl; return -1; }
 \'[^\n\']*[\\\']\'         { cerr << "Error: unexpected character in input" << endl; return -1; }
 \'[^\n\'][^\n\']+\'        { cerr << "Error: unexpected character in input" << endl; return -1; }
 \"[\"\n]\"                 { cerr << "Error: unexpected character in input" << endl; return -1; }
@@ -39,8 +39,8 @@ while                      { return 47; }
 \"([\\][abtnvfr\\\'\"])+\" { return 51; }
 \"[\\][^abtnvfr\\\'\"]*\"  { cerr << "Error: unexpected character in input" << endl; return -1; }
 \"[^\n\"]*[^\n\"]\"|\"\"   { return 51; }  // T_STRINGCONTANT
-~                  { cerr << "Error: unexpected character in input" << endl; return -1; }
-\/\/[ ]*[^\n]*[\n]*  { return 49; }  // T_COMMENT
+~                          { cerr << "Error: unexpected character in input" << endl; return -1; }
+\/\/[ ]*[^\n]*[\n]*        { return 49; }  // T_COMMENT
 [0-9]+|0[x|X][0-9a-fA-F]+  { return 50; }  // T_INTCONSTANT
 [a-zA-Z\_][a-zA-Z\_0-9]*   { return 8; }   // T_ID
 \{                         { return 4; }

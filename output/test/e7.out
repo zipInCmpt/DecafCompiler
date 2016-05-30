@@ -38,18 +38,3 @@ T_ID z
 T_WHITESPACE  
 T_ASSIGN =
 T_WHITESPACE  
-T_CHARCONSTANT ''
-T_SEMICOLON ;
-T_WHITESPACE \n\n
-T_COMMENT // print_int is part of the standard input-output library\n
-T_WHITESPACE        
-T_ID print_int
-T_LPAREN (
-T_ID z
-T_RPAREN )
-T_SEMICOLON ;
-T_WHITESPACE \n
-T_RCB }
-T_WHITESPACE \n\n
-T_RCB }
-T_WHITESPACE \n

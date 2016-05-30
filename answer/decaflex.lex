@@ -30,13 +30,14 @@ true                       { return 44; }
 var                        { return 45; }
 void                       { return 46; }
 while                      { return 47; }
-\'\'|\'[^\\\']\'|\'[\\][^\n]\'  { return 48; }  // T_CHARCONSTNT
-\'[^\n\']*[\\\']\'           { cerr << "Error: unexpected character in input" << endl; return -1; }
+\'\'|\'[^\\\']\'|\'[\\][abtnvfr\\\'\"]\'  { return 48; }  // T_CHARCONSTNT
+\'[\\][^abtnvfr\\\'\"]\'   { cerr << "Error: unexpected character in input" << endl; return -1; }
+\'[^\n\']*[\\\']\'         { cerr << "Error: unexpected character in input" << endl; return -1; }
 \'[^\n\'][^\n\']+\'        { cerr << "Error: unexpected character in input" << endl; return -1; }
 \"[\"\n]\"                 { cerr << "Error: unexpected character in input" << endl; return -1; }
 \"[.|\n][\n]               { cerr << "Error: unexpected character in input" << endl; return -1; }
-\"([\\][^\n])+\"           { return 51; }
-\"[\\]\"                   { cerr << "Error: unexpected character in input" << endl; return -1; }
+\"([\\][abtnvfr\\\'\"])+\" { return 51; }
+\"[\\][^abtnvfr\\\'\"]*\"  { cerr << "Error: unexpected character in input" << endl; return -1; }
 \"[^\n\"]*[^\n\"]\"|\"\"   { return 51; }  // T_STRINGCONTANT
 ~                  { cerr << "Error: unexpected character in input" << endl; return -1; }
 \/\/[ ]*[^\n]*[\n]*  { return 49; }  // T_COMMENT
@@ -146,12 +147,6 @@ int main () {
 		case 47: cout << "T_WHILE " << lexeme << endl; break;
 		case 48: cout << "T_CHARCONSTANT " << lexeme << endl; break;
 		case 49: {
-		            /*if (lexeme.find("\n") != lexeme.length()-1) {
-		                cout << "T_COMMENT " << lexeme.substr(0, lexeme.length() - 1);
-		                cout << "\\n";
-		            } else {
-		                cout << "T_COMMENT " << lexeme;
-		            }*/
 		            int flag = lexeme.find("\n");
 		            if(flag == -1) {
 		                 cout << "T_COMMENT " << lexeme;

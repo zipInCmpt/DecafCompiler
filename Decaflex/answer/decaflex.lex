@@ -151,8 +151,8 @@ int main () {
 		            if(flag == -1) {
 		                 cout << "T_COMMENT " << lexeme;
 		            } else {
-		                 lexeme = lexeme.substr(0, flag);
-		                 cout << "T_COMMENT " << lexeme << "\\n";
+		                 cout << "T_COMMENT " << lexeme.substr(0, flag);
+		                 lexeme = lexeme.substr(flag, lexeme.length());
 		                 flag = lexeme.find("\n");
 		                 while(flag != -1) {
                             cout << "\\n";

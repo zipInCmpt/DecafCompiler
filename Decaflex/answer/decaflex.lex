@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <cstdlib>
+#define DEFAULTLINE 0
+#define DEFAULTOKEN 0
 
 using namespace std;
 
@@ -79,19 +81,21 @@ while                      { return 47; }
 int main () {
   int token;
   string lexeme;
+  int tokenNum = DEFAULTOKEN;
+  int lineNum = DEFAULTLINE;
   while ((token = yylex())) {
     if (token > 0) {
       lexeme.assign(yytext);
 	  switch(token) {
-		case 1: cout << "T_FUNC " << lexeme << endl; break;
-		case 2: cout << "T_INTTYPE " << lexeme << endl; break;
-		case 3: cout << "T_PACKAGE " << lexeme << endl; break;
-		case 4: cout << "T_LCB " << lexeme << endl; break;
-		case 5: cout << "T_RCB " << lexeme << endl; break;
-		case 6: cout << "T_LPAREN " << lexeme << endl; break;
-		case 7: cout << "T_RPAREN " << lexeme << endl; break;
-		case 8: cout << "T_ID " << lexeme << endl; break;
-		case 9: cout << "T_WHITESPACE " << lexeme << endl; break;
+		case 1: cout << "T_FUNC " << lexeme << endl; tokenNum++; break;
+		case 2: cout << "T_INTTYPE " << lexeme << endl; tokenNum++; break;
+		case 3: cout << "T_PACKAGE " << lexeme << endl; tokenNum++; break;
+		case 4: cout << "T_LCB " << lexeme << endl; tokenNum++; break;
+		case 5: cout << "T_RCB " << lexeme << endl; tokenNum++; break;
+		case 6: cout << "T_LPAREN " << lexeme << endl; tokenNum++; break;
+		case 7: cout << "T_RPAREN " << lexeme << endl; tokenNum++; break;
+		case 8: cout << "T_ID " << lexeme << endl; tokenNum++; break;
+		case 9: cout << "T_WHITESPACE " << lexeme << endl; tokenNum++; break;
 		case 56: cout << "T_WHITESPACE \\n" << endl; break;
 		case 10: {
 		             cout << "T_WHITESPACE ";
@@ -106,46 +110,50 @@ int main () {
 		                }
 		             }
 		             cout << endl;
+
+		             lineNum++;
+		             tokenNum = DEFAULTOKEN;
+
 		             break;
 		         }
-		case 11: cout << "T_AND " << lexeme << endl; break;
-		case 12: cout << "T_ASSIGN " << lexeme << endl; break;
-		case 13: cout << "T_BOOLTYPE " << lexeme << endl; break;
-		case 14: cout << "T_BREAK " << lexeme << endl; break;
-		case 15: cout << "T_COMMA " << lexeme << endl; break;
-		case 16: cout << "T_CONTINUE " << lexeme << endl; break;
-		case 17: cout << "T_DIV " << lexeme << endl; break;
-		case 18: cout << "T_DOT " << lexeme << endl; break;
-		case 19: cout << "T_ELSE " << lexeme << endl; break;
-		case 20: cout << "T_EQ " << lexeme << endl; break;
-		case 21: cout << "T_EXTERN " << lexeme << endl; break;
-		case 22: cout << "T_FALSE " << lexeme << endl; break;
-		case 23: cout << "T_FOR " << lexeme << endl; break;
-		case 24: cout << "T_GEQ " << lexeme << endl; break;
-		case 25: cout << "T_GT " << lexeme << endl; break;
-		case 26: cout << "T_IF " << lexeme << endl; break;
-		case 27: cout << "T_LEFTSHIFT " << lexeme << endl; break;
-		case 28: cout << "T_LEQ " << lexeme << endl; break;
-		case 29: cout << "T_LSB " << lexeme << endl; break;
-		case 30: cout << "T_LT " << lexeme << endl; break;
-		case 31: cout << "T_MINUS " << lexeme << endl; break;
-		case 32: cout << "T_MOD " << lexeme << endl; break;
-		case 33: cout << "T_MULT " << lexeme << endl; break;
-		case 34: cout << "T_NEQ " << lexeme << endl; break;
-		case 35: cout << "T_NOT " << lexeme << endl; break;
-		case 36: cout << "T_NULL " << lexeme << endl; break;
-		case 37: cout << "T_OR " << lexeme << endl; break;
-		case 38: cout << "T_PLUS " << lexeme << endl; break;
-		case 39: cout << "T_RETURN " << lexeme << endl; break;
-		case 40: cout << "T_RIGHTSHIFT " << lexeme << endl; break;
-		case 41: cout << "T_RSB " << lexeme << endl; break;
-		case 42: cout << "T_SEMICOLON " << lexeme << endl; break;
-		case 43: cout << "T_STRINGTYPE " << lexeme << endl; break;
-		case 44: cout << "T_TRUE " << lexeme << endl; break;
-		case 45: cout << "T_VAR " << lexeme << endl; break;
-		case 46: cout << "T_VOID " << lexeme << endl; break;
-		case 47: cout << "T_WHILE " << lexeme << endl; break;
-		case 48: cout << "T_CHARCONSTANT " << lexeme << endl; break;
+		case 11: cout << "T_AND " << lexeme << endl; tokenNum++; break;
+		case 12: cout << "T_ASSIGN " << lexeme << endl; tokenNum++; break;
+		case 13: cout << "T_BOOLTYPE " << lexeme << endl; tokenNum++; break;
+		case 14: cout << "T_BREAK " << lexeme << endl; tokenNum++; break;
+		case 15: cout << "T_COMMA " << lexeme << endl; tokenNum++; break;
+		case 16: cout << "T_CONTINUE " << lexeme << endl; tokenNum++; break;
+		case 17: cout << "T_DIV " << lexeme << endl; tokenNum++; break;
+		case 18: cout << "T_DOT " << lexeme << endl; tokenNum++; break;
+		case 19: cout << "T_ELSE " << lexeme << endl; tokenNum++; break;
+		case 20: cout << "T_EQ " << lexeme << endl; tokenNum++; break;
+		case 21: cout << "T_EXTERN " << lexeme << endl; tokenNum++; break;
+		case 22: cout << "T_FALSE " << lexeme << endl; tokenNum++; break;
+		case 23: cout << "T_FOR " << lexeme << endl; tokenNum++; break;
+		case 24: cout << "T_GEQ " << lexeme << endl; tokenNum++; break;
+		case 25: cout << "T_GT " << lexeme << endl; tokenNum++; break;
+		case 26: cout << "T_IF " << lexeme << endl; tokenNum++; break;
+		case 27: cout << "T_LEFTSHIFT " << lexeme << endl; tokenNum++; break;
+		case 28: cout << "T_LEQ " << lexeme << endl; tokenNum++; break;
+		case 29: cout << "T_LSB " << lexeme << endl; tokenNum++; break;
+		case 30: cout << "T_LT " << lexeme << endl; tokenNum++; break;
+		case 31: cout << "T_MINUS " << lexeme << endl; tokenNum++; break;
+		case 32: cout << "T_MOD " << lexeme << endl; tokenNum++; break;
+		case 33: cout << "T_MULT " << lexeme << endl; tokenNum++; break;
+		case 34: cout << "T_NEQ " << lexeme << endl; tokenNum++; break;
+		case 35: cout << "T_NOT " << lexeme << endl; tokenNum++; break;
+		case 36: cout << "T_NULL " << lexeme << endl; tokenNum++; break;
+		case 37: cout << "T_OR " << lexeme << endl; tokenNum++; break;
+		case 38: cout << "T_PLUS " << lexeme << endl; tokenNum++; break;
+		case 39: cout << "T_RETURN " << lexeme << endl; tokenNum++; break;
+		case 40: cout << "T_RIGHTSHIFT " << lexeme << endl; tokenNum++; break;
+		case 41: cout << "T_RSB " << lexeme << endl; tokenNum++; break;
+		case 42: cout << "T_SEMICOLON " << lexeme << endl; tokenNum++; break;
+		case 43: cout << "T_STRINGTYPE " << lexeme << endl; tokenNum++; break;
+		case 44: cout << "T_TRUE " << lexeme << endl; tokenNum++; break;
+		case 45: cout << "T_VAR " << lexeme << endl; tokenNum++; break;
+		case 46: cout << "T_VOID " << lexeme << endl; tokenNum++; break;
+		case 47: cout << "T_WHILE " << lexeme << endl; tokenNum++; break;
+		case 48: cout << "T_CHARCONSTANT " << lexeme << endl; tokenNum++; break;
 		case 49: {
 		            int flag = lexeme.find("\n");
 		            if(flag == -1) {
@@ -165,14 +173,18 @@ int main () {
                          }
 		            }
 		            cout << endl;
+
+		            lineNum++;
+                    tokenNum = DEFAULTOKEN;
+
 		            break;
 		}
-		case 50: cout << "T_INTCONSTANT " << lexeme << endl; break;
-		case 51: cout << "T_STRINGCONSTANT " << lexeme << endl; break;
-		case 52: cout << "T_WHITESPACE \\r" << endl; break;
-		case 53: cout << "T_WHITESPACE \\t" << endl; break;
-		case 54: cout << "T_WHITESPACE \\v" << endl; break;
-		case 55: cout << "T_WHITESPACE \\f" << endl; break;
+		case 50: cout << "T_INTCONSTANT " << lexeme << endl; tokenNum++; break;
+		case 51: cout << "T_STRINGCONSTANT " << lexeme << endl; tokenNum++; break;
+		case 52: cout << "T_WHITESPACE \\r" << endl; tokenNum++; break;
+		case 53: cout << "T_WHITESPACE \\t" << endl; tokenNum++; break;
+		case 54: cout << "T_WHITESPACE \\v" << endl; tokenNum++; break;
+		case 55: cout << "T_WHITESPACE \\f" << endl; tokenNum++; break;
 		default: exit(EXIT_FAILURE);
 	  }
     } else {

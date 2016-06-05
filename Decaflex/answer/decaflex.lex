@@ -38,9 +38,10 @@ while                      { return 47; }
 \'[^\n\']*[\\\']\'         { return 103; } // char unterminated
 \'[^\n\'][^\n\']+\'        { return 104; } // char length greater than 1
 \"[\n]\"                   { return 105; } // string new line
-\"[^\"\n]*[\n]             { return 106; } // string unterminated
-\"[^\n]*([\\][abtnvfr\\\'\"])+[^\n]*\" { return 51; }
-\"[\\][^abtnvfr\\\'\"]*\"  { return 107; } // string unknown escape sequence
+\"[^\"\n]*[\n]|\"[\\]\"|\"([\\][\\])+[\\]\"   { return 106; } // string unterminated
+\"[^\n]*([\\][\\])+[\\][^abtnvfr\\\'\"][^\n]*\"  { return 107; } // string unknown escape sequence
+\"[^\n]*([\\][abtnvfr\\\'\"])+[^\n]*[\"] { return 51; }
+\"[^\n]*[\\][^abtnvfr\\\'\"][^\n]*\"  { return 107; } // string unknown escape sequence
 \"[^\n\"]*[^\n\"]\"|\"\"   { return 51; }  // T_STRINGCONTANT
 ~                          { cerr << "Error: unexpected character in input" << endl; return -1; }
 \/\/[ ]*[^\n]*[\n]*        { return 49; }  // T_COMMENT

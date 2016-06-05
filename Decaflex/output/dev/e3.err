@@ -1,2 +1,2 @@
-Error: unknown escape sequence in string constant
+Error: string constant is missing closing delimiter
 Lexical error: line 11, position 21

@@ -1,0 +1,4940 @@
+INFO:root:path=dev
+INFO:root:Checking dev/3.ret
+INFO:root:Diff between reference and your output for dev/3.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/forloop.out
+INFO:root:Diff between reference and your output for dev/forloop.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,58 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,ForStmt(AssignVar(i,NumberExpr(0)),BinaryExpr(Lt,VariableExpr(i),VariableExpr(size)),AssignVar(i,BinaryExpr(Plus,VariableExpr(i),NumberExpr(1))),Block(None,AssignVar(x,NumberExpr(1))))))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FOR for
++T_WHITESPACE
++T_LPAREN (
++T_ID i
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 0
++T_SEMICOLON ;
++T_WHITESPACE
++T_ID i
++T_WHITESPACE
++T_LT <
++T_WHITESPACE
++T_ID size
++T_SEMICOLON ;
++T_WHITESPACE
++T_ID i
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID i
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_INTCONSTANT 1
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charescapevals-3.out
+INFO:root:Diff between reference and your output for dev/charescapevals-3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(13))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '\r'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/method0.out
+INFO:root:Diff between reference and your output for dev/method0.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,26 @@
+-Program(None,Package(QuickSort,FieldDecl(x,IntType,Scalar),Method(main,VoidType,None,MethodBlock(None,None))))
++T_WHITESPACE
++T_ID QuickSort
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charexpr-1.out
+INFO:root:Diff between reference and your output for dev/charexpr-1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(x,IntType),AssignVar(x,BinaryExpr(Minus,NumberExpr(103),NumberExpr(104)))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT 'g'
++T_WHITESPACE
++T_MINUS -
++T_WHITESPACE
++T_CHARCONSTANT 'h'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/e4.ret
+INFO:root:dev/e4.ret Correct!
+INFO:root:Checking dev/charescapevals-1.out
+INFO:root:Diff between reference and your output for dev/charescapevals-1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(9))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '\t'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/escapes.out
+INFO:root:Diff between reference and your output for dev/escapes.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1,2 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Print,None,Method(main,VoidType,None,MethodBlock(None,MethodCall(print_string,StringConstant("
+-\"))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Print
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\t\v\r\n\a\f\b\\"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/stringescapes-5.out
+INFO:root:Diff between reference and your output for dev/stringescapes-5.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant(""))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\a"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/stringescapes-6.out
+INFO:root:Diff between reference and your output for dev/stringescapes-6.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant(""))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\f"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/prec.out
+INFO:root:Diff between reference and your output for dev/prec.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,77 @@
+-Program(None,Package(QuickSort,None,Method(main,VoidType,None,MethodBlock(None,AssignVar(a,BinaryExpr(Plus,BinaryExpr(Rightshift,NumberExpr(1),NumberExpr(2)),NumberExpr(3))),AssignVar(b,BinaryExpr(Plus,NumberExpr(1),BinaryExpr(Mult,NumberExpr(2),NumberExpr(3)))),AssignVar(c,BinaryExpr(Or,UnaryExpr(Not,BoolExpr(False)),BoolExpr(True))),AssignVar(d,BinaryExpr(Plus,BinaryExpr(Div,NumberExpr(1),NumberExpr(2)),UnaryExpr(UnaryMinus,NumberExpr(3))))))))
++T_WHITESPACE
++T_ID QuickSort
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID a
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_WHITESPACE
++T_RIGHTSHIFT >>
++T_WHITESPACE
++T_INTCONSTANT 2
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_INTCONSTANT 3
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID b
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_INTCONSTANT 2
++T_WHITESPACE
++T_MULT *
++T_WHITESPACE
++T_INTCONSTANT 3
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID c
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_NOT !
++T_FALSE false
++T_WHITESPACE
++T_OR ||
++T_WHITESPACE
++T_TRUE true
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID d
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_WHITESPACE
++T_DIV /
++T_WHITESPACE
++T_INTCONSTANT 2
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_MINUS -
++T_INTCONSTANT 3
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charescapevals-5.out
+INFO:root:Diff between reference and your output for dev/charescapevals-5.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(7))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '\a'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/returnexpr.out
+INFO:root:Diff between reference and your output for dev/returnexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,26 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,ReturnStmt(VariableExpr(x))))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RETURN return
++T_WHITESPACE
++T_LPAREN (
++T_ID x
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/block.out
+INFO:root:Diff between reference and your output for dev/block.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,30 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,Block(None,AssignVar(x,NumberExpr(1)))))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/assign.out
+INFO:root:Diff between reference and your output for dev/assign.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,26 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,AssignVar(x,NumberExpr(1))))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charvals-11.out
+INFO:root:Diff between reference and your output for dev/charvals-11.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(122))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT 'z'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/stringescapes-3.out
+INFO:root:Diff between reference and your output for dev/stringescapes-3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1,2 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant("
+-"))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\r"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/5.ret
+INFO:root:Diff between reference and your output for dev/5.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charvals-7.out
+INFO:root:Diff between reference and your output for dev/charvals-7.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(45))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '-'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/onlyfields.out
+INFO:root:Diff between reference and your output for dev/onlyfields.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,14 @@
+-Program(None,Package(QuickSort,FieldDecl(x,IntType,Scalar),None))
++T_WHITESPACE
++T_ID QuickSort
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/quicksort.out
+INFO:root:Diff between reference and your output for dev/quicksort.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1,4 +1,707 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),ExternFunction(print_int,VoidType,VarDef(IntType)),Package(QuickSort,FieldDecl(list,IntType,Array(100)),Method(cr,VoidType,None,MethodBlock(None,MethodCall(print_string,StringConstant("
+-")))),Method(displayList,VoidType,VarDef(start,IntType),VarDef(len,IntType),MethodBlock(VarDef(j,IntType),MethodCall(print_string,StringConstant("List:
+-")),ForStmt(AssignVar(j,VariableExpr(start)),BinaryExpr(Lt,VariableExpr(j),BinaryExpr(Plus,VariableExpr(start),VariableExpr(len))),AssignVar(j,BinaryExpr(Plus,VariableExpr(j),NumberExpr(1))),Block(None,MethodCall(print_int,ArrayLocExpr(list,VariableExpr(j))),MethodCall(print_string,StringConstant(" ")),IfStmt(BinaryExpr(Or,BinaryExpr(Eq,BinaryExpr(Mod,BinaryExpr(Plus,BinaryExpr(Minus,VariableExpr(j),VariableExpr(start)),NumberExpr(1)),NumberExpr(20)),NumberExpr(0)),BinaryExpr(Eq,BinaryExpr(Plus,VariableExpr(j),NumberExpr(1)),BinaryExpr(Plus,VariableExpr(start),VariableExpr(len)))),Block(None,MethodCall(cr,None)),None))))),Method(initList,VoidType,VarDef(size,IntType),MethodBlock(VarDef(i,IntType),ForStmt(AssignVar(i,NumberExpr(0)),BinaryExpr(Lt,VariableExpr(i),VariableExpr(size)),AssignVar(i,BinaryExpr(Plus,VariableExpr(i),NumberExpr(1))),Block(None,AssignArrayLoc(list,VariableExpr(i),BinaryExpr(Mod,BinaryExpr(Mult,VariableExpr(i),NumberExpr(2382983)),NumberExpr(100))))))),Method(swap,VoidType,VarDef(leftPtr,IntType),VarDef(rightPtr,IntType),MethodBlock(VarDef(temp,IntType),AssignVar(temp,ArrayLocExpr(list,VariableExpr(leftPtr))),AssignArrayLoc(list,VariableExpr(leftPtr),ArrayLocExpr(list,VariableExpr(rightPtr))),AssignArrayLoc(list,VariableExpr(rightPtr),VariableExpr(temp)))),Method(quickSort,VoidType,VarDef(left,IntType),VarDef(right,IntType),MethodBlock(None,IfStmt(BinaryExpr(Leq,BinaryExpr(Minus,VariableExpr(right),VariableExpr(left)),NumberExpr(0)),Block(None,ReturnStmt(None)),Block(VarDef(part,IntType),VarDef(pivot,IntType),AssignVar(pivot,ArrayLocExpr(list,VariableExpr(right))),AssignVar(part,MethodCall(partition,VariableExpr(left),VariableExpr(right),VariableExpr(pivot))),MethodCall(quickSort,VariableExpr(left),BinaryExpr(Minus,VariableExpr(part),NumberExpr(1))),MethodCall(quickSort,BinaryExpr(Plus,VariableExpr(part),NumberExpr(1)),VariableExpr(right)))))),Method(main,VoidType,None,MethodBlock(VarDef(size,IntType),AssignVar(size,NumberExpr(100)),MethodCall(initList,VariableExpr(size)),MethodCall(displayList,NumberExpr(0),VariableExpr(size)),MethodCall(quickSort,NumberExpr(0),BinaryExpr(Minus,VariableExpr(size),NumberExpr(1))),MethodCall(print_string,StringConstant("After sorting:
+-")),MethodCall(displayList,NumberExpr(0),VariableExpr(size)))),Method(partition,IntType,VarDef(left,IntType),VarDef(right,IntType),VarDef(pivot,IntType),MethodBlock(VarDef(leftPtr,IntType),VarDef(rightPtr,IntType),AssignVar(leftPtr,BinaryExpr(Minus,VariableExpr(left),NumberExpr(1))),AssignVar(rightPtr,VariableExpr(right)),WhileStmt(BoolExpr(True),Block(None,WhileStmt(BoolExpr(True),Block(None,AssignVar(leftPtr,BinaryExpr(Plus,VariableExpr(leftPtr),NumberExpr(1))),IfStmt(BinaryExpr(Geq,ArrayLocExpr(list,VariableExpr(leftPtr)),VariableExpr(pivot)),Block(None,BreakStmt),None))),WhileStmt(BoolExpr(True),Block(None,IfStmt(BinaryExpr(Leq,VariableExpr(rightPtr),NumberExpr(0)),Block(None,BreakStmt),None),AssignVar(rightPtr,BinaryExpr(Minus,VariableExpr(rightPtr),NumberExpr(1))),IfStmt(BinaryExpr(Leq,ArrayLocExpr(list,VariableExpr(rightPtr)),VariableExpr(pivot)),Block(None,BreakStmt),None))),IfStmt(BinaryExpr(Geq,VariableExpr(leftPtr),VariableExpr(rightPtr)),Block(None,BreakStmt),Block(None,MethodCall(swap,VariableExpr(leftPtr),VariableExpr(rightPtr)))))),MethodCall(swap,VariableExpr(leftPtr),VariableExpr(right)),ReturnStmt(VariableExpr(leftPtr))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_EXTERN extern
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID QuickSort
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n\n
++T_VAR var
++T_WHITESPACE
++T_ID list
++T_WHITESPACE
++T_LSB [
++T_INTCONSTANT 100
++T_RSB ]
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_FUNC func
++T_WHITESPACE
++T_ID cr
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\n"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE
++T_RCB }
++T_WHITESPACE \n\n
++T_FUNC func
++T_WHITESPACE
++T_ID displayList
++T_LPAREN (
++T_ID start
++T_WHITESPACE
++T_INTTYPE int
++T_COMMA ,
++T_WHITESPACE
++T_ID len
++T_WHITESPACE
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID j
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "List:\n"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_FOR for
++T_WHITESPACE
++T_LPAREN (
++T_ID j
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID start
++T_SEMICOLON ;
++T_WHITESPACE
++T_ID j
++T_WHITESPACE
++T_LT <
++T_WHITESPACE
++T_ID start
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_ID len
++T_SEMICOLON ;
++T_WHITESPACE
++T_ID j
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID j
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_INTCONSTANT 1
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_ID list
++T_LSB [
++T_ID j
++T_RSB ]
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT " "
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_LPAREN (
++T_ID j
++T_WHITESPACE
++T_MINUS -
++T_WHITESPACE
++T_ID start
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_INTCONSTANT 1
++T_RPAREN )
++T_WHITESPACE
++T_MOD %
++T_WHITESPACE
++T_INTCONSTANT 20
++T_WHITESPACE
++T_EQ ==
++T_WHITESPACE
++T_INTCONSTANT 0
++T_WHITESPACE
++T_OR ||
++T_WHITESPACE
++T_ID j
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_INTCONSTANT 1
++T_WHITESPACE
++T_EQ ==
++T_WHITESPACE
++T_ID start
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_ID len
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID cr
++T_LPAREN (
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n\n
++T_FUNC func
++T_WHITESPACE
++T_ID initList
++T_LPAREN (
++T_ID size
++T_WHITESPACE
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID i
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_FOR for
++T_WHITESPACE
++T_LPAREN (
++T_ID i
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 0
++T_SEMICOLON ;
++T_WHITESPACE
++T_ID i
++T_WHITESPACE
++T_LT <
++T_WHITESPACE
++T_ID size
++T_SEMICOLON ;
++T_WHITESPACE
++T_ID i
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID i
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_INTCONSTANT 1
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID list
++T_LSB [
++T_ID i
++T_RSB ]
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_LPAREN (
++T_ID i
++T_WHITESPACE
++T_MULT *
++T_WHITESPACE
++T_INTCONSTANT 2382983
++T_RPAREN )
++T_WHITESPACE
++T_MOD %
++T_WHITESPACE
++T_INTCONSTANT 100
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n\n
++T_FUNC func
++T_WHITESPACE
++T_ID swap
++T_LPAREN (
++T_ID leftPtr
++T_WHITESPACE
++T_INTTYPE int
++T_COMMA ,
++T_WHITESPACE
++T_ID rightPtr
++T_WHITESPACE
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n\n
++T_VAR var
++T_WHITESPACE
++T_ID temp
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID temp
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID list
++T_LSB [
++T_ID leftPtr
++T_RSB ]
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID list
++T_LSB [
++T_ID leftPtr
++T_RSB ]
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID list
++T_LSB [
++T_ID rightPtr
++T_RSB ]
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID list
++T_LSB [
++T_ID rightPtr
++T_RSB ]
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID temp
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n\n
++T_FUNC func
++T_WHITESPACE
++T_ID quickSort
++T_LPAREN (
++T_ID left
++T_WHITESPACE
++T_INTTYPE int
++T_COMMA ,
++T_WHITESPACE
++T_ID right
++T_WHITESPACE
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n\n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID right
++T_WHITESPACE
++T_MINUS -
++T_WHITESPACE
++T_ID left
++T_WHITESPACE
++T_LEQ <=
++T_WHITESPACE
++T_INTCONSTANT 0
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RETURN return
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE
++T_ELSE else
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID pivot
++T_COMMA ,
++T_WHITESPACE
++T_ID part
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID pivot
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID list
++T_LSB [
++T_ID right
++T_RSB ]
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID part
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID partition
++T_LPAREN (
++T_ID left
++T_COMMA ,
++T_WHITESPACE
++T_ID right
++T_COMMA ,
++T_WHITESPACE
++T_ID pivot
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID quickSort
++T_LPAREN (
++T_ID left
++T_COMMA ,
++T_WHITESPACE
++T_ID part
++T_WHITESPACE
++T_MINUS -
++T_WHITESPACE
++T_INTCONSTANT 1
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID quickSort
++T_LPAREN (
++T_ID part
++T_PLUS +
++T_INTCONSTANT 1
++T_COMMA ,
++T_WHITESPACE
++T_ID right
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n\n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID size
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID size
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 100
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID initList
++T_LPAREN (
++T_ID size
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_ID displayList
++T_LPAREN (
++T_INTCONSTANT 0
++T_COMMA ,
++T_ID size
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID quickSort
++T_LPAREN (
++T_INTCONSTANT 0
++T_COMMA ,
++T_ID size
++T_MINUS -
++T_INTCONSTANT 1
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "After sorting:\n"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID displayList
++T_LPAREN (
++T_INTCONSTANT 0
++T_COMMA ,
++T_ID size
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n\n
++T_FUNC func
++T_WHITESPACE
++T_ID partition
++T_LPAREN (
++T_ID left
++T_WHITESPACE
++T_INTTYPE int
++T_COMMA ,
++T_WHITESPACE
++T_ID right
++T_WHITESPACE
++T_INTTYPE int
++T_COMMA ,
++T_WHITESPACE
++T_ID pivot
++T_WHITESPACE
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n\n
++T_VAR var
++T_WHITESPACE
++T_ID leftPtr
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID rightPtr
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_ID leftPtr
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID left
++T_MINUS -
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID rightPtr
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID right
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_WHILE while
++T_WHITESPACE
++T_LPAREN (
++T_TRUE true
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_WHILE while
++T_WHITESPACE
++T_LPAREN (
++T_TRUE true
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID leftPtr
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID leftPtr
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID list
++T_LSB [
++T_ID leftPtr
++T_RSB ]
++T_WHITESPACE
++T_GEQ >=
++T_WHITESPACE
++T_ID pivot
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_BREAK break
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_WHILE while
++T_WHITESPACE
++T_LPAREN (
++T_TRUE true
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID rightPtr
++T_WHITESPACE
++T_LEQ <=
++T_WHITESPACE
++T_INTCONSTANT 0
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_BREAK break
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_ID rightPtr
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID rightPtr
++T_WHITESPACE
++T_MINUS -
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID list
++T_LSB [
++T_ID rightPtr
++T_RSB ]
++T_WHITESPACE
++T_LEQ <=
++T_WHITESPACE
++T_ID pivot
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_BREAK break
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID leftPtr
++T_WHITESPACE
++T_GEQ >=
++T_WHITESPACE
++T_ID rightPtr
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_BREAK break
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE
++T_ELSE else
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID swap
++T_LPAREN (
++T_ID leftPtr
++T_COMMA ,
++T_ID rightPtr
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n\n
++T_ID swap
++T_LPAREN (
++T_ID leftPtr
++T_COMMA ,
++T_WHITESPACE
++T_ID right
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RETURN return
++T_LPAREN (
++T_ID leftPtr
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/15.ret
+INFO:root:Diff between reference and your output for dev/15.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/methodcall0.out
+INFO:root:Diff between reference and your output for dev/methodcall0.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,24 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,MethodCall(g,None)))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID g
++T_LPAREN (
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/parens.ret
+INFO:root:Diff between reference and your output for dev/parens.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/stringconst-3.out
+INFO:root:Diff between reference and your output for dev/stringconst-3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1,2 +1,49 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant("hello,")),MethodCall(print_string,StringConstant(" world")),MethodCall(print_string,StringConstant("
+-"))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "hello,"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT " world"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\n"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/8.ret
+INFO:root:Diff between reference and your output for dev/8.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/ifelse-prev.ret
+INFO:root:Diff between reference and your output for dev/ifelse-prev.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/empty.ret
+INFO:root:Diff between reference and your output for dev/empty.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charescapevals-7.out
+INFO:root:Diff between reference and your output for dev/charescapevals-7.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(8))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '\b'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charvals-6.out
+INFO:root:Diff between reference and your output for dev/charvals-6.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(57))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '9'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/stringconst-2.out
+INFO:root:Diff between reference and your output for dev/stringconst-2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1,2 +1,43 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant("hello,")),MethodCall(print_string,StringConstant(" world
+-"))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "hello,"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT " world\n"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/if-func3.out
+INFO:root:Diff between reference and your output for dev/if-func3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,56 @@
+-Program(None,Package(C,None,Method(f,BoolType,None,MethodBlock(None,ReturnStmt(NumberExpr(1)))),Method(main,VoidType,None,MethodBlock(None,IfStmt(MethodCall(f,None),Block(None,AssignVar(x,NumberExpr(1))),None)))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_BOOLTYPE bool
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RETURN return
++T_LPAREN (
++T_INTCONSTANT 1
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/stringescapes-8.out
+INFO:root:Diff between reference and your output for dev/stringescapes-8.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant("\"))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\\"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/14.ret
+INFO:root:Diff between reference and your output for dev/14.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charescapes-6.out
+INFO:root:Diff between reference and your output for dev/charescapes-6.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,33 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(c,IntType),AssignVar(c,NumberExpr(12))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID c
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID c
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT '\f'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/2.ret
+INFO:root:Diff between reference and your output for dev/2.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/methodcall2-prev.ret
+INFO:root:Diff between reference and your output for dev/methodcall2-prev.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charescapevals-2.out
+INFO:root:Diff between reference and your output for dev/charescapevals-2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(11))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '\v'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/returnmismatch-intofchar-ok.out
+INFO:root:Diff between reference and your output for dev/returnmismatch-intofchar-ok.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,38 @@
+-Program(None,Package(Test,None,Method(test,IntType,None,MethodBlock(None,ReturnStmt(NumberExpr(120)))),Method(main,IntType,None,MethodBlock(None,None))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID test
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RETURN return
++T_WHITESPACE
++T_LPAREN (
++T_CHARCONSTANT 'x'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/externs.out
+INFO:root:Diff between reference and your output for dev/externs.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,50 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),ExternFunction(print_int,VoidType,VarDef(IntType)),Package(QuickSort,FieldDecl(x,IntType,Scalar),Method(main,VoidType,None,MethodBlock(None,None))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_EXTERN extern
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID QuickSort
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/returnemptyparans.out
+INFO:root:Diff between reference and your output for dev/returnemptyparans.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,25 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,ReturnStmt(None)))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RETURN return
++T_WHITESPACE
++T_LPAREN (
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/13.ret
+INFO:root:Diff between reference and your output for dev/13.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/method2-prev.ret
+INFO:root:Diff between reference and your output for dev/method2-prev.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charvals-12.out
+INFO:root:Diff between reference and your output for dev/charvals-12.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(65))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT 'A'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charvals-1.out
+INFO:root:Diff between reference and your output for dev/charvals-1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(97))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT 'a'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/stringconst-1.out
+INFO:root:Diff between reference and your output for dev/stringconst-1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1,2 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant("hello, world
+-"))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "hello, world\n"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/externsmulti.ret
+INFO:root:Diff between reference and your output for dev/externsmulti.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charescapes-3.out
+INFO:root:Diff between reference and your output for dev/charescapes-3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,33 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(c,IntType),AssignVar(c,NumberExpr(13))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID c
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID c
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT '\r'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/21.ret
+INFO:root:Diff between reference and your output for dev/21.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charvals-9.out
+INFO:root:Diff between reference and your output for dev/charvals-9.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(34))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '"'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/7.ret
+INFO:root:Diff between reference and your output for dev/7.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charvar.out
+INFO:root:Diff between reference and your output for dev/charvar.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,33 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(97))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT 'a'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charvals-13.out
+INFO:root:Diff between reference and your output for dev/charvals-13.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(77))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT 'M'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charescapes-1.out
+INFO:root:Diff between reference and your output for dev/charescapes-1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,33 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(c,IntType),AssignVar(c,NumberExpr(9))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID c
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID c
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT '\t'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/method1.out
+INFO:root:Diff between reference and your output for dev/method1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,29 @@
+-Program(None,Package(QuickSort,FieldDecl(x,IntType,Scalar),Method(main,VoidType,VarDef(a,IntType),MethodBlock(None,None))))
++T_WHITESPACE
++T_ID QuickSort
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_ID a
++T_WHITESPACE
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/whileloop.out
+INFO:root:Diff between reference and your output for dev/whileloop.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,36 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,WhileStmt(BoolExpr(True),Block(None,AssignVar(x,NumberExpr(1))))))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_WHILE while
++T_WHITESPACE
++T_LPAREN (
++T_TRUE true
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charvals-2.out
+INFO:root:Diff between reference and your output for dev/charvals-2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(90))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT 'Z'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charvals-4.out
+INFO:root:Diff between reference and your output for dev/charvals-4.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(94))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '^'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charescapes-2.out
+INFO:root:Diff between reference and your output for dev/charescapes-2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,33 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(c,IntType),AssignVar(c,NumberExpr(11))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID c
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID c
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT '\v'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/16.ret
+INFO:root:Diff between reference and your output for dev/16.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/decls.out
+INFO:root:Diff between reference and your output for dev/decls.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,50 @@
+-Program(None,Package(C,FieldDecl(size,IntType,Scalar),FieldDecl(x,IntType,Scalar),Method(f,VoidType,None,MethodBlock(VarDef(x,IntType),VarDef(i,IntType),AssignVar(size,NumberExpr(100))))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_COMMA ,
++T_WHITESPACE
++T_ID size
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID i
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID size
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 100
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charvals-5.out
+INFO:root:Diff between reference and your output for dev/charvals-5.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(55))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '7'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charvals-8.out
+INFO:root:Diff between reference and your output for dev/charvals-8.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(125))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '}'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/methodcall1.out
+INFO:root:Diff between reference and your output for dev/methodcall1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,25 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,MethodCall(g,NumberExpr(1))))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID g
++T_LPAREN (
++T_INTCONSTANT 1
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/methodcall2.out
+INFO:root:Diff between reference and your output for dev/methodcall2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,28 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,MethodCall(g,NumberExpr(1),NumberExpr(2))))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID g
++T_LPAREN (
++T_INTCONSTANT 1
++T_COMMA ,
++T_WHITESPACE
++T_INTCONSTANT 2
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/default-passes.out
+INFO:root:Diff between reference and your output for dev/default-passes.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,19 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(None,None))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE
++T_RCB }
++T_WHITESPACE
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charescapes-4.out
+INFO:root:Diff between reference and your output for dev/charescapes-4.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,33 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(c,IntType),AssignVar(c,NumberExpr(10))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID c
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID c
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT '\n'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charescapevals-9.out
+INFO:root:Diff between reference and your output for dev/charescapevals-9.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(39))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '\''
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/decls-fail.ret
+INFO:root:Diff between reference and your output for dev/decls-fail.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/18.ret
+INFO:root:Diff between reference and your output for dev/18.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/e1.ret
+INFO:root:dev/e1.ret Correct!
+INFO:root:Checking dev/10.ret
+INFO:root:Diff between reference and your output for dev/10.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/returnempty.out
+INFO:root:Diff between reference and your output for dev/returnempty.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,22 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,ReturnStmt(None)))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RETURN return
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charprint.out
+INFO:root:Diff between reference and your output for dev/charprint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,51 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(97)),MethodCall(print_int,VariableExpr(x))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT 'a'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_ID x
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/if-func1.out
+INFO:root:Diff between reference and your output for dev/if-func1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,50 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,None)),Method(main,VoidType,None,MethodBlock(None,IfStmt(MethodCall(f,None),Block(None,AssignVar(x,NumberExpr(1))),None)))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/stringescapes-9.out
+INFO:root:Diff between reference and your output for dev/stringescapes-9.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant("""))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\""
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/1.ret
+INFO:root:Diff between reference and your output for dev/1.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/if.out
+INFO:root:Diff between reference and your output for dev/if.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,40 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,IfStmt(BinaryExpr(Geq,VariableExpr(leftPtr),VariableExpr(rightPtr)),Block(None,AssignVar(x,NumberExpr(1))),None)))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID leftPtr
++T_WHITESPACE
++T_GEQ >=
++T_WHITESPACE
++T_ID rightPtr
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/stringescapes-4.out
+INFO:root:Diff between reference and your output for dev/stringescapes-4.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1,2 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant("
+-"))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\n"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/e3.ret
+INFO:root:dev/e3.ret Correct!
+INFO:root:Checking dev/stringescapes-7.out
+INFO:root:Diff between reference and your output for dev/stringescapes-7.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant(""))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\b"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/stringescapes-1.out
+INFO:root:Diff between reference and your output for dev/stringescapes-1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant("	"))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\t"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charexpr-2.ret
+INFO:root:Diff between reference and your output for dev/charexpr-2.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charescapevals-6.out
+INFO:root:Diff between reference and your output for dev/charescapevals-6.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(12))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '\f'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charescapevals-4.out
+INFO:root:Diff between reference and your output for dev/charescapevals-4.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(10))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '\n'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/method1-prev.ret
+INFO:root:Diff between reference and your output for dev/method1-prev.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charescapes-9.out
+INFO:root:Diff between reference and your output for dev/charescapes-9.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,33 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(c,IntType),AssignVar(c,NumberExpr(39))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID c
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID c
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT '\''
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/e2.ret
+INFO:root:dev/e2.ret Correct!
+INFO:root:Checking dev/arith2.ret
+INFO:root:Diff between reference and your output for dev/arith2.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charvals-10.out
+INFO:root:Diff between reference and your output for dev/charvals-10.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(109))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT 'm'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/no-main.out
+INFO:root:Diff between reference and your output for dev/no-main.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,7 @@
+-Program(None,Package(foo,None,None))
++T_WHITESPACE
++T_ID foo
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/4.ret
+INFO:root:Diff between reference and your output for dev/4.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/externsmultinocomma.ret
+INFO:root:Diff between reference and your output for dev/externsmultinocomma.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/ifelse.out
+INFO:root:Diff between reference and your output for dev/ifelse.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,53 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,IfStmt(BinaryExpr(Geq,VariableExpr(leftPtr),VariableExpr(rightPtr)),Block(None,AssignVar(x,NumberExpr(1))),Block(None,AssignVar(x,NumberExpr(2))))))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID leftPtr
++T_WHITESPACE
++T_GEQ >=
++T_WHITESPACE
++T_ID rightPtr
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE
++T_ELSE else
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 2
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/9.ret
+INFO:root:Diff between reference and your output for dev/9.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/methodcall1-prev.ret
+INFO:root:Diff between reference and your output for dev/methodcall1-prev.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/if-func2.out
+INFO:root:Diff between reference and your output for dev/if-func2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,56 @@
+-Program(None,Package(C,None,Method(f,IntType,None,MethodBlock(None,ReturnStmt(NumberExpr(1)))),Method(main,VoidType,None,MethodBlock(None,IfStmt(MethodCall(f,None),Block(None,AssignVar(x,NumberExpr(1))),None)))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RETURN return
++T_LPAREN (
++T_INTCONSTANT 1
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/stringescapequote.out
+INFO:root:Diff between reference and your output for dev/stringescapequote.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant("""))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\""
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charescapes-7.out
+INFO:root:Diff between reference and your output for dev/charescapes-7.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,33 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(c,IntType),AssignVar(c,NumberExpr(8))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID c
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID c
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT '\b'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/onlymethods.out
+INFO:root:Diff between reference and your output for dev/onlymethods.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,19 @@
+-Program(None,Package(QuickSort,None,Method(main,VoidType,None,MethodBlock(None,None))))
++T_WHITESPACE
++T_ID QuickSort
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/arith1.out
+INFO:root:Diff between reference and your output for dev/arith1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,75 @@
+-Program(None,Package(foo,None,Method(main,VoidType,None,MethodBlock(None,AssignVar(size,BinaryExpr(Minus,BinaryExpr(Plus,BinaryExpr(Rightshift,NumberExpr(1),NumberExpr(3)),BinaryExpr(Mod,BinaryExpr(Div,NumberExpr(1),UnaryExpr(UnaryMinus,NumberExpr(2))),NumberExpr(10))),BinaryExpr(Leftshift,BinaryExpr(Div,BinaryExpr(Mult,NumberExpr(5),NumberExpr(2)),NumberExpr(20)),NumberExpr(2)))),AssignVar(flag,BinaryExpr(Or,VariableExpr(a),BinaryExpr(And,VariableExpr(b),UnaryExpr(Not,VariableExpr(c)))))))))
++T_WHITESPACE
++T_ID foo
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID size
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_WHITESPACE
++T_RIGHTSHIFT >>
++T_WHITESPACE
++T_INTCONSTANT 3
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_INTCONSTANT 1
++T_WHITESPACE
++T_DIV /
++T_WHITESPACE
++T_MINUS -
++T_INTCONSTANT 2
++T_WHITESPACE
++T_MOD %
++T_WHITESPACE
++T_INTCONSTANT 10
++T_WHITESPACE
++T_MINUS -
++T_WHITESPACE
++T_INTCONSTANT 5
++T_WHITESPACE
++T_MULT *
++T_WHITESPACE
++T_INTCONSTANT 2
++T_WHITESPACE
++T_DIV /
++T_WHITESPACE
++T_INTCONSTANT 20
++T_WHITESPACE
++T_LEFTSHIFT <<
++T_WHITESPACE
++T_INTCONSTANT 2
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID flag
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID a
++T_WHITESPACE
++T_OR ||
++T_WHITESPACE
++T_ID b
++T_WHITESPACE
++T_AND &&
++T_WHITESPACE
++T_NOT !
++T_ID c
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charvals-3.out
+INFO:root:Diff between reference and your output for dev/charvals-3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(48))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '0'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/11.ret
+INFO:root:Diff between reference and your output for dev/11.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charescapes-5.out
+INFO:root:Diff between reference and your output for dev/charescapes-5.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,33 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(c,IntType),AssignVar(c,NumberExpr(7))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID c
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID c
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT '\a'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charexpr-3.out
+INFO:root:Diff between reference and your output for dev/charexpr-3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(x,IntType),AssignVar(x,BinaryExpr(Minus,NumberExpr(92),NumberExpr(39)))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT '\\'
++T_WHITESPACE
++T_MINUS -
++T_WHITESPACE
++T_CHARCONSTANT '\''
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/methodcall0-prev.ret
+INFO:root:Diff between reference and your output for dev/methodcall0-prev.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/gcd.out
+INFO:root:Diff between reference and your output for dev/gcd.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,167 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(GreatestCommonDivisor,AssignGlobalVar(a,IntType,NumberExpr(10)),AssignGlobalVar(b,IntType,NumberExpr(20)),Method(main,IntType,None,MethodBlock(VarDef(z,IntType),VarDef(y,IntType),VarDef(x,IntType),AssignVar(x,VariableExpr(a)),AssignVar(y,VariableExpr(b)),AssignVar(z,MethodCall(gcd,VariableExpr(x),VariableExpr(y))),MethodCall(print_int,VariableExpr(z)))),Method(gcd,IntType,VarDef(a,IntType),VarDef(b,IntType),MethodBlock(None,IfStmt(BinaryExpr(Eq,VariableExpr(b),NumberExpr(0)),Block(None,ReturnStmt(VariableExpr(a))),Block(None,ReturnStmt(MethodCall(gcd,VariableExpr(b),BinaryExpr(Mod,VariableExpr(a),VariableExpr(b))))))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID GreatestCommonDivisor
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID a
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 10
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID b
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 20
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_COMMA ,
++T_WHITESPACE
++T_ID y
++T_COMMA ,
++T_WHITESPACE
++T_ID z
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID a
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID y
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID b
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID z
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_ID gcd
++T_LPAREN (
++T_ID x
++T_COMMA ,
++T_WHITESPACE
++T_ID y
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_COMMENT // print_int is part of the standard input-output library\n
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_ID z
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n\n
++T_COMMENT // function that computes the greatest common divisor\n
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID gcd
++T_LPAREN (
++T_ID a
++T_WHITESPACE
++T_INTTYPE int
++T_COMMA ,
++T_WHITESPACE
++T_ID b
++T_WHITESPACE
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID b
++T_WHITESPACE
++T_EQ ==
++T_WHITESPACE
++T_INTCONSTANT 0
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE
++T_RETURN return
++T_LPAREN (
++T_ID a
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE
++T_RCB }
++T_WHITESPACE \n
++T_ELSE else
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE
++T_RETURN return
++T_LPAREN (
++T_WHITESPACE
++T_ID gcd
++T_LPAREN (
++T_ID b
++T_COMMA ,
++T_WHITESPACE
++T_ID a
++T_WHITESPACE
++T_MOD %
++T_WHITESPACE
++T_ID b
++T_RPAREN )
++T_WHITESPACE
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/assignmismatch-intofchar-ok.out
+INFO:root:Diff between reference and your output for dev/assignmismatch-intofchar-ok.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,33 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(120))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT 'x'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/method0-prev.ret
+INFO:root:Diff between reference and your output for dev/method0-prev.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/method2.out
+INFO:root:Diff between reference and your output for dev/method2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,34 @@
+-Program(None,Package(QuickSort,FieldDecl(x,IntType,Scalar),Method(main,VoidType,VarDef(a,IntType),VarDef(b,IntType),MethodBlock(None,None))))
++T_WHITESPACE
++T_ID QuickSort
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_ID a
++T_WHITESPACE
++T_INTTYPE int
++T_COMMA ,
++T_WHITESPACE
++T_ID b
++T_WHITESPACE
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/continue.out
+INFO:root:Diff between reference and your output for dev/continue.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,32 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,WhileStmt(BoolExpr(True),Block(None,ContinueStmt))))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_WHILE while
++T_WHITESPACE
++T_LPAREN (
++T_TRUE true
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_CONTINUE continue
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/stringescapes-2.out
+INFO:root:Diff between reference and your output for dev/stringescapes-2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_string,StringConstant(""))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID print_string
++T_LPAREN (
++T_STRINGCONSTANT "\v"
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/19.ret
+INFO:root:Diff between reference and your output for dev/19.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/break.out
+INFO:root:Diff between reference and your output for dev/break.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,32 @@
+-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,WhileStmt(BoolExpr(True),Block(None,BreakStmt))))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_WHILE while
++T_WHITESPACE
++T_LPAREN (
++T_TRUE true
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_BREAK break
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/returnnoparens.ret
+INFO:root:Diff between reference and your output for dev/returnnoparens.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/externprintstring.out
+INFO:root:Diff between reference and your output for dev/externprintstring.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,45 @@
+-Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,Method(main,VoidType,None,MethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_string
++T_LPAREN (
++T_STRINGTYPE string
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n\n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/arith3.ret
+INFO:root:Diff between reference and your output for dev/arith3.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0
+INFO:root:Checking dev/charexprprint.out
+INFO:root:Diff between reference and your output for dev/charexprprint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,55 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(x,IntType),AssignVar(x,BinaryExpr(Minus,NumberExpr(102),NumberExpr(97))),MethodCall(print_int,VariableExpr(x))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID x
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT 'f'
++T_WHITESPACE
++T_MINUS -
++T_WHITESPACE
++T_CHARCONSTANT 'a'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_ID x
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/arith4.out
+INFO:root:Diff between reference and your output for dev/arith4.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,67 @@
+-Program(None,Package(foo,None,Method(main,VoidType,None,MethodBlock(None,AssignVar(size,BinaryExpr(Minus,BinaryExpr(Plus,BinaryExpr(Rightshift,NumberExpr(1),NumberExpr(3)),BinaryExpr(Mod,BinaryExpr(Div,NumberExpr(1),UnaryExpr(UnaryMinus,NumberExpr(2))),NumberExpr(10))),BinaryExpr(Leftshift,BinaryExpr(Div,BinaryExpr(Mult,NumberExpr(5),NumberExpr(2)),NumberExpr(20)),NumberExpr(2)))),AssignVar(x,UnaryExpr(Not,VariableExpr(size)))))))
++T_WHITESPACE
++T_ID foo
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID size
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_WHITESPACE
++T_RIGHTSHIFT >>
++T_WHITESPACE
++T_INTCONSTANT 3
++T_WHITESPACE
++T_PLUS +
++T_WHITESPACE
++T_INTCONSTANT 1
++T_WHITESPACE
++T_DIV /
++T_WHITESPACE
++T_MINUS -
++T_INTCONSTANT 2
++T_WHITESPACE
++T_MOD %
++T_WHITESPACE
++T_INTCONSTANT 10
++T_WHITESPACE
++T_MINUS -
++T_WHITESPACE
++T_INTCONSTANT 5
++T_WHITESPACE
++T_MULT *
++T_WHITESPACE
++T_INTCONSTANT 2
++T_WHITESPACE
++T_DIV /
++T_WHITESPACE
++T_INTCONSTANT 20
++T_WHITESPACE
++T_LEFTSHIFT <<
++T_WHITESPACE
++T_INTCONSTANT 2
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_NOT !
++T_ID size
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/if-func5.out
+INFO:root:Diff between reference and your output for dev/if-func5.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,56 @@
+-Program(None,Package(C,None,Method(f,BoolType,None,MethodBlock(None,ReturnStmt(VariableExpr(True)))),Method(main,VoidType,None,MethodBlock(None,IfStmt(MethodCall(f,None),Block(None,AssignVar(x,NumberExpr(1))),None)))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_BOOLTYPE bool
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RETURN return
++T_LPAREN (
++T_ID True
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charescapevals-8.out
+INFO:root:Diff between reference and your output for dev/charescapevals-8.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,37 @@
+-Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,NumberExpr(92))))))
++T_WHITESPACE
++T_FUNC func
++T_WHITESPACE
++T_ID print_int
++T_LPAREN (
++T_INTTYPE int
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_PACKAGE package
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_ID print_int
++T_LPAREN (
++T_CHARCONSTANT '\\'
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/charescapes-8.out
+INFO:root:Diff between reference and your output for dev/charescapes-8.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,33 @@
+-Program(None,Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(c,IntType),AssignVar(c,NumberExpr(92))))))
++T_WHITESPACE
++T_ID Test
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_INTTYPE int
++T_WHITESPACE \n
++T_LCB {
++T_WHITESPACE \n
++T_VAR var
++T_WHITESPACE
++T_ID c
++T_WHITESPACE
++T_INTTYPE int
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_ID c
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_CHARCONSTANT '\\'
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/if-func4.out
+INFO:root:Diff between reference and your output for dev/if-func4.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,56 @@
+-Program(None,Package(C,None,Method(f,BoolType,None,MethodBlock(None,ReturnStmt(BoolExpr(True)))),Method(main,VoidType,None,MethodBlock(None,IfStmt(MethodCall(f,None),Block(None,AssignVar(x,NumberExpr(1))),None)))))
++T_WHITESPACE
++T_ID C
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_BOOLTYPE bool
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_RETURN return
++T_LPAREN (
++T_TRUE true
++T_RPAREN )
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_FUNC func
++T_WHITESPACE
++T_ID main
++T_LPAREN (
++T_RPAREN )
++T_WHITESPACE
++T_VOID void
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_IF if
++T_WHITESPACE
++T_LPAREN (
++T_ID f
++T_LPAREN (
++T_RPAREN )
++T_RPAREN )
++T_WHITESPACE
++T_LCB {
++T_WHITESPACE \n
++T_ID x
++T_WHITESPACE
++T_ASSIGN =
++T_WHITESPACE
++T_INTCONSTANT 1
++T_SEMICOLON ;
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
++T_RCB }
++T_WHITESPACE \n
+INFO:root:Checking dev/12.ret
+INFO:root:Diff between reference and your output for dev/12.ret
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++0

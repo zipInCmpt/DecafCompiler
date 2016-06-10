@@ -1,7 +1,7 @@
 
 %{
 #include "default-defs.h"
-//#include "default.tab.h"
+#include "decafast.tab.h"
 #include <iostream>
 #include <cstdlib>
 #define DEFAULTLINE 1
@@ -15,25 +15,25 @@ using namespace std;
   /*
     Pattern definitions for all tokens 
   */
-func                       { return 1; }
-int                        { return 2; }
-package					   { return 3; }
-bool                       { return 13; }
-break                      { return 14; }
-continue                   { return 16; }
-else                       { return 19; }
-extern                     { return 21; }
-false                      { return 22; }
-for                        { return 23; }
-if                         { return 26; }
-null                       { return 36; }
-return                     { return 39; }
-string                     { return 43; }
-true                       { return 44; }
-var                        { return 45; }
-void                       { return 46; }
-while                      { return 47; }
-\'[^\\\']\'|\'[\\][abtnvfr\\\'\"]\'  { return 48; }  // T_CHARCONSTNT
+func                       { return T_FUNC; }
+int                        { return T_INTTYPE; }
+package					   { return T_PACKAGE; }
+bool                       { return T_BOOLTYPE; }
+break                      { return T_BREAK; }
+continue                   { return T_CONTINUE; }
+else                       { return T_ELSE; }
+extern                     { return T_EXTERN; }
+false                      { return T_FALSE; }
+for                        { return T_FOR; }
+if                         { return T_IF; }
+null                       { return T_NULL; }
+return                     { return T_RETURN; }
+string                     { return T_STRINGTYPE; }
+true                       { return T_TRUE; }
+var                        { return T_VAR; }
+void                       { return T_VOID; }
+while                      { return T_WHILE; }
+\'[^\\\']\'|\'[\\][abtnvfr\\\'\"]\'  { return T_CHARCONSTANT; }  // T_CHARCONSTNT
 \'\'                       { return 101; } // char zero length
 \'[\\][^abtnvfr\\\'\"]\'   { return 102; } // char unexpected character
 \'[^\n\']*[\\\']\'         { return 103; } // char unterminated
@@ -41,42 +41,42 @@ while                      { return 47; }
 \"[\n]\"                   { return 105; } // string new line
 \"[^\"\n]*[\n]|\"[\\]\"|\"([\\][\\])+[\\]\"   { return 106; } // string unterminated
 \"[^\n]*([\\][\\])+[\\][^abtnvfr\\\'\"][^\n]*\"  { return 107; } // string unknown escape sequence
-\"[^\n]*([\\][abtnvfr\\\'\"])+[^\n]*[\"] { return 51; }
+\"[^\n]*([\\][abtnvfr\\\'\"])+[^\n]*[\"] { return T_STRINGCONSTANT; }
 \"[^\n]*[\\][^abtnvfr\\\'\"][^\n]*\"  { return 107; } // string unknown escape sequence
-\"[^\n\"]*[^\n\"]\"|\"\"   { return 51; }  // T_STRINGCONTANT
+\"[^\n\"]*[^\n\"]\"|\"\"   { return T_STRINGCONSTANT; }  // T_STRINGCONTANT
 ~                          { cerr << "Error: unexpected character in input" << endl; return -1; }
-\/\/[ ]*[^\n]*[\n]*        { return 49; }  // T_COMMENT
-[0-9]+|0[x|X][0-9a-fA-F]+  { return 50; }  // T_INTCONSTANT
-[a-zA-Z\_][a-zA-Z\_0-9]*   { return 8; }   // T_ID
-\{                         { return 4; }
-\}                         { return 5; }
-\(                         { return 6; }
-\)                         { return 7; }
-\&\&                       { return 11; }
-\=                         { return 12; }
-\,                         { return 15; }
-\/                         { return 17; }
-\.                         { return 18; }
-\=\=                       { return 20; }
-\>\=                       { return 24; }
-\>                         { return 25; }
-\<\<                       { return 27; }
-\<\=                       { return 28; }
-\[                         { return 29; }
-\<                         { return 30; }
-\-                         { return 31; }
-\%                         { return 32; }
-\*                         { return 33; }
-\!\=                       { return 34; }
-\!                         { return 35; }
-\|\|                       { return 37; }
-\+                         { return 38; }
-\>\>                       { return 40; }
-\]                         { return 41; }
-\;                         { return 42; }
-[\r\t\v\f ]*\n[\n\t\f\r\a\v\b ]* { return 10; }
-[\n]+                      { return 10; }
-[\t\r\a\v\b ]+             { return 9; }   // T_WHITESPACE
+\/\/[ ]*[^\n]*[\n]*        { return T_COMMENT; }  // T_COMMENT
+[0-9]+|0[x|X][0-9a-fA-F]+  { return T_INTCONSTANT; }  // T_INTCONSTANT
+[a-zA-Z\_][a-zA-Z\_0-9]*   { return T_ID; }   // T_ID
+\{                         { return T_LCB; }
+\}                         { return T_RCB; }
+\(                         { return T_LPAREN; }
+\)                         { return T_RPAREN; }
+\&\&                       { return T_AND; }
+\=                         { return T_ASSIGN; }
+\,                         { return T_COMMA; }
+\/                         { return T_DIV; }
+\.                         { return T_DOT; }
+\=\=                       { return T_EQ; }
+\>\=                       { return T_GEQ; }
+\>                         { return T_GT; }
+\<\<                       { return T_LEFTSHIFT; }
+\<\=                       { return T_LEQ; }
+\[                         { return T_LSB; }
+\<                         { return T_LT; }
+\-                         { return T_MINUS; }
+\%                         { return T_MOD; }
+\*                         { return T_MULT; }
+\!\=                       { return T_NEQ; }
+\!                         { return T_NOT; }
+\|\|                       { return T_OR; }
+\+                         { return T_PLUS; }
+\>\>                       { return T_RIGHTSHIFT; }
+\]                         { return T_RSB; }
+\;                         { return T_SEMICOLON; }
+[\r\t\v\f ]*\n[\n\t\f\r\a\v\b ]* { return T_WHITESPACE; }
+[\n]+                      { return T_WHITESPACE; }
+[\t\r\a\v\b ]+             { return T_WHITESPACE; }   // T_WHITESPACE
 
 
 %%

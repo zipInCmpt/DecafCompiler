@@ -26,7 +26,52 @@ using namespace std;
 %token T_LCB
 %token T_RCB
 %token <sval> T_ID
-
+%token T_AND
+%token T_ASSIGN
+%token T_BOOLTYPE
+%token T_BREAK
+%token T_CHARCONSTANT
+%token T_COMMA
+%token T_COMMENT
+%token T_CONTINUE
+%token T_DIV
+%token T_DOT
+%token T_ELSE
+%token T_EQ
+%token T_EXTERN
+%token T_FALSE
+%token T_FOR
+%token T_FUNC
+%token T_GEQ
+%token T_GT
+%token T_IF
+%token T_INTCONSTANT
+%token T_INTTYPE
+%token T_LEFTSHIFT
+%token T_LEQ
+%token T_LPAREN
+%token T_LSB
+%token T_LT
+%token T_MINUS
+%token T_MOD
+%token T_MULT
+%token T_NEQ
+%token T_NOT
+%token T_NULL
+%token T_OR
+%token T_PLUS
+%token T_RETURN
+%token T_RIGHTSHIFT
+%token T_RPAREN
+%token T_RSB
+%token T_SEMICOLON
+%token T_STRINGCONSTANT
+%token T_STRINGTYPE
+%token T_TRUE
+%token T_VAR
+%token T_VOID
+%token T_WHILE
+%token T_WHITESPACE
 
 %type <ast> extern_list decafpackage
 

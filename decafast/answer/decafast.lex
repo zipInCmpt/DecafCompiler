@@ -47,7 +47,7 @@ while                      { return T_WHILE; }
 ~                          { cerr << "Error: unexpected character in input" << endl; return -1; }
 \/\/[ ]*[^\n]*[\n]*        { return T_COMMENT; }  // T_COMMENT
 [0-9]+|0[x|X][0-9a-fA-F]+  { return T_INTCONSTANT; }  // T_INTCONSTANT
-[a-zA-Z\_][a-zA-Z\_0-9]*   { return T_ID; }   // T_ID
+[a-zA-Z\_][a-zA-Z\_0-9]*   { yylval.sval = new string(yytext); return T_ID; }   // T_ID
 \{                         { return T_LCB; }
 \}                         { return T_RCB; }
 \(                         { return T_LPAREN; }
@@ -74,9 +74,9 @@ while                      { return T_WHILE; }
 \>\>                       { return T_RIGHTSHIFT; }
 \]                         { return T_RSB; }
 \;                         { return T_SEMICOLON; }
-[\r\t\v\f ]*\n[\n\t\f\r\a\v\b ]* { return T_WHITESPACE; }
-[\n]+                      { return T_WHITESPACE; }
-[\t\r\a\v\b ]+             { return T_WHITESPACE; }   // T_WHITESPACE
+[\r\t\v\f ]*\n[\n\t\f\r\a\v\b ]* ;
+[\n]+                      ;
+[\t\r\a\v\b ]+             ;   // T_WHITESPACE
 
 
 %%

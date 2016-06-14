@@ -20,11 +20,12 @@ using namespace std;
 %union{
     class decafAST *ast;
     std::string *sval;
+    //char* sval;
  }
 
 %token T_PACKAGE
-%token T_LCB
-%token T_RCB
+%token <sval>T_LCB
+%token <sval>T_RCB
 %token <sval> T_ID
 %token T_AND
 %token T_ASSIGN
@@ -93,15 +94,16 @@ extern_list: /* extern_list can be empty */
     ;
 
 decafpackage: T_PACKAGE T_ID T_LCB T_RCB
-    { $$ = new PackageAST(*$2, new decafStmtList(), new decafStmtList()); delete $2; }
+    {  $$ = new PackageAST(*$2, new decafStmtList(), new decafStmtList());  delete $2; }
     ;
 
 ExternDefn: T_EXTERN T_FUNC T_ID T_LPAREN ExternTypes T_RPAREN MethodType T_SEMICOLON
           | T_EXTERN T_FUNC T_ID T_LPAREN T_RPAREN MethodType T_SEMICOLON
+          ;
 
-statement: T_BREAK T_SEMICOLON T_WHITESPACE { cout << "statement: T_BREAK"; }
+statement: T_BREAK T_SEMICOLON { cout << "statement: T_BREAK"; }
          | T_CONTINUE T_SEMICOLON { cout << "statement: T_CONTINUE"; }
-         | Return { cout << "statement: Return; }
+         | Return { cout << "statement: Return"; }
          | T_FOR T_LPAREN Assigns T_SEMICOLON Expr T_SEMICOLON Assigns T_RPAREN Block { cout << "statement: T_FOR"; }
          | T_WHILE T_LPAREN Expr T_RPAREN Block { cout << "statement: T_WHILE"; }
          | If { cout << "statement: If"; }
@@ -109,6 +111,8 @@ statement: T_BREAK T_SEMICOLON T_WHITESPACE { cout << "statement: T_BREAK"; }
          | Block { cout << "statement: Block"; }
          | MethodCall T_SEMICOLON { cout << "statement: methodcall"; }
          ;
+
+statements: statement;
 
 Expr: T_ID { cout << "Expr: T_ID" }
     | MethodCall { cout << "Expr: MethodCall" }
@@ -128,6 +132,10 @@ If: T_IF T_LPAREN Expr T_RPAREN Block T_ELSE Block { cout << "T_IF_ELSE"; }
   ;
 
 Assign: Lvalue "=" Expr { cout << "Assign"; }
+
+Assigns: Assign T_COMMA
+       | Assign
+       ;
 
 Lvalue: T_ID { cout << "LValue Not Array"; }
       | T_ID T_LSB Expr T_RSB { cout << "Lvalue Array"; }
@@ -170,7 +178,7 @@ Constant: T_INTCONSTANT { cout << "Int Constant"; }
         ;
 
 Type: T_INTTYPE { cout << "Int type"; }
-    | T_BOOL { cout << "Bool Type"; }
+    | T_BOOLTYPE { cout << "Bool Type"; }
     ;
 
 ArrayType: T_LSB T_INTCONSTANT T_RSB Type { cout << "Array Type"; }
@@ -211,7 +219,7 @@ Block: T_LCB VarDecls statements T_RCB;
 
 FieldDecl: T_VAR Identifiers Type T_SEMICOLON { cout << "Field Decl - NO Array" }
          | T_VAR Identifiers ArrayType T_SEMICOLON { cout << "Field Decl - Array" }
-         | T_VAR T_ID T_TYPE "=" Constant T_SEMICOLON { cout << "Field Decl - Assign" }
+         | T_VAR T_ID Type "=" Constant T_SEMICOLON { cout << "Field Decl - Assign" }
          ;
 
 FieldDecls: FieldDecl;

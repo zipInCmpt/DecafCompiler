@@ -33,7 +33,7 @@ string commaList(list<T> vec) {
         s = s + (s.empty() ? string("") : string(",")) + (*i)->str(); 
     }   
     if (s.empty()) {
-        s = string("None");
+        s = string("None");6
     }   
     return s;
 }

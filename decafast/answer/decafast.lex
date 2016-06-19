@@ -23,13 +23,13 @@ break                      { return T_BREAK; }
 continue                   { return T_CONTINUE; }
 else                       { return T_ELSE; }
 extern                     { return T_EXTERN; }
-false                      { return T_FALSE; }
+false                      { yylval.boolValue = true; return T_FALSE; }
 for                        { return T_FOR; }
 if                         { return T_IF; }
 null                       { return T_NULL; }
 return                     { return T_RETURN; }
 string                     { return T_STRINGTYPE; }
-true                       { return T_TRUE; }
+true                       { yylval.boolValue = true; return T_TRUE; }
 var                        { return T_VAR; }
 void                       { return T_VOID; }
 while                      { return T_WHILE; }
@@ -46,7 +46,7 @@ while                      { return T_WHILE; }
 \"[^\n\"]*[^\n\"]\"|\"\"   { return T_STRINGCONSTANT; }  // T_STRINGCONTANT
 ~                          { cerr << "Error: unexpected character in input" << endl; return -1; }
 \/\/[ ]*[^\n]*[\n]*        { return T_COMMENT; }  // T_COMMENT
-[0-9]+|0[x|X][0-9a-fA-F]+  { return T_INTCONSTANT; }  // T_INTCONSTANT
+[0-9]+|0[x|X][0-9a-fA-F]+  { yylval.numericalValue = atoi(yytext); return T_INTCONSTANT; }  // T_INTCONSTANT
 [a-zA-Z\_][a-zA-Z\_0-9]*   { yylval.sval = new string(yytext); return T_ID; }   // T_ID
 \{                         { return T_LCB; }
 \}                         { return T_RCB; }

@@ -11,7 +11,7 @@ int yyerror(char *);
 // print AST?
 bool printAST = true;
 
-#include "default.cc"
+#include "decafast.cc"
 
 using namespace std;
 
@@ -20,12 +20,14 @@ using namespace std;
 %union{
     class decafAST *ast;
     std::string *sval;
+    int numericalValue;
+    bool boolValue;
     //char* sval;
  }
 
 %token T_PACKAGE
-%token <sval>T_LCB
-%token <sval>T_RCB
+%token T_LCB
+%token T_RCB
 %token <sval> T_ID
 %token T_AND
 %token T_ASSIGN
@@ -46,7 +48,7 @@ using namespace std;
 %token T_GEQ
 %token T_GT
 %token T_IF
-%token T_INTCONSTANT
+%token <numericalValue> T_INTCONSTANT
 %token T_INTTYPE
 %token T_LEFTSHIFT
 %token T_LEQ
@@ -74,7 +76,9 @@ using namespace std;
 %token T_WHILE
 %token T_WHITESPACE
 
-%type <ast> extern_list decafpackage
+%type <ast> extern_list decafpackage Type Lvalue Expr Assign statement
+%type <int> Constant
+%type <sval> MethodType
 
 %%
 
@@ -99,6 +103,7 @@ decafpackage: T_PACKAGE T_ID T_LCB T_RCB
 
 ExternDefn: T_EXTERN T_FUNC T_ID T_LPAREN ExternTypes T_RPAREN MethodType T_SEMICOLON
           | T_EXTERN T_FUNC T_ID T_LPAREN T_RPAREN MethodType T_SEMICOLON
+            { decafStmtList *slist = new decafStmtList(); $$ = slist; }
           ;
 
 statement: T_BREAK T_SEMICOLON { cout << "statement: T_BREAK"; }
@@ -172,7 +177,7 @@ BoolConstant: T_TRUE { cout << "BoolConstant - True"; }
             | T_FALSE { cout << "BoolConstant - False"; }
             ;
 
-Constant: T_INTCONSTANT { cout << "Int Constant"; }
+Constant: T_INTCONSTANT { cout << "Int Constant: " << $1 << endl; }
         | T_CHARCONSTANT { cout << "Char Constant"; }
         | BoolConstant { cout << "Bool Constant"; }
         ;

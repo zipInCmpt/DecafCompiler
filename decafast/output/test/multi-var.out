@@ -1,6 +1,1 @@
-here c
-here b
-here a
-FieldDecl(c,IntType,Scalar)
-FieldDecl(b,IntType,Scalar)
-FieldDecl(a,IntType,Scalar)
+Program(None,Package(QuickSort,FieldDecl(a,IntType,Scalar),FieldDecl(b,IntType,Scalar),FieldDecl(c,IntType,Scalar),Method(main,VoidType,None,MethodBlock(None,None))))

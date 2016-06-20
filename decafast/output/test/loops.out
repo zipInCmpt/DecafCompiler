@@ -1,4 +1,1 @@
-here size
-here x
-FieldDecl(size,IntType,Scalar)
-FieldDecl(x,IntType,Scalar)
+Var Decl

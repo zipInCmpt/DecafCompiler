@@ -78,9 +78,9 @@ using namespace std;
 %token T_WHILE
 %token T_WHITESPACE
 
-%type <ast> decafpackage ExternDefn statement ArrayType MethodCall MethodArg Expr BoolConstant Lvalue If Block Return ExternType
+%type <ast> decafpackage ExternDefn statement ArrayType MethodCall MethodArg Expr BoolConstant Lvalue If Block Return ExternType MethodDecl IdentifierType MethodBlock
 %type <numericalValue> Constant ArithmeticOperator BooleanOperator BinaryOperator UnaryOperator Type MethodType
-%type <list> MethodArgs ExternTypes Assigns VarDecls statements FieldDecls extern_list FieldDecl Identifiers
+%type <list> MethodArgs ExternTypes Assigns VarDecls statements FieldDecls extern_list FieldDecl Identifiers MethodDecls IdentifierTypes
 
 %%
 /// TODO: Finished
@@ -97,10 +97,10 @@ program: extern_list decafpackage
     }
 
 /// TODO: After ExternDefn
-extern_list:  ExternDefn T_COMMA extern_list
+extern_list:  ExternDefn extern_list
         {
-            $3->push_front($1);
-            $$ = $3;
+            $2->push_front($1);
+            $$ = $2;
         }
            |  ExternDefn
         {
@@ -116,8 +116,8 @@ extern_list:  ExternDefn T_COMMA extern_list
 /// TODO: Not Finished
 decafpackage: T_PACKAGE T_ID T_LCB T_RCB
     { $$ = new PackageAST(*$2, new decafStmtList(), new decafStmtList());  delete $2; }
-            | T_PACKAGE T_ID T_LCB FieldDecl MethodDecls T_RCB
-        { $$ = new PackageAST(*$2, $4, new decafStmtList());  delete $2; }
+            | T_PACKAGE T_ID T_LCB FieldDecls MethodDecls T_RCB
+        { $$ = new PackageAST(*$2, $4, $5);  delete $2; }
 
     ;
 
@@ -140,12 +140,22 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                    string name = $2->pop_front();
                    FieldDeclAST *fieldNode = new FieldDeclAST(name, $3, size, false);
                    fieldDeclList->push_front(fieldNode);
-                   cout << fieldNode->str() << endl;
+                   //cout << fieldNode->str() << endl;
                    //delete fieldNode;
             }
             //FieldDeclAST *node = new FieldDeclAST(*$2, $3, exprNode, false);
             $$ = fieldDeclList;
          }
+        | T_VAR IdentifierType T_SEMICOLON
+        {
+                //cout << "hree" << endl;
+                decafStmtList *fieldDeclList = new decafStmtList();
+                FieldSizeAST *size = new FieldSizeAST(-1, false);
+
+                FieldDeclAST *fieldNode = new FieldDeclAST($2->str(), -1, size, false);
+                fieldDeclList->push_front(fieldNode);
+                $$ = fieldDeclList;
+        }
          | T_VAR Identifiers ArrayType T_SEMICOLON
         {
             decafAST *exprNode = new decafAST();
@@ -158,26 +168,63 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
         }
         ;
 
-/// TODO: Not Finished
-FieldDecls: FieldDecls T_COMMA
+/// TODO: Finished
+FieldDecls: FieldDecl T_COMMA FieldDecls
+        {
+                $3->push_front($1);
+                $$ = $3;
+        };
           | FieldDecl
+{
+    decafStmtList *list = new decafStmtList();
+    list->push_front($1);
+    $$ = list;
+}
+        |
+{
+    decafStmtList *list = new decafStmtList();
+    $$ = list;
+}
           ;
 
 /// TODO: Not Finished
-MethodDecl: T_FUNC T_ID T_LPAREN Identifiers T_RPAREN MethodType Block { cout<< "MethodDecl with IDs"; }
-| T_FUNC T_ID T_LPAREN T_RPAREN MethodType Block { cout<< "MethodDecl no IDs"; }
+MethodDecl: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType MethodBlock
+        {
+                MethodDeclAST *node = new MethodDeclAST(*$2, $6, $4, $7);
+                $$ = node;
+        }
+| T_FUNC T_ID T_LPAREN T_RPAREN MethodType MethodBlock
+        {
+                //cout << "Here" << endl;
+                MethodDeclAST *node = new MethodDeclAST(*$2, $5, new decafStmtList, $6);
+                $$ = node;
+        }
 ;
 
 /// TODO: Not Finished
-MethodDecls: MethodDecls T_COMMA
+MethodDecls: MethodDecl T_COMMA MethodDecls
+            {
+                $3->push_front($1);
+                $$ = $3;
+            }
            | MethodDecl
-           ;
+            {
+                decafStmtList *list = new decafStmtList();
+                list->push_front($1);
+                $$ = list;
+            }
+            |
+            {
+                decafStmtList *list = new decafStmtList();
+                $$ = list;
+            }
+            ;
 
 /// TODO: Not Finished
 Identifiers: T_ID T_COMMA Identifiers
         {
             RawStringAST *str = new RawStringAST(*$1);
-            cout << "here " << str->str() << endl;
+            //cout << "here " << str->str() << endl;
             $3->push_front(str);
             $$ = $3;
         }
@@ -185,11 +232,44 @@ Identifiers: T_ID T_COMMA Identifiers
         {
             decafStmtList *idList = new decafStmtList();
             RawStringAST *str = new RawStringAST(*$1);
-            cout << "here " << str->str() << endl;
+            //cout << "here " << str->str() << endl;
             idList->push_front(str);
             $$ = idList;
         }
 ;
+
+IdentifierType: T_ID Type
+{
+    IDTypeStringAST *node = new IDTypeStringAST(*$1, $2);
+    $$ = node;
+}
+;
+
+IdentifierTypes: IdentifierType T_COMMA IdentifierTypes
+        {
+                IDTypeStringSpecialAST *sss = new IDTypeStringSpecialAST($1);
+                $3->push_front(sss);
+                $$ = $3;
+        }
+        | IdentifierType
+        {
+            decafStmtList *list = new decafStmtList();
+            IDTypeStringSpecialAST *sss = new IDTypeStringSpecialAST($1);
+            list->push_front(sss);
+            $$ = list;
+        }
+        |
+        {
+            $$ = new decafStmtList();
+        }
+        ;
+
+MethodBlock: Block
+        {
+            MethodBlockAST *node = new MethodBlockAST($1);
+            $$ = node;
+        }
+        ;
 
 /// TODO: Finished
 ExternType: T_STRINGTYPE { ExternType *type = new ExternType(0); $$ = type; }
@@ -277,6 +357,12 @@ Block: T_LCB VarDecls statements T_RCB
                 BlockAST *node = new BlockAST($2, $3);
                 $$ = node;
         }
+    | T_LCB T_RCB
+        {
+                BlockAST *node = new BlockAST(new decafStmtList(), new decafStmtList());
+                $$ = node;
+        }
+
      ;
 
 /// TODO: Not Finished
@@ -477,7 +563,7 @@ Expr: T_ID
 int main() {
   // parse the input and create the abstract syntax tree
   int retval = yyparse();
-    if(retval == 1) cout << "Error" << endl; else cout << "Strange" << endl;
+    //if(retval == 1) cout << "Error" << endl; else cout << "Strange" << endl;
   return(retval >= 1 ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 

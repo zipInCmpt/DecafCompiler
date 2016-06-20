@@ -212,6 +212,33 @@ string getBinaryOp (int opId) {
 	}
 }
 
+// DecafType
+string getDecafType (int typeIndex) {
+	switch (typeIndex) {
+		case 17: return string("IntType"); break;
+		case 18: return string("BoolType"); break;
+		default: return string(""); break;
+	}
+}
+
+// Method Type
+string getMethodType (int typeIndex) {
+	switch (typeIndex) {
+		case 17: return getDecafType(typeIndex); break;
+		case 18: return getDecafType(typeIndex); break;
+		case 19: return string("VoidType"); break;
+		default: return string(""); break;
+	}
+}
+
+string getExternType (int typeIndex) {
+	if(typeIndex == 17 || typeIndex == 18 || typeIndex == 19) {
+		return getMethodType(typeIndex);
+	} else {
+		return string("StringType");
+	}
+}
+
 // Get Unary Operator
 string getUnaryOp (int opId) {
 	switch(opId) {
@@ -242,6 +269,24 @@ public:
 	//string rawStr() { return decafASTString; }
 };
 
+class IDTypeStringAST : public decafAST {
+	string decafASTString;
+	int methodType;
+public:
+	IDTypeStringAST(string value, int typeId) { decafASTString = value; methodType = typeId; }
+	~IDTypeStringAST() { }
+	string str() { return decafASTString + "," + getMethodType(methodType); }
+	//string rawStr() { return decafASTString; }
+};
+
+class IDTypeStringSpecialAST : public decafAST {
+	decafAST *strs;
+public:
+	IDTypeStringSpecialAST(decafAST *node) { strs = node; }
+	~IDTypeStringSpecialAST() { delete strs; }
+	string str() { return string("VarDef(") + getString(strs) + ")"; }
+};
+
 class RawStringAST : public decafAST {
 	string decafASTString;
 public:
@@ -270,32 +315,7 @@ public:
 	}
 };
 
-// DecafType
-string getDecafType (int typeIndex) {
-	switch (typeIndex) {
-		case 17: return string("IntType"); break;
-		case 18: return string("BoolType"); break;
-		default: return string(""); break;
-	}
-}
 
-// Method Type
-string getMethodType (int typeIndex) {
-	switch (typeIndex) {
-		case 17: return getDecafType(typeIndex); break;
-		case 18: return getDecafType(typeIndex); break;
-		case 19: return string("VoidType"); break;
-		default: return string(""); break;
-	}
-}
-
-string getExternType (int typeIndex) {
-	if(typeIndex == 17 || typeIndex == 18 || typeIndex == 19) {
-		return getMethodType(typeIndex);
-	} else {
-		return string("StringType");
-	}
-}
 
 // Extern Type
 class ExternType : public decafAST {
@@ -358,7 +378,8 @@ public:
 		if(isGlobal)
 			return string("AssignGlobalVar(") + identifierName + "," + getDecafType(decafTypeId) + "," + getString(expr) + ")";
 		else
-			return string("FieldDecl(") + identifierName + "," + getDecafType(decafTypeId) + "," + getString(expr) + ")";
+			if (decafTypeId != -1) return string("FieldDecl(") + identifierName + "," + getDecafType(decafTypeId) + "," + getString(expr) + ")";
+			else return string("FieldDecl(") + identifierName + "," + getString(expr) + ")";
 	}
 };
 
@@ -378,13 +399,12 @@ public:
 };
 
 class MethodBlockAST : public decafAST {
-	decafStmtList *varDeclList;
-	decafStmtList *statementList;
+	decafAST *block;
 public:
-	MethodBlockAST(decafStmtList *varDecl, decafStmtList *stmt) { varDeclList = varDecl; statementList = stmt; }
-	~MethodBlockAST() { delete varDeclList; delete statementList; }
+	MethodBlockAST(decafAST *node) { block = node; }
+	~MethodBlockAST() { delete block; }
 	string str() {
-		return string("MethodBlock(") + varDeclList->str() + "," + statementList->str() + ")";
+		return string("Method") + getString(block);
 	}
 };
 
@@ -393,14 +413,17 @@ public:
 class BlockAST : public decafAST {
 	decafStmtList *varDeclList;
 	decafStmtList *statementList;
+	bool isMethod;
 public:
 	BlockAST(decafStmtList *varDecl, decafStmtList *stmt) {
 		varDeclList = varDecl;
 		statementList = stmt;
 	}
 	~BlockAST() { delete varDeclList; delete statementList; };
+	void turnToMethod() { isMethod = true; }
 	string str() {
-		return string("Block(") + varDeclList->str() + "," + statementList->str() + ")";
+		if(!isMethod) return string("Block(") + varDeclList->str() + "," + statementList->str() + ")";
+		else return string("MethodBlock(") + varDeclList->str() + "," + statementList->str() + ")";
 	}
 };
 
@@ -409,9 +432,9 @@ class MethodDeclAST : public decafAST {
 	string identifierName;
 	int methodTypeId;
 	decafStmtList *paramList;
-	MethodBlockAST *block;
+	decafAST *block;
 public:
-	MethodDeclAST(string idName, int methodType, decafStmtList *params, MethodBlockAST *blockMethod) {
+	MethodDeclAST(string idName, int methodType, decafStmtList *params, decafAST *blockMethod) {
 		identifierName = idName;
 		methodTypeId = methodType;
 		paramList = params;

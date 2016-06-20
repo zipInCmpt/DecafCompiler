@@ -1,6 +1,6 @@
 
 %{
-#include "default-defs.h"
+#include "decafast-defs.h"
 #include "decafast.tab.h"
 #include <iostream>
 #include <cstdlib>
@@ -41,9 +41,9 @@ while                      { return T_WHILE; }
 \"[\n]\"                   { return 105; } // string new line
 \"[^\"\n]*[\n]|\"[\\]\"|\"([\\][\\])+[\\]\"   { return 106; } // string unterminated
 \"[^\n]*([\\][\\])+[\\][^abtnvfr\\\'\"][^\n]*\"  { return 107; } // string unknown escape sequence
-\"[^\n]*([\\][abtnvfr\\\'\"])+[^\n]*[\"] { return T_STRINGCONSTANT; }
+\"[^\n]*([\\][abtnvfr\\\'\"])+[^\n]*[\"] { yylval.sval = new string(yytext); return T_STRINGCONSTANT; }
 \"[^\n]*[\\][^abtnvfr\\\'\"][^\n]*\"  { return 107; } // string unknown escape sequence
-\"[^\n\"]*[^\n\"]\"|\"\"   { return T_STRINGCONSTANT; }  // T_STRINGCONTANT
+\"[^\n\"]*[^\n\"]\"|\"\"   { yylval.sval = new string(yytext); return T_STRINGCONSTANT; }  // T_STRINGCONTANT
 ~                          { cerr << "Error: unexpected character in input" << endl; return -1; }
 \/\/[ ]*[^\n]*[\n]*        { return T_COMMENT; }  // T_COMMENT
 [0-9]+|0[x|X][0-9a-fA-F]+  { yylval.numericalValue = atoi(yytext); return T_INTCONSTANT; }  // T_INTCONSTANT

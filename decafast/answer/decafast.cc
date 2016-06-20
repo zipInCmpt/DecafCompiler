@@ -1,12 +1,12 @@
 
-#include "default-defs.h"
+#include "decafast-defs.h"
 #include <list>
 #include <ostream>
 #include <iostream>
 #include <sstream>
 
 #ifndef YYTOKENTYPE
-#include "default.tab.h"
+#include "decafast.tab.h"
 #endif
 
 using namespace std;
@@ -51,6 +51,7 @@ public:
 	int size() { return stmts.size(); }
 	void push_front(decafAST *e) { stmts.push_front(e); }
 	void push_back(decafAST *e) { stmts.push_back(e); }
+	string pop_front() { string value = stmts.back()->str(); stmts.pop_back(); return value; }
 	string str() { return commaList<class decafAST *>(stmts); }
 };
 
@@ -63,12 +64,21 @@ public:
 	PackageAST(string name, decafStmtList *fieldlist, decafStmtList *methodlist) 
 		: Name(name), FieldDeclList(fieldlist), MethodDeclList(methodlist) {}
 	~PackageAST() { 
-		if (FieldDeclList != NULL) { delete FieldDeclList; }
-		if (MethodDeclList != NULL) { delete MethodDeclList; }
+		//if (FieldDeclList != NULL) { delete FieldDeclList; }
+		//if (MethodDeclList != NULL) { delete MethodDeclList; }
 	}
 	string str() { 
 		return string("Package") + "(" + Name + "," + getString(FieldDeclList) + "," + getString(MethodDeclList) + ")";
 	}
+};
+
+// Expr
+class ExprAST : public decafAST {
+	decafAST *decafASTNode;
+public:
+	ExprAST (decafAST *node) { decafASTNode = node; }
+	~ExprAST() { delete decafASTNode; }
+	string str() { return getString(decafASTNode); }
 };
 
 /// ProgramAST - the decaf program
@@ -88,24 +98,24 @@ class BoolConstantAST : public decafAST {
 	bool value;
 public:
 	BoolConstantAST(bool type) { value = type; };
-	~BoolConstantAST();
+	~BoolConstantAST() { }
 	string str() { if(value) return string("True"); else return string("False"); }
 };
 
 class rvalueAST : public decafAST {
 	string idName;
 	bool isArray;
-	int arrayIndex;
+	decafAST *arrayIndex;
 public:
-	rvalueAST(string ID, bool arraytype = false) { idName = ID; isArray = arraytype; arrayIndex = -1; }
-	rvalueAST(string ID, bool arrayype, int index) { idName = ID; isArray = arraytype; if(isArray) arrayIndex = index; else arrayIndex = -1; }
-	~rvalueAST();
+	rvalueAST(string ID, bool arraytype = false) { idName = ID; isArray = arraytype; arrayIndex = NULL; }
+	rvalueAST(string ID, bool arraytype, decafAST *index) { idName = ID; isArray = arraytype; arrayIndex = index;}
+	~rvalueAST() { }
 	string str() {
 		if(isArray) {
 			return string("VariableExpr") + "(" + idName + ")";
 		} else {
 			/// TODO: Double check this statement
-			return string("ArrayLocExpr") + "(" + idName + "," + std::to_string(arrayIndex) + ")";
+			return string("ArrayLocExpr") + "(" + idName + "," + getString(arrayIndex) + ")";
 		}
 	}
 };
@@ -151,19 +161,18 @@ public:
 	}
 };
 
-class UnaryOperator : public decafAST {
+class UnaryExprAST : public decafAST {
 	string unaryOperator;
 	decafAST *opNumber;
 public:
-	UnaryOperator(string unaryOp, decafAST *exp) {
+	UnaryExprAST(string unaryOp, decafAST *exp) {
 		unaryOperator = unaryOp;
 		opNumber = exp;
 	}
-	~UnaryOperator() {
+	~UnaryExprAST() {
 		unaryOperator = "";
 		delete opNumber;
 	}
-
 	string str() {
 		return string("UnaryExpr(") + unaryOperator + "," + getString(opNumber) + ")";
 	}
@@ -179,14 +188,7 @@ public:
 	string str() { return string("MethodCall(") + identifierName + "," + argumentList->str() + ")"; }
 };
 
-// Expr
-class ExprAST : public decafAST {
-	decafAST *decafASTNode;
-public:
-	ExprAST (decafAST *node) { decafASTNode = node; }
-	~ExprAST();
-	string str() { return getString(decafASTNode); }
-};
+
 
 // Get Binary Operator
 string getBinaryOp (int opId) {
@@ -223,7 +225,9 @@ string getUnaryOp (int opId) {
 class MethodArgumentAST : public decafAST {
 	decafAST *decafASTNode;
 public:
-	MethodArgumentAST(decafAST *node);
+	MethodArgumentAST(decafAST *node) {
+		decafASTNode = node;
+	}
 	~MethodArgumentAST() { delete decafASTNode; }
 	string str() { return getString(decafASTNode); }
 };
@@ -233,8 +237,18 @@ class StringAST : public decafAST {
 	string decafASTString;
 public:
 	StringAST(string value) { decafASTString = value; }
-	~StringAST();
+	~StringAST() { }
 	string str() { return string("StringConstant") + "(" + decafASTString + ")"; }
+	//string rawStr() { return decafASTString; }
+};
+
+class RawStringAST : public decafAST {
+	string decafASTString;
+public:
+	RawStringAST(string value) { decafASTString = value; }
+	~RawStringAST() { }
+	string str() { return decafASTString; }
+	//string rawStr() { return decafASTString; }
 };
 
 // Assign
@@ -288,7 +302,7 @@ class ExternType : public decafAST {
 	int externType;
 public:
 	ExternType(int typeIndex) { externType = typeIndex; }
-	~ExternType();
+	~ExternType() { }
 	string str() {
 		return string("VarDef(") + getExternType(externType) + ")";
 	}
@@ -320,13 +334,13 @@ class FieldSizeAST : public decafAST {
 	int size;
 	bool isArray;
 public:
-	FieldSizeAST(int sizeValue, bool array) { size = sizeValue; isArray = array; }
-	~FieldSizeAST();
+	FieldSizeAST(int sizeValue, bool array) { if(array) { size = sizeValue; isArray = array; } else { size = -1; isArray = array; } }
+	~FieldSizeAST() { }
 	string str() {
 		if(isArray) {
 			return string("Array(") + std::to_string(size) + ")";
 		} else {
-			return std::to_string(size);
+			return string("Scalar");
 		}
 	}
 };
@@ -339,7 +353,7 @@ class FieldDeclAST : public decafAST {
 	decafAST *expr;
 public:
 	FieldDeclAST(string idName, int typeId, decafAST *exprNode, bool global) { identifierName = idName; decafTypeId = typeId; isGlobal = global; expr = exprNode; }
-	~FieldDeclAST();
+	~FieldDeclAST() { }
 	string str() {
 		if(isGlobal)
 			return string("AssignGlobalVar(") + identifierName + "," + getDecafType(decafTypeId) + "," + getString(expr) + ")";
@@ -363,14 +377,6 @@ public:
 	}
 };
 
-// method decl
-class MethodDeclAST : public decafAST {
-	string identifierName;
-	int returnType;
-	decafStmtList *paramList;
-	MethodBlockAST *block;
-};
-
 class MethodBlockAST : public decafAST {
 	decafStmtList *varDeclList;
 	decafStmtList *statementList;
@@ -381,6 +387,7 @@ public:
 		return string("MethodBlock(") + varDeclList->str() + "," + statementList->str() + ")";
 	}
 };
+
 
 // Block
 class BlockAST : public decafAST {
@@ -426,7 +433,7 @@ public:
 	SimpleStatement(int type) {
 		typeId = type;
 	}
-	~SimpleStatement();
+	~SimpleStatement() { }
 	string str() {
 		if(typeId == 20) return string("BreakStmt");
 		else if(typeId == 21) return string("ContinueStmt");
@@ -435,11 +442,11 @@ public:
 };
 
 class IfStmtAST : public decafAST {
-	ExprAST *condition;
-	BlockAST *ifBlock;
-	BlockAST *ElseBlock;
+	decafAST *condition;
+	decafAST *ifBlock;
+	decafAST *ElseBlock;
 public:
-	IfStmtAST(ExprAST *cond, BlockAST *ifBlockStmt, BlockAST *elseBlockStmt) {
+	IfStmtAST(decafAST *cond, decafAST *ifBlockStmt, decafAST *elseBlockStmt) {
 		condition = cond;
 		ifBlock = ifBlockStmt;
 		ElseBlock = elseBlockStmt;
@@ -454,15 +461,16 @@ public:
 };
 
 class WhileStmt : public decafAST {
-	ExprAST *condition;
-	BlockAST *whileBlock;
+	decafAST *condition;
+	decafAST *whileBlock;
 public:
-	WhileStmt(ExprAST *cond, BlockAST *whileStmt) {
+	WhileStmt(decafAST *cond, decafAST *whileStmt) {
 		condition = cond;
 		whileBlock = whileStmt;
 	}
 	~WhileStmt() {
-		delete condition, whileBlock;
+		delete condition;
+		delete whileBlock;
 	}
 	string str() {
 		return string("WhileStmt(") + getString(condition) + "," + getString(whileBlock) + ")";
@@ -472,15 +480,17 @@ public:
 class ForStmtAST : public decafAST {
 	decafStmtList *preAssignList;
 	decafStmtList *loopAssignList;
-	ExprAST *condition;
+	decafAST *condition;
 public:
-	ForStmtAST(decafStmtList *pre, ExprAST *cond, decafStmtList *loop) {
+	ForStmtAST(decafStmtList *pre, decafAST *cond, decafStmtList *loop) {
 		preAssignList = pre;
 		condition = cond;
 		loopAssignList = loop;
 	}
 	~ForStmtAST() {
-		delete preAssignList, loopAssignList, condition;
+		delete preAssignList;
+		delete loopAssignList;
+		delete condition;
 	}
 	string str() {
 		return string("ForStmt(") + preAssignList->str() + "," + getString(condition) + "," +loopAssignList->str() + ")";
@@ -488,9 +498,9 @@ public:
 };
 
 class ReturnStmtAST : public decafAST {
-	ExprAST *returnValue;
+	decafAST *returnValue;
 public:
-	ReturnStmtAST(ExprAST *returnVal) {
+	ReturnStmtAST(decafAST *returnVal) {
 		returnValue = returnVal;
 	}
 	~ReturnStmtAST() {
@@ -504,13 +514,8 @@ public:
 class StatementAST : public decafAST {
 	decafAST *stmtASTNode;
 public:
-	StatementAST(MethodCallAST *node) { stmtASTNode = node; }
-	StatementAST(IfStmtAST *node) { stmtASTNode = node; }
-	StatementAST(WhileStmt *node) { stmtASTNode = node; }
-	StatementAST(ForStmtAST *node) { stmtASTNode = node; }
-	StatementAST(ReturnStmtAST *node) { stmtASTNode = node; }
-	StatementAST(SimpleStatement *node) { stmtASTNode = node; }
-	StatementAST(BlockAST *node) { stmtASTNode = node; }
+	StatementAST(decafAST *node) { stmtASTNode = node; }
+
 	~StatementAST() { delete stmtASTNode; }
 	string str() { return getString(stmtASTNode); }
 };

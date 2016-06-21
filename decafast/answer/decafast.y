@@ -480,10 +480,10 @@ Return: T_RETURN T_LPAREN Expr T_RPAREN T_SEMICOLON
             $$ = node;
             //cout << "T_RETURN";
       }
-      | T_RETURN T_SEMICOLON
+      | T_RETURN T_LPAREN T_RPAREN T_SEMICOLON
       {
-            decafAST *emptyNode = new decafAST();
-            ReturnStmtAST *node = new ReturnStmtAST(emptyNode);
+            //decafAST *emptyNode = new decafAST();
+            ReturnStmtAST *node = new ReturnStmtAST(NULL);
             $$ = node;
       }
       ;

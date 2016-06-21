@@ -101,12 +101,7 @@ INFO:root:dev/returnmismatch-intofchar-ok.out Correct!
 INFO:root:Checking dev/externs.out
 INFO:root:dev/externs.out Correct!
 INFO:root:Checking dev/returnemptyparans.out
-INFO:root:Diff between reference and your output for dev/returnemptyparans.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,ReturnStmt(None)))))
+INFO:root:dev/returnemptyparans.out Correct!
 INFO:root:Checking dev/expr-testfile-8.out
 INFO:root:Diff between reference and your output for dev/expr-testfile-8.out
 INFO:root:
@@ -210,9 +205,8 @@ INFO:root:Diff between reference and your output for dev/returnempty.out
 INFO:root:
 --- reference
 +++ your-output
-@@ -1 +1 @@
+@@ -1 +0,0 @@
 -Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,ReturnStmt(None)))))
-+Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,ReturnStmt()))))
 INFO:root:Checking dev/charprint.out
 INFO:root:dev/charprint.out Correct!
 INFO:root:Checking dev/if-func1.out

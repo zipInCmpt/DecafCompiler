@@ -8,12 +8,7 @@ INFO:root:dev/forloop.out Correct!
 INFO:root:Checking dev/charescapevals-3.out
 INFO:root:dev/charescapevals-3.out Correct!
 INFO:root:Checking dev/method0.out
-INFO:root:Diff between reference and your output for dev/method0.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(QuickSort,FieldDecl(x,IntType,Scalar),Method(main,VoidType,None,MethodBlock(None,None))))
+INFO:root:dev/method0.out Correct!
 INFO:root:Checking dev/charexpr-1.out
 INFO:root:dev/charexpr-1.out Correct!
 INFO:root:Checking dev/charvals-6.out
@@ -53,12 +48,7 @@ INFO:root:dev/5.ret Correct!
 INFO:root:Checking dev/charvals-7.out
 INFO:root:dev/charvals-7.out Correct!
 INFO:root:Checking dev/onlyfields.out
-INFO:root:Diff between reference and your output for dev/onlyfields.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(QuickSort,FieldDecl(x,IntType,Scalar),None))
+INFO:root:dev/onlyfields.out Correct!
 INFO:root:Checking dev/quicksort.out
 INFO:root:Diff between reference and your output for dev/quicksort.out
 INFO:root:
@@ -95,12 +85,7 @@ INFO:root:dev/10.ret Correct!
 INFO:root:Checking dev/stringconst-2.out
 INFO:root:dev/stringconst-2.out Correct!
 INFO:root:Checking dev/if-func3.out
-INFO:root:Diff between reference and your output for dev/if-func3.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(C,None,Method(f,BoolType,None,MethodBlock(None,ReturnStmt(NumberExpr(1)))),Method(main,VoidType,None,MethodBlock(None,IfStmt(MethodCall(f,None),Block(None,AssignVar(x,NumberExpr(1))),None)))))
+INFO:root:dev/if-func3.out Correct!
 INFO:root:Checking dev/stringescapes-8.out
 INFO:root:dev/stringescapes-8.out Correct!
 INFO:root:Checking dev/14.ret
@@ -112,19 +97,9 @@ INFO:root:dev/2.ret Correct!
 INFO:root:Checking dev/charescapevals-2.out
 INFO:root:dev/charescapevals-2.out Correct!
 INFO:root:Checking dev/returnmismatch-intofchar-ok.out
-INFO:root:Diff between reference and your output for dev/returnmismatch-intofchar-ok.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(Test,None,Method(test,IntType,None,MethodBlock(None,ReturnStmt(NumberExpr(120)))),Method(main,IntType,None,MethodBlock(None,None))))
+INFO:root:dev/returnmismatch-intofchar-ok.out Correct!
 INFO:root:Checking dev/externs.out
-INFO:root:Diff between reference and your output for dev/externs.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(ExternFunction(print_string,VoidType,VarDef(StringType)),ExternFunction(print_int,VoidType,VarDef(IntType)),Package(QuickSort,FieldDecl(x,IntType,Scalar),Method(main,VoidType,None,MethodBlock(None,None))))
+INFO:root:dev/externs.out Correct!
 INFO:root:Checking dev/returnemptyparans.out
 INFO:root:Diff between reference and your output for dev/returnemptyparans.out
 INFO:root:
@@ -171,12 +146,7 @@ INFO:root:dev/charvar.out Correct!
 INFO:root:Checking dev/charvals-13.out
 INFO:root:dev/charvals-13.out Correct!
 INFO:root:Checking dev/method1.out
-INFO:root:Diff between reference and your output for dev/method1.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(QuickSort,FieldDecl(x,IntType,Scalar),Method(main,VoidType,VarDef(a,IntType),MethodBlock(None,None))))
+INFO:root:dev/method1.out Correct!
 INFO:root:Checking dev/whileloop.out
 INFO:root:dev/whileloop.out Correct!
 INFO:root:Checking dev/expr-testfile-5.out
@@ -246,12 +216,7 @@ INFO:root:
 INFO:root:Checking dev/charprint.out
 INFO:root:dev/charprint.out Correct!
 INFO:root:Checking dev/if-func1.out
-INFO:root:Diff between reference and your output for dev/if-func1.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,None)),Method(main,VoidType,None,MethodBlock(None,IfStmt(MethodCall(f,None),Block(None,AssignVar(x,NumberExpr(1))),None)))))
+INFO:root:dev/if-func1.out Correct!
 INFO:root:Checking dev/stringescapes-9.out
 INFO:root:dev/stringescapes-9.out Correct!
 INFO:root:Checking dev/1.ret
@@ -263,13 +228,7 @@ INFO:root:
 -1
 +0
 INFO:root:Checking dev/if.out
-INFO:root:Diff between reference and your output for dev/if.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,IfStmt(BinaryExpr(Geq,VariableExpr(leftPtr),VariableExpr(rightPtr)),Block(None,AssignVar(x,NumberExpr(1))),None)))))
-+Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,IfStmt(BinaryExpr(Geq,VariableExpr(leftPtr),VariableExpr(rightPtr)),Block(None,AssignVar(x,NumberExpr(1))),)))))
+INFO:root:dev/if.out Correct!
 INFO:root:Checking dev/stringescapes-4.out
 INFO:root:dev/stringescapes-4.out Correct!
 INFO:root:Checking dev/e3.ret
@@ -301,21 +260,11 @@ INFO:root:dev/externsmultinocomma.ret Correct!
 INFO:root:Checking dev/ifelse.out
 INFO:root:dev/ifelse.out Correct!
 INFO:root:Checking dev/if-func2.out
-INFO:root:Diff between reference and your output for dev/if-func2.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(C,None,Method(f,IntType,None,MethodBlock(None,ReturnStmt(NumberExpr(1)))),Method(main,VoidType,None,MethodBlock(None,IfStmt(MethodCall(f,None),Block(None,AssignVar(x,NumberExpr(1))),None)))))
+INFO:root:dev/if-func2.out Correct!
 INFO:root:Checking dev/9.ret
 INFO:root:dev/9.ret Correct!
 INFO:root:Checking dev/expr-testfile-10.out
-INFO:root:Diff between reference and your output for dev/expr-testfile-10.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(foo,IntType,None,MethodBlock(None,ReturnStmt(NumberExpr(10)))),Method(bar,IntType,VarDef(x,IntType),MethodBlock(None,ReturnStmt(BinaryExpr(Plus,VariableExpr(x),NumberExpr(10))))),Method(main,IntType,None,MethodBlock(None,MethodCall(print_int,MethodCall(foo,None)),MethodCall(print_int,MethodCall(bar,NumberExpr(10)))))))
+INFO:root:dev/expr-testfile-10.out Correct!
 INFO:root:Checking dev/stringescapequote.out
 INFO:root:dev/stringescapequote.out Correct!
 INFO:root:Checking dev/expr-testfile-2.out
@@ -368,12 +317,7 @@ INFO:root:
 -Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(x,IntType),AssignVar(x,BinaryExpr(Plus,BinaryExpr(Plus,NumberExpr(2),BinaryExpr(Mult,NumberExpr(2),NumberExpr(3))),NumberExpr(5))),MethodCall(print_int,VariableExpr(x))))))
 +Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,Method(main,IntType,None,MethodBlock(VarDef(x,IntType),AssignVar(x,BinaryExpr(Plus,NumberExpr(2),BinaryExpr(Mult,NumberExpr(2),BinaryExpr(Plus,NumberExpr(3),NumberExpr(5))))),MethodCall(print_int,VariableExpr(x))))))
 INFO:root:Checking dev/method2.out
-INFO:root:Diff between reference and your output for dev/method2.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(QuickSort,FieldDecl(x,IntType,Scalar),Method(main,VoidType,VarDef(a,IntType),VarDef(b,IntType),MethodBlock(None,None))))
+INFO:root:dev/method2.out Correct!
 INFO:root:Checking dev/continue.out
 INFO:root:dev/continue.out Correct!
 INFO:root:Checking dev/expr-testfile-4.out
@@ -413,22 +357,12 @@ INFO:root:
 -Program(None,Package(foo,None,Method(main,VoidType,None,MethodBlock(None,AssignVar(size,BinaryExpr(Minus,BinaryExpr(Plus,BinaryExpr(Rightshift,NumberExpr(1),NumberExpr(3)),BinaryExpr(Mod,BinaryExpr(Div,NumberExpr(1),UnaryExpr(UnaryMinus,NumberExpr(2))),NumberExpr(10))),BinaryExpr(Leftshift,BinaryExpr(Div,BinaryExpr(Mult,NumberExpr(5),NumberExpr(2)),NumberExpr(20)),NumberExpr(2)))),AssignVar(x,UnaryExpr(Not,VariableExpr(size)))))))
 +Program(None,Package(foo,None,Method(main,VoidType,None,MethodBlock(None,AssignVar(size,BinaryExpr(Rightshift,NumberExpr(1),BinaryExpr(Plus,NumberExpr(3),BinaryExpr(Div,NumberExpr(1),UnaryExpr(UnaryMinus,BinaryExpr(Mod,NumberExpr(2),BinaryExpr(Minus,NumberExpr(10),BinaryExpr(Mult,NumberExpr(5),BinaryExpr(Div,NumberExpr(2),BinaryExpr(Leftshift,NumberExpr(20),NumberExpr(2))))))))))),AssignVar(x,UnaryExpr(Not,VariableExpr(size)))))))
 INFO:root:Checking dev/if-func5.out
-INFO:root:Diff between reference and your output for dev/if-func5.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(C,None,Method(f,BoolType,None,MethodBlock(None,ReturnStmt(VariableExpr(True)))),Method(main,VoidType,None,MethodBlock(None,IfStmt(MethodCall(f,None),Block(None,AssignVar(x,NumberExpr(1))),None)))))
+INFO:root:dev/if-func5.out Correct!
 INFO:root:Checking dev/charescapevals-8.out
 INFO:root:dev/charescapevals-8.out Correct!
 INFO:root:Checking dev/charescapes-8.out
 INFO:root:dev/charescapes-8.out Correct!
 INFO:root:Checking dev/if-func4.out
-INFO:root:Diff between reference and your output for dev/if-func4.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(C,None,Method(f,BoolType,None,MethodBlock(None,ReturnStmt(BoolExpr(True)))),Method(main,VoidType,None,MethodBlock(None,IfStmt(MethodCall(f,None),Block(None,AssignVar(x,NumberExpr(1))),None)))))
+INFO:root:dev/if-func4.out Correct!
 INFO:root:Checking dev/12.ret
 INFO:root:dev/12.ret Correct!

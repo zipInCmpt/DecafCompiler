@@ -95,6 +95,7 @@ program: extern_list decafpackage
 		}
         delete prog;
     }
+    ;
 
 /// TODO: After ExternDefn
 extern_list:  ExternDefn extern_list
@@ -212,10 +213,10 @@ MethodDecl: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType MethodBlock
 ;
 
 /// TODO: Finished
-MethodDecls: MethodDecl T_COMMA MethodDecls
+MethodDecls: MethodDecl MethodDecls
             {
-                $3->push_front($1);
-                $$ = $3;
+                $2->push_front($1);
+                $$ = $2;
             }
            | MethodDecl
             {
@@ -250,8 +251,9 @@ Identifiers: Identifier T_COMMA Identifiers
 
 Identifier: T_ID { $$ = $1; };
 
-IdentifierType: Identifier Type
+IdentifierType: T_ID Type
 {
+    //cout << "Here" << endl;
     IDTypeStringAST *node = new IDTypeStringAST(*$1, $2);
     $$ = node;
 }
@@ -494,8 +496,8 @@ If: T_IF T_LPAREN Expr T_RPAREN Block T_ELSE Block
       }
       | T_IF T_LPAREN Expr T_RPAREN Block
       {
-            decafAST *emptyNode = new decafAST();
-            IfStmtAST *node = new IfStmtAST($3, $5, emptyNode);
+            //decafStmtList *emptyNode = new decafStmtList();
+            IfStmtAST *node = new IfStmtAST($3, $5, NULL);
             $$ = node;
       }
 ;

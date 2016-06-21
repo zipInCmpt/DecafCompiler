@@ -35,7 +35,7 @@ using namespace std;
 %token T_ASSIGN
 %token T_BOOLTYPE
 %token T_BREAK
-%token T_CHARCONSTANT
+%token <numericalValue> T_CHARCONSTANT
 %token T_COMMA
 %token T_COMMENT
 %token T_CONTINUE
@@ -78,8 +78,8 @@ using namespace std;
 %token T_WHILE
 %token T_WHITESPACE
 
-%type <ast> decafpackage ExternDefn statement ArrayType MethodCall MethodArg Expr BoolConstant Lvalue If Block Return ExternType MethodDecl IdentifierType MethodBlock
-%type <numericalValue> Constant ArithmeticOperator BooleanOperator BinaryOperator UnaryOperator Type MethodType
+%type <ast> Constant Assign decafpackage ExternDefn statement ArrayType MethodCall MethodArg Expr BoolConstant Lvalue If Block Return ExternType MethodDecl IdentifierType MethodBlock
+%type <numericalValue> ArithmeticOperator BooleanOperator BinaryOperator UnaryOperator Type MethodType
 %type <list> MethodArgs ExternTypes Assigns VarDecl VarDecls statements FieldDecls extern_list FieldDecl Identifiers MethodDecls IdentifierTypes
 
 %%
@@ -305,7 +305,6 @@ Type: T_INTTYPE { $$ = 17; }
 ArrayType: T_LSB T_INTCONSTANT T_RSB Type
         {
 
-            //cout << "Array Type";
         }
 ;
 
@@ -340,12 +339,20 @@ BoolConstant: T_TRUE { BoolConstantAST *node = new BoolConstantAST(true); $$ = n
 | T_FALSE { BoolConstantAST *node = new BoolConstantAST(false); $$ = node; }
 ;
 
-/// TODO: NOT Finished
-Constant: T_INTCONSTANT {  }
-| T_CHARCONSTANT {  }
+/// TODO: Finished
+Constant: T_INTCONSTANT
+{
+    ConstantAST *node = new ConstantAST($1);
+    $$ = node;
+}
+| T_CHARCONSTANT
+{
+    ConstantAST *node = new ConstantAST($1);
+    $$ = node;
+}
 ;
 
-/// TODO: Finish after identifiers
+/// TODO: Finished
 VarDecl: T_VAR Identifiers Type T_SEMICOLON
 {
     decafStmtList *list = new decafStmtList();
@@ -360,7 +367,7 @@ VarDecl: T_VAR Identifiers Type T_SEMICOLON
 
 };
 
-/// TODO: Not Finished
+/// TODO: Finished
 VarDecls: VarDecl VarDecls
 {
     $2->push_front($1);
@@ -392,7 +399,7 @@ Block: T_LCB VarDecls statements T_RCB
 
      ;
 
-/// TODO: Not Finished
+/// TODO: Finished
 statement: T_BREAK T_SEMICOLON
         {
                 SimpleStatement *stmt = new SimpleStatement(20);
@@ -412,7 +419,8 @@ statement: T_BREAK T_SEMICOLON
 | T_FOR T_LPAREN Assigns T_SEMICOLON Expr T_SEMICOLON Assigns T_RPAREN Block
         {
                 /// TODO: Finish after figure out the Block
-                ForStmtAST *forStmt = new ForStmtAST($3, $5, $7);
+                ForStmtAST *forStmt = new ForStmtAST($3, $5, $7, $9);
+                $$ = forStmt;
         }
 | T_WHILE T_LPAREN Expr T_RPAREN Block
         {
@@ -427,7 +435,8 @@ statement: T_BREAK T_SEMICOLON
         }
 | Assign T_SEMICOLON
         {
-                /// TODO: Finish after figuring out
+                StatementAST *node = new StatementAST($1);
+                $$ = node;
         }
 | Block
         {
@@ -440,16 +449,29 @@ statement: T_BREAK T_SEMICOLON
 ;
 
 /// TODO: Finish after Statement
-statements: statements T_COMMA
+statements: statement statements
+{
+    $2->push_front($1);
+    $$ = $2;
+}
           | statement
-          ;
+{
+    decafStmtList *list = new decafStmtList();
+    list->push_front($1);
+    $$ = list;
+}
+|
+{
+    $$ = new decafStmtList();
+}
+;
 
 /// TODO: Finished
 Return: T_RETURN T_LPAREN Expr T_RPAREN T_SEMICOLON
       {
             ReturnStmtAST *node = new ReturnStmtAST($3);
             $$ = node;
-            cout << "T_RETURN";
+            //cout << "T_RETURN";
       }
       | T_RETURN T_SEMICOLON
       {
@@ -473,15 +495,25 @@ If: T_IF T_LPAREN Expr T_RPAREN Block T_ELSE Block
       }
 ;
 
-/// TODO: Not Finished - Double Check
+/// TODO: Finished - Double Check
 Assign: Lvalue "=" Expr
         {
-            //AssignAST *node = new AssignAST()
+            AssignAST *node = new AssignAST($1, $3);
+            $$ = node;
         }
 
-/// TODO: Not Finished
-Assigns: Assigns T_COMMA
+/// TODO: Finished
+Assigns: Assign T_COMMA Assigns
+        {
+               $3->push_front($1);
+               $$ = $3;
+        };
 | Assign
+{
+    decafStmtList *list = new decafStmtList();
+    list->push_front($1);
+    $$ = list;
+}
 ;
 
 /// TODO: Finished
@@ -498,8 +530,8 @@ Lvalue: T_ID
 ;
 
 /// TODO: Finished
-UnaryOperator: T_NOT{ $$ = 15; cout << "Unary Not"; }
-| T_MINUS { $$ = 16; cout << "Unary Minus"; }
+UnaryOperator: T_NOT{ $$ = 15; }
+| T_MINUS { $$ = 16; }
 ;
 
 /// TODO: Finished
@@ -562,7 +594,8 @@ Expr: T_ID
         }
 | Constant
         {
-            ///TODO: Build a Constant Class
+            ExprAST *node = new ExprAST($1);
+            $$ = node;
         }
 | BoolConstant
         {

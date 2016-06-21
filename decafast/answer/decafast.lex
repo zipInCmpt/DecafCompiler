@@ -33,7 +33,7 @@ true                       { yylval.boolValue = true; return T_TRUE; }
 var                        { return T_VAR; }
 void                       { return T_VOID; }
 while                      { return T_WHILE; }
-\'[^\\\']\'|\'[\\][abtnvfr\\\'\"]\'  { return T_CHARCONSTANT; }  // T_CHARCONSTNT
+\'[^\\\']\'|\'[\\][abtnvfr\\\'\"]\'  { yylval.numericalValue = (int)yytext[0]; return T_CHARCONSTANT; }  // T_CHARCONSTNT
 \'\'                       { return 101; } // char zero length
 \'[\\][^abtnvfr\\\'\"]\'   { return 102; } // char unexpected character
 \'[^\n\']*[\\\']\'         { return 103; } // char unterminated

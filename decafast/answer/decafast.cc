@@ -188,8 +188,6 @@ public:
 	string str() { return string("MethodCall(") + identifierName + "," + argumentList->str() + ")"; }
 };
 
-
-
 // Get Binary Operator
 string getBinaryOp (int opId) {
 	switch(opId) {
@@ -298,19 +296,19 @@ public:
 
 // Assign
 class AssignAST : public decafAST {
-	string identifierName;
-	ExprAST *value;
-	ExprAST *index;
+	decafAST *identifierName;
+	decafAST *value;
+	decafAST *index;
 	bool isArray;
 public:
-	AssignAST(string idName, ExprAST *assignedValue) { identifierName = idName; value = assignedValue; index = NULL; isArray = false; }
-	AssignAST(string idName, ExprAST *dstIndex, ExprAST *assignedValue) { identifierName = idName; index = dstIndex; value = assignedValue; isArray = true; }
-	~AssignAST() { identifierName = ""; delete value; if(isArray) delete index;}
+	AssignAST(decafAST *idName, decafAST *assignedValue) { identifierName = idName; value = assignedValue; index = NULL; isArray = false; }
+	AssignAST(decafAST *idName, decafAST *dstIndex, decafAST *assignedValue) { identifierName = idName; index = dstIndex; value = assignedValue; isArray = true; }
+	~AssignAST() { delete identifierName; delete value; if(isArray) delete index;}
 	string str() {
 		if(isArray) {
-			return string("AssignArrayLoc(") + identifierName + "," + getString(index) + "," + getString(value) + ")";
+			return string("AssignArrayLoc(") + getString(identifierName) + "," + getString(index) + "," + getString(value) + ")";
 		} else {
-			return string("AssignArrayLoc(") + identifierName + "," + getString(value) + ")";
+			return string("AssignVar(") + getString(identifierName) + "," + getString(value) + ")";
 		}
 	}
 };
@@ -504,19 +502,22 @@ class ForStmtAST : public decafAST {
 	decafStmtList *preAssignList;
 	decafStmtList *loopAssignList;
 	decafAST *condition;
+	decafAST *Block;
 public:
-	ForStmtAST(decafStmtList *pre, decafAST *cond, decafStmtList *loop) {
+	ForStmtAST(decafStmtList *pre, decafAST *cond, decafStmtList *loop, decafAST *blockNode) {
 		preAssignList = pre;
 		condition = cond;
 		loopAssignList = loop;
+		Block = blockNode;
 	}
 	~ForStmtAST() {
 		delete preAssignList;
 		delete loopAssignList;
 		delete condition;
+		delete Block;
 	}
 	string str() {
-		return string("ForStmt(") + preAssignList->str() + "," + getString(condition) + "," +loopAssignList->str() + ")";
+		return string("ForStmt(") + preAssignList->str() + "," + getString(condition) + "," +loopAssignList->str() + "," + getString(Block) + ")";
 	}
 };
 
@@ -532,6 +533,14 @@ public:
 	string str() {
 		return string("ReturnStmt(") + getString(returnValue) + ")";
 	}
+};
+
+class ConstantAST : public decafAST {
+	int constantValue;
+public:
+	ConstantAST(int value) { constantValue = value; }
+	~ConstantAST() { }
+	string str() { return string("NumberExpr(") + std::to_string(constantValue) + ")"; }
 };
 
 class StatementAST : public decafAST {

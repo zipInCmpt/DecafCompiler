@@ -78,6 +78,15 @@ using namespace std;
 %token T_WHILE
 %token T_WHITESPACE
 
+%right T_ASSIGN
+%left T_OR
+%left T_AND
+%left T_MULT T_DIV T_MOD T_LEFTSHIFT T_RIGHTSHIFT
+%left T_PLUS T_MINUS
+%left T_UMINUS T_NOT
+%left T_EQ T_NEQ
+%left T_GT T_LT T_GEQ T_LEQ
+
 %type <ast> Constant Assign decafpackage ExternDefn statement MethodCall MethodArg Expr BoolConstant If Block Return ExternType MethodDecl IdentifierType MethodBlock
 %type <numericalValue> ArithmeticOperator BooleanOperator BinaryOperator UnaryOperator Type MethodType
 %type <list> MethodArgs ExternTypes Assigns VarDecl VarDecls statements FieldDecls extern_list FieldDecl Identifiers MethodDecls IdentifierTypes
@@ -95,6 +104,10 @@ program: extern_list decafpackage
 		}
         delete prog;
     }
+    |
+{
+    exit(EXIT_FAILURE);
+}
     ;
 
 /// TODO: After ExternDefn
@@ -119,6 +132,7 @@ decafpackage: T_PACKAGE T_ID T_LCB T_RCB
     { $$ = new PackageAST(*$2, new decafStmtList(), new decafStmtList());  delete $2; }
             | T_PACKAGE T_ID T_LCB FieldDecls MethodDecls T_RCB
         { $$ = new PackageAST(*$2, $4, $5);  delete $2; }
+    | T_PACKAGE { exit(EXIT_FAILURE); }
 
     ;
 

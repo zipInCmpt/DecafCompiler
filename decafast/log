@@ -71,13 +71,7 @@ INFO:root:dev/ifelse-prev.ret Correct!
 INFO:root:Checking dev/charexpr-2.out
 INFO:root:dev/charexpr-2.out Correct!
 INFO:root:Checking dev/empty.ret
-INFO:root:Diff between reference and your output for dev/empty.ret
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--1
-+0
+INFO:root:dev/empty.ret Correct!
 INFO:root:Checking dev/charescapevals-7.out
 INFO:root:dev/charescapevals-7.out Correct!
 INFO:root:Checking dev/10.ret
@@ -204,13 +198,7 @@ INFO:root:dev/if-func1.out Correct!
 INFO:root:Checking dev/stringescapes-9.out
 INFO:root:dev/stringescapes-9.out Correct!
 INFO:root:Checking dev/1.ret
-INFO:root:Diff between reference and your output for dev/1.ret
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--1
-+0
+INFO:root:dev/1.ret Correct!
 INFO:root:Checking dev/if.out
 INFO:root:dev/if.out Correct!
 INFO:root:Checking dev/stringescapes-4.out

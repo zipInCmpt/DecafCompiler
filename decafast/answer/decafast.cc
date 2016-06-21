@@ -99,7 +99,7 @@ class BoolConstantAST : public decafAST {
 public:
 	BoolConstantAST(bool type) { value = type; };
 	~BoolConstantAST() { }
-	string str() { if(value) return string("True"); else return string("False"); }
+	string str() { if(value) return string("BoolExpr(True)"); else return string("BoolExpr(False)"); }
 };
 
 class rvalueAST : public decafAST {
@@ -111,7 +111,7 @@ public:
 	rvalueAST(string ID, bool arraytype, decafAST *index) { idName = ID; isArray = arraytype; arrayIndex = index;}
 	~rvalueAST() { }
 	string str() {
-		if(isArray) {
+		if(!isArray) {
 			return string("VariableExpr") + "(" + idName + ")";
 		} else {
 			/// TODO: Double check this statement
@@ -296,19 +296,19 @@ public:
 
 // Assign
 class AssignAST : public decafAST {
-	decafAST *identifierName;
+	string identifierName;
 	decafAST *value;
 	decafAST *index;
 	bool isArray;
 public:
-	AssignAST(decafAST *idName, decafAST *assignedValue) { identifierName = idName; value = assignedValue; index = NULL; isArray = false; }
-	AssignAST(decafAST *idName, decafAST *dstIndex, decafAST *assignedValue) { identifierName = idName; index = dstIndex; value = assignedValue; isArray = true; }
-	~AssignAST() { delete identifierName; delete value; if(isArray) delete index;}
+	AssignAST(string idName, decafAST *assignedValue) { identifierName = idName; value = assignedValue; index = NULL; isArray = false; }
+	AssignAST(string idName, decafAST *dstIndex, decafAST *assignedValue) { identifierName = idName; index = dstIndex; value = assignedValue; isArray = true; }
+	~AssignAST() { delete value; if(isArray) delete index;}
 	string str() {
 		if(isArray) {
-			return string("AssignArrayLoc(") + getString(identifierName) + "," + getString(index) + "," + getString(value) + ")";
+			return string("AssignArrayLoc(") + identifierName + "," + getString(index) + "," + getString(value) + ")";
 		} else {
-			return string("AssignVar(") + getString(identifierName) + "," + getString(value) + ")";
+			return string("AssignVar(") + identifierName + "," + getString(value) + ")";
 		}
 	}
 };

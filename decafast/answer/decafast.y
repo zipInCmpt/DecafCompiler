@@ -78,10 +78,10 @@ using namespace std;
 %token T_WHILE
 %token T_WHITESPACE
 
-%type <ast> Constant Assign decafpackage ExternDefn statement MethodCall MethodArg Expr BoolConstant Lvalue If Block Return ExternType MethodDecl IdentifierType MethodBlock
+%type <ast> Constant Assign decafpackage ExternDefn statement MethodCall MethodArg Expr BoolConstant If Block Return ExternType MethodDecl IdentifierType MethodBlock
 %type <numericalValue> ArithmeticOperator BooleanOperator BinaryOperator UnaryOperator Type MethodType
 %type <list> MethodArgs ExternTypes Assigns VarDecl VarDecls statements FieldDecls extern_list FieldDecl Identifiers MethodDecls IdentifierTypes
-
+%type <sval> Identifier
 %%
 /// TODO: Finished
 start: program
@@ -231,14 +231,14 @@ MethodDecls: MethodDecl T_COMMA MethodDecls
             ;
 
 /// TODO: Finished
-Identifiers: T_ID T_COMMA Identifiers
+Identifiers: Identifier T_COMMA Identifiers
         {
             RawStringAST *str = new RawStringAST(*$1);
             //cout << "here " << str->str() << endl;
             $3->push_front(str);
             $$ = $3;
         }
-| T_ID
+| Identifier
         {
             decafStmtList *idList = new decafStmtList();
             RawStringAST *str = new RawStringAST(*$1);
@@ -248,7 +248,9 @@ Identifiers: T_ID T_COMMA Identifiers
         }
 ;
 
-IdentifierType: T_ID Type
+Identifier: T_ID { $$ = $1; };
+
+IdentifierType: Identifier Type
 {
     IDTypeStringAST *node = new IDTypeStringAST(*$1, $2);
     $$ = node;
@@ -499,11 +501,16 @@ If: T_IF T_LPAREN Expr T_RPAREN Block T_ELSE Block
 ;
 
 /// TODO: Finished - Double Check
-Assign: Lvalue "=" Expr
+Assign: Identifier T_ASSIGN Expr
         {
-            AssignAST *node = new AssignAST($1, $3);
+            AssignAST *node = new AssignAST(*$1, $3);
             $$ = node;
         }
+|   Identifier T_LSB Expr T_RSB T_ASSIGN Expr
+{
+        AssignAST *node = new AssignAST(*$1, $3, $6);
+        $$ = node;
+}
 
 /// TODO: Finished
 Assigns: Assign T_COMMA Assigns
@@ -520,21 +527,8 @@ Assigns: Assign T_COMMA Assigns
 ;
 
 /// TODO: Finished
-Lvalue: T_ID
-      {
-            rvalueAST *node = new rvalueAST(*$1, false);
-            $$ = node;
-      }
-      | T_ID T_LSB Expr T_RSB
-      {
-            rvalueAST *node = new rvalueAST(*$1, true, $3);
-            $$ = node;
-      }
-;
-
-/// TODO: Finished
-UnaryOperator: T_NOT{ $$ = 15; }
-| T_MINUS { $$ = 16; }
+UnaryOperator: T_NOT{ $$ = 16; }
+| T_MINUS { $$ = 15; }
 ;
 
 /// TODO: Finished
@@ -613,7 +607,7 @@ Expr: T_ID
         }
 | UnaryOperator Expr
         {
-            UnaryExprAST *expr = new UnaryExprAST(getBinaryOp($1), $2);
+            UnaryExprAST *expr = new UnaryExprAST(getUnaryOp($1), $2);
             ExprAST *node = new ExprAST(expr);
             $$ = node;
         }

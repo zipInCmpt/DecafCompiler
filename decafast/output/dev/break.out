@@ -1,1 +1,1 @@
-Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,WhileStmt(True,Block(None,BreakStmt))))))
+Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,WhileStmt(BoolExpr(True),Block(None,BreakStmt))))))

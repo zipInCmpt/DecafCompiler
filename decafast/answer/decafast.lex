@@ -33,7 +33,25 @@ true                       { yylval.boolValue = true; return T_TRUE; }
 var                        { return T_VAR; }
 void                       { return T_VOID; }
 while                      { return T_WHILE; }
-\'[^\\\']\'|\'[\\][abtnvfr\\\'\"]\'  { yylval.numericalValue = (int)yytext[0]; return T_CHARCONSTANT; }  // T_CHARCONSTNT
+\'[^\\\']\'|\'[\\][abtnvfr\\\'\"]\' {
+    if(yytext[1] == '\\') {
+        switch(yytext[2]) {
+            case 'a': yylval.numericalValue = '\a'; break;
+            case 'b': yylval.numericalValue = '\b'; break;
+            case 't': yylval.numericalValue = '\t'; break;
+            case 'n': yylval.numericalValue = '\n'; break;
+            case 'v': yylval.numericalValue = '\v'; break;
+            case 'f': yylval.numericalValue = '\f'; break;
+            case 'r': yylval.numericalValue = '\r'; break;
+            case '\\': yylval.numericalValue = '\\'; break;
+            case '\'': yylval.numericalValue = '\''; break;
+        }
+    } else {
+        yylval.numericalValue = (int)yytext[1];
+    }
+
+    return T_CHARCONSTANT;
+}  // T_CHARCONSTNT
 \'\'                       { return 101; } // char zero length
 \'[\\][^abtnvfr\\\'\"]\'   { return 102; } // char unexpected character
 \'[^\n\']*[\\\']\'         { return 103; } // char unterminated

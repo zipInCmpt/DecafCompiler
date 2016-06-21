@@ -80,7 +80,7 @@ using namespace std;
 
 %type <ast> decafpackage ExternDefn statement ArrayType MethodCall MethodArg Expr BoolConstant Lvalue If Block Return ExternType MethodDecl IdentifierType MethodBlock
 %type <numericalValue> Constant ArithmeticOperator BooleanOperator BinaryOperator UnaryOperator Type MethodType
-%type <list> MethodArgs ExternTypes Assigns VarDecls statements FieldDecls extern_list FieldDecl Identifiers MethodDecls IdentifierTypes
+%type <list> MethodArgs ExternTypes Assigns VarDecl VarDecls statements FieldDecls extern_list FieldDecl Identifiers MethodDecls IdentifierTypes
 
 %%
 /// TODO: Finished
@@ -187,7 +187,7 @@ FieldDecls: FieldDecl T_COMMA FieldDecls
 }
           ;
 
-/// TODO: Not Finished
+/// TODO: Finished
 MethodDecl: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType MethodBlock
         {
                 MethodDeclAST *node = new MethodDeclAST(*$2, $6, $4, $7);
@@ -201,7 +201,7 @@ MethodDecl: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType MethodBlock
         }
 ;
 
-/// TODO: Not Finished
+/// TODO: Finished
 MethodDecls: MethodDecl T_COMMA MethodDecls
             {
                 $3->push_front($1);
@@ -220,7 +220,7 @@ MethodDecls: MethodDecl T_COMMA MethodDecls
             }
             ;
 
-/// TODO: Not Finished
+/// TODO: Finished
 Identifiers: T_ID T_COMMA Identifiers
         {
             RawStringAST *str = new RawStringAST(*$1);
@@ -331,25 +331,52 @@ BooleanOperator: T_EQ { $$ = 11; }
 ;
 
 /// TODO: Finished
-BinaryOperator: BooleanOperator   { $$ = $1; cout << "BinaryOp - Boolean"; }
-| ArithmeticOperator   { $$ = $1; cout << "BinaryOp - Arith"; }
+BinaryOperator: BooleanOperator   { $$ = $1; }
+| ArithmeticOperator   { $$ = $1; }
 ;
 
 /// TODO: Finished
-BoolConstant: T_TRUE { BoolConstantAST *node = new BoolConstantAST(true); $$ = node; cout << "BoolConstant - True"; }
-| T_FALSE { BoolConstantAST *node = new BoolConstantAST(false); $$ = node; cout << "BoolConstant - False"; }
+BoolConstant: T_TRUE { BoolConstantAST *node = new BoolConstantAST(true); $$ = node; }
+| T_FALSE { BoolConstantAST *node = new BoolConstantAST(false); $$ = node; }
 ;
 
 /// TODO: NOT Finished
-Constant: T_INTCONSTANT { cout << "Int Constant: " << endl; }
-| T_CHARCONSTANT { cout << "Char Constant"; }
+Constant: T_INTCONSTANT {  }
+| T_CHARCONSTANT {  }
 ;
 
 /// TODO: Finish after identifiers
-VarDecl: T_VAR Identifiers Type T_SEMICOLON { cout << "Var Decl" };
+VarDecl: T_VAR Identifiers Type T_SEMICOLON
+{
+    decafStmtList *list = new decafStmtList();
+
+    while($2->size() > 0) {
+        string name = $2->pop_front();
+        TypedSymbol *newNode = new TypedSymbol(name, $3);
+        list->push_front(newNode);
+    }
+
+    $$ = list;
+
+};
 
 /// TODO: Not Finished
-VarDecls: VarDecl;
+VarDecls: VarDecl VarDecls
+{
+    $2->push_front($1);
+    $$ = $2;
+}
+| VarDecl
+{
+    decafStmtList *list = new decafStmtList();
+    list->push_front($1);
+    $$ = list;
+}
+|
+{
+    $$ = new decafStmtList();
+}
+;
 
 /// TODO: Finished
 Block: T_LCB VarDecls statements T_RCB
@@ -554,8 +581,8 @@ Expr: T_ID
             ExprAST *node = new ExprAST(expr);
             $$ = node;
         }
-| T_LPAREN Expr T_RPAREN { $$ = $2; cout << "Expr: LPAREN RPAREN"; }
-| T_ID T_LSB Expr T_RSB { cout << "Expr: Array"; }
+| T_LPAREN Expr T_RPAREN { $$ = $2; }
+| T_ID T_LSB Expr T_RSB { /* Array */ }
 ;
 
 %%

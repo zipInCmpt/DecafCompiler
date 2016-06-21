@@ -392,7 +392,7 @@ public:
 		identifierName = idName;
 		decafTypeId = typeId;
 	}
-	~TypedSymbol();
+	~TypedSymbol() { }
 	string str() {
 		return string("VarDef(") + identifierName + "," + getDecafType(decafTypeId) + ")";
 	}

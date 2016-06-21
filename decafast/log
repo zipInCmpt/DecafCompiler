@@ -201,12 +201,7 @@ INFO:root:dev/18.ret Correct!
 INFO:root:Checking dev/e1.ret
 INFO:root:dev/e1.ret Correct!
 INFO:root:Checking dev/returnempty.out
-INFO:root:Diff between reference and your output for dev/returnempty.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,ReturnStmt(None)))))
+INFO:root:dev/returnempty.out Correct!
 INFO:root:Checking dev/charprint.out
 INFO:root:dev/charprint.out Correct!
 INFO:root:Checking dev/if-func1.out

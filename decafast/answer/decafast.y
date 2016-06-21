@@ -486,6 +486,11 @@ Return: T_RETURN T_LPAREN Expr T_RPAREN T_SEMICOLON
             ReturnStmtAST *node = new ReturnStmtAST(NULL);
             $$ = node;
       }
+      | T_RETURN T_SEMICOLON
+        {
+            ReturnStmtAST *node = new ReturnStmtAST(NULL);
+            $$ = node;
+        }
       ;
 
 /// TODO: Finished

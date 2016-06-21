@@ -9,6 +9,9 @@
 
 using namespace std;
 
+int lineno = 1;
+int tokenpos = 1;
+
 %}
 
 %%
@@ -96,10 +99,9 @@ while                      { return T_WHILE; }
 [\n]+                      ;
 [\t\r\a\v\b ]+             ;   // T_WHITESPACE
 
-
 %%
 
-int yyerror(const char *s) {
+int ttt(const char *s) {
   int token;
   string lexeme;
   int tokenNum = DEFAULTOKEN;
@@ -249,5 +251,10 @@ int yyerror(const char *s) {
     }
   }
   exit(EXIT_SUCCESS);
+}
+
+int yyerror(const char *s) {
+  cerr << lineno << ": " << s << " at char " << tokenpos << endl;
+  return 1;
 }
 

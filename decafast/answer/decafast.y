@@ -136,6 +136,7 @@ decafpackage: T_PACKAGE T_ID T_LCB T_RCB
             | T_PACKAGE T_ID T_LCB FieldDecls MethodDecls T_RCB
         { $$ = new PackageAST(*$2, $4, $5);  delete $2; }
     | T_PACKAGE { exit(EXIT_FAILURE); }
+    | T_PACKAGE T_ID { exit(EXIT_FAILURE); }
 
     ;
 
@@ -305,7 +306,7 @@ MethodBlock: Block
 
 /// TODO: Finished
 ExternType: T_STRINGTYPE { ExternType *type = new ExternType(0); $$ = type; }
-| MethodType { ExternType *type = new ExternType($1); $$ = type; }
+| Type { ExternType *type = new ExternType($1); $$ = type; }
 ;
 
 /// TODO: Finished
@@ -709,7 +710,7 @@ Binarys: Expr T_PLUS Expr
 int main() {
   // parse the input and create the abstract syntax tree
   int retval = yyparse();
-    //if(retval == 1) cout << "Error" << endl; else cout << "Strange" << endl;
+        //cout << retval << endl;
   return(retval >= 1 ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 

@@ -555,9 +555,10 @@ MethodArg: Expr
 ;
 
 /// TODO: Check
-MethodArgs: MethodArgs T_COMMA
+MethodArgs: MethodArg T_COMMA MethodArgs
         {
-            $$ = $1;
+            $3->push_front($1);
+            $$ = $3;
             //cout << "MethodArg - WithComma";
         }
 | MethodArg

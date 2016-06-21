@@ -180,12 +180,7 @@ INFO:root:
 @@ -1 +0,0 @@
 -Program(ExternFunction(print_int,VoidType,VarDef(IntType)),ExternFunction(read_int,IntType,None),Package(Catalan,None,Method(main,VoidType,None,MethodBlock(None,MethodCall(print_int,MethodCall(cat,MethodCall(read_int,None))))),Method(fact,IntType,VarDef(n,IntType),MethodBlock(None,IfStmt(BinaryExpr(Eq,VariableExpr(n),NumberExpr(1)),Block(None,ReturnStmt(NumberExpr(1))),Block(None,ReturnStmt(BinaryExpr(Mult,VariableExpr(n),MethodCall(fact,BinaryExpr(Minus,VariableExpr(n),NumberExpr(1))))))))),Method(choose,IntType,VarDef(a,IntType),VarDef(b,IntType),MethodBlock(None,ReturnStmt(BinaryExpr(Div,MethodCall(fact,VariableExpr(a)),BinaryExpr(Mult,MethodCall(fact,VariableExpr(b)),MethodCall(fact,BinaryExpr(Minus,VariableExpr(a),VariableExpr(b)))))))),Method(cat,IntType,VarDef(n,IntType),MethodBlock(None,ReturnStmt(BinaryExpr(Div,MethodCall(choose,BinaryExpr(Mult,NumberExpr(2),VariableExpr(n)),VariableExpr(n)),BinaryExpr(Plus,VariableExpr(n),NumberExpr(1))))))))
 INFO:root:Checking dev/methodcall2.out
-INFO:root:Diff between reference and your output for dev/methodcall2.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(None,Package(C,None,Method(f,VoidType,None,MethodBlock(None,MethodCall(g,NumberExpr(1),NumberExpr(2))))))
+INFO:root:dev/methodcall2.out Correct!
 INFO:root:Checking dev/4.ret
 INFO:root:dev/4.ret Correct!
 INFO:root:Checking dev/default-passes.out

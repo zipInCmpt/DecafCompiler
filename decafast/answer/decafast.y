@@ -78,7 +78,7 @@ using namespace std;
 %token T_WHILE
 %token T_WHITESPACE
 
-%type <ast> Constant Assign decafpackage ExternDefn statement ArrayType MethodCall MethodArg Expr BoolConstant Lvalue If Block Return ExternType MethodDecl IdentifierType MethodBlock
+%type <ast> Constant Assign decafpackage ExternDefn statement MethodCall MethodArg Expr BoolConstant Lvalue If Block Return ExternType MethodDecl IdentifierType MethodBlock
 %type <numericalValue> ArithmeticOperator BooleanOperator BinaryOperator UnaryOperator Type MethodType
 %type <list> MethodArgs ExternTypes Assigns VarDecl VarDecls statements FieldDecls extern_list FieldDecl Identifiers MethodDecls IdentifierTypes
 
@@ -156,15 +156,25 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                 fieldDeclList->push_front(fieldNode);
                 $$ = fieldDeclList;
         }
-         | T_VAR Identifiers ArrayType T_SEMICOLON
+         | T_VAR Identifiers T_LSB T_INTCONSTANT T_RSB Type T_SEMICOLON
         {
-            decafAST *exprNode = new decafAST();
-            /// TODO: Check
-            //FieldDeclAST *node = new FieldDeclAST(*$2, $3, exprNode, false);
-        }
-        | T_VAR T_ID Type "=" Constant T_SEMICOLON { cout << "Field Decl - Assign" }
-        {
+            FieldSizeAST *size = new FieldSizeAST($4, true);
+            decafStmtList *fieldDeclList = new decafStmtList();
 
+            while($2->size() > 0) {
+                string name = $2->pop_front();
+                FieldDeclAST *fieldNode = new FieldDeclAST(name, $6, size, false);
+                fieldDeclList->push_front(fieldNode);
+            }
+
+            $$ = fieldDeclList;
+        }
+        | T_VAR T_ID Type "=" Constant T_SEMICOLON
+        {
+                decafStmtList *fieldDeclList = new decafStmtList();
+                FieldDeclAST *node = new FieldDeclAST(*$2, $3, $5, true);
+                fieldDeclList->push_front(node);
+                $$ = fieldDeclList;
         }
         ;
 
@@ -299,13 +309,6 @@ MethodType: T_VOID { $$ = 19; }
 /// TODO: Finished
 Type: T_INTTYPE { $$ = 17; }
 | T_BOOLTYPE { $$ = 18; }
-;
-
-/// TODO: Not Finished - Figure out
-ArrayType: T_LSB T_INTCONSTANT T_RSB Type
-        {
-
-        }
 ;
 
 /// TODO: Finished

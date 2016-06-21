@@ -81,14 +81,14 @@ using namespace std;
 %right T_ASSIGN
 %left T_OR
 %left T_AND
-%left T_MULT T_DIV T_MOD T_LEFTSHIFT T_RIGHTSHIFT
+%left T_EQ T_NEQ T_LT T_GT T_LEQ T_GEQ
 %left T_PLUS T_MINUS
-%left T_UMINUS T_NOT
-%left T_EQ T_NEQ
-%left T_GT T_LT T_GEQ T_LEQ
+%left T_MULT T_DIV T_MOD T_LEFTSHIFT T_RIGHTSHIFT
+%left T_NOT
+%left T_UMINUS
 
-%type <ast> Constant Assign decafpackage ExternDefn statement MethodCall MethodArg Expr BoolConstant If Block Return ExternType MethodDecl IdentifierType MethodBlock
-%type <numericalValue> ArithmeticOperator BooleanOperator BinaryOperator UnaryOperator Type MethodType
+%type <ast> Binarys Constant Assign decafpackage ExternDefn statement MethodCall MethodArg Expr BoolConstant If Block Return ExternType MethodDecl IdentifierType MethodBlock
+%type <numericalValue> Type MethodType
 %type <list> MethodArgs ExternTypes Assigns VarDecl VarDecls statements FieldDecls extern_list FieldDecl Identifiers MethodDecls IdentifierTypes
 %type <sval> Identifier
 %%
@@ -330,32 +330,6 @@ Type: T_INTTYPE { $$ = 17; }
 ;
 
 /// TODO: Finished
-ArithmeticOperator: T_PLUS { $$ = 0; } //cout << "ArithOp - Plus"; }
-| T_MINUS { $$ = 1; }
-| T_MULT { $$ = 2; }
-| T_DIV { $$ = 3; }
-| T_LEFTSHIFT { $$ = 4; }
-| T_RIGHTSHIFT { $$ = 5; }
-| T_MOD { $$ = 6; }
-;
-
-/// TODO: Finished
-BooleanOperator: T_EQ { $$ = 11; }
-| T_NEQ { $$ = 12; }
-| T_LT { $$ = 7; }
-| T_GT { $$ = 8; }
-| T_LEQ { $$ = 9; }
-| T_GEQ { $$ = 10; }
-| T_AND { $$ = 13; }
-| T_OR { $$ = 14; }
-;
-
-/// TODO: Finished
-BinaryOperator: BooleanOperator   { $$ = $1; }
-| ArithmeticOperator   { $$ = $1; }
-;
-
-/// TODO: Finished
 BoolConstant: T_TRUE { BoolConstantAST *node = new BoolConstantAST(true); $$ = node; }
 | T_FALSE { BoolConstantAST *node = new BoolConstantAST(false); $$ = node; }
 ;
@@ -547,10 +521,6 @@ Assigns: Assign T_COMMA Assigns
 }
 ;
 
-/// TODO: Finished
-UnaryOperator: T_NOT{ $$ = 16; }
-| T_MINUS { $$ = 15; }
-;
 
 /// TODO: Finished
 MethodArg: Expr
@@ -621,21 +591,105 @@ Expr: T_ID
             ExprAST *node = new ExprAST($1);
             $$ = node;
         }
-| Expr BinaryOperator Expr
+| Binarys
         {
-            BinaryExprAST *expr = new BinaryExprAST(getBinaryOp($2), $1, $3);
-            ExprAST *node = new ExprAST(expr);
-            $$ = node;
-        }
-| UnaryOperator Expr
-        {
-            UnaryExprAST *expr = new UnaryExprAST(getUnaryOp($1), $2);
-            ExprAST *node = new ExprAST(expr);
-            $$ = node;
+            $$ = $1;
         }
 | T_LPAREN Expr T_RPAREN { $$ = $2; }
 | T_ID T_LSB Expr T_RSB { /* Array */ }
 ;
+/// TODO: Split Binary Operators into an independent rule
+Binarys: Expr T_PLUS Expr
+        {
+            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(0), $1, $3);
+            $$ = node;
+        }
+        | Expr T_MINUS Expr
+        {
+            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(1), $1, $3);
+            $$ = node;
+        }
+        | Expr T_MULT Expr
+        {
+            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(2), $1, $3);
+            $$ = node;
+        }
+        | Expr T_DIV Expr
+        {
+            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(3), $1, $3);
+            $$ = node;
+        }
+        | Expr T_LEFTSHIFT Expr
+        {
+            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(4), $1, $3);
+            $$ = node;
+        }
+        | Expr T_RIGHTSHIFT Expr
+        {
+            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(5), $1, $3);
+            $$ = node;
+        }
+        | Expr T_MOD Expr
+        {
+            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(6), $1, $3);
+            $$ = node;
+        }
+        | T_MINUS Expr %prec T_UMINUS
+        {
+             UnaryExprAST *node = new UnaryExprAST(getUnaryOp(15), $2);
+             $$ = node;
+        }
+| Expr T_EQ Expr
+{
+    BinaryExprAST *node = new BinaryExprAST(getBinaryOp(11), $1, $3);
+    $$ = node;
+}
+| Expr T_NEQ Expr
+{
+    BinaryExprAST *node = new BinaryExprAST(getBinaryOp(12), $1, $3);
+    $$ = node;
+}
+| Expr T_LT Expr
+{
+    BinaryExprAST *node = new BinaryExprAST(getBinaryOp(7), $1, $3);
+    $$ = node;
+}
+| Expr T_GT Expr
+{
+    BinaryExprAST *node = new BinaryExprAST(getBinaryOp(8), $1, $3);
+    $$ = node;
+}
+| Expr T_LEQ Expr
+{
+    BinaryExprAST *node = new BinaryExprAST(getBinaryOp(9), $1, $3);
+    $$ = node;
+}
+        | T_MINUS Expr %prec T_UMINUS
+        {
+                UnaryExprAST *node = new UnaryExprAST(getUnaryOp(15), $2);
+        $$ = node;
+        }
+        | T_NOT Expr
+        {
+             UnaryExprAST *node = new UnaryExprAST(getUnaryOp(16), $2);
+             $$ = node;
+        }
+        | Expr T_GEQ Expr
+        {
+            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(10), $1, $3);
+            $$ = node;
+        }
+        | Expr T_AND Expr
+        {
+            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(13), $1, $3);
+            $$ = node;
+        }
+        | Expr T_OR Expr
+        {
+            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(14), $1, $3);
+            $$ = node;
+        }
+        ;
 
 %%
 

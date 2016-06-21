@@ -24,6 +24,8 @@ using namespace std;
     int numericalValue;
     bool boolValue;
     class decafStmtList *list;
+    class IDTypeList *IDList;
+    class IDTypeStringSpecialAST *IDType;
     //char* sval;
  }
 
@@ -37,7 +39,6 @@ using namespace std;
 %token T_BREAK
 %token <numericalValue> T_CHARCONSTANT
 %token T_COMMA
-%token T_COMMENT
 %token T_CONTINUE
 %token T_DIV
 %token T_DOT
@@ -87,10 +88,12 @@ using namespace std;
 %left T_NOT
 %left T_UMINUS
 
-%type <ast> Binarys Constant Assign decafpackage ExternDefn statement MethodCall MethodArg Expr BoolConstant If Block Return ExternType MethodDecl IdentifierType MethodBlock
+%type <ast> Binarys Constant Assign decafpackage ExternDefn statement MethodCall MethodArg Expr BoolConstant If Block Return ExternType MethodDecl MethodBlock
 %type <numericalValue> Type MethodType
-%type <list> MethodArgs ExternTypes Assigns VarDecl VarDecls statements FieldDecls extern_list FieldDecl Identifiers MethodDecls IdentifierTypes
+%type <list> MethodArgs ExternTypes Assigns VarDecl VarDecls statements FieldDecls extern_list FieldDecl Identifiers MethodDecls
 %type <sval> Identifier
+%type <IDList> IdentifierTypes
+%type <IDType> IdentifierType
 %%
 /// TODO: Finished
 start: program
@@ -167,7 +170,7 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                 decafStmtList *fieldDeclList = new decafStmtList();
                 FieldSizeAST *size = new FieldSizeAST(-1, false);
 
-                FieldDeclAST *fieldNode = new FieldDeclAST($2->str(), -1, size, false);
+                FieldDeclAST *fieldNode = new FieldDeclAST($2->getName(), $2->getTypeId(), size, false);
                 fieldDeclList->push_front(fieldNode);
                 $$ = fieldDeclList;
         }
@@ -184,20 +187,20 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
 
             $$ = fieldDeclList;
         }
-        | T_VAR T_ID Type "=" Constant T_SEMICOLON
+        | T_VAR IdentifierType T_ASSIGN Constant T_SEMICOLON
         {
                 decafStmtList *fieldDeclList = new decafStmtList();
-                FieldDeclAST *node = new FieldDeclAST(*$2, $3, $5, true);
+                FieldDeclAST *node = new FieldDeclAST($2->getName(), $2->getTypeId(), $4, true);
                 fieldDeclList->push_front(node);
                 $$ = fieldDeclList;
         }
         ;
 
 /// TODO: Finished
-FieldDecls: FieldDecl T_COMMA FieldDecls
+FieldDecls: FieldDecl FieldDecls
         {
-                $3->push_front($1);
-                $$ = $3;
+                $2->push_front($1);
+                $$ = $2;
         };
           | FieldDecl
 {
@@ -221,7 +224,7 @@ MethodDecl: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType MethodBlock
 | T_FUNC T_ID T_LPAREN T_RPAREN MethodType MethodBlock
         {
                 //cout << "Here" << endl;
-                MethodDeclAST *node = new MethodDeclAST(*$2, $5, new decafStmtList, $6);
+                MethodDeclAST *node = new MethodDeclAST(*$2, $5, new IDTypeList(), $6);
                 $$ = node;
         }
 ;
@@ -268,27 +271,28 @@ Identifier: T_ID { $$ = $1; };
 IdentifierType: T_ID Type
 {
     //cout << "Here" << endl;
-    IDTypeStringAST *node = new IDTypeStringAST(*$1, $2);
+    IDTypeStringAST *nnode = new IDTypeStringAST(*$1, $2);
+    IDTypeStringSpecialAST *node = new IDTypeStringSpecialAST(nnode);
     $$ = node;
 }
 ;
 
 IdentifierTypes: IdentifierType T_COMMA IdentifierTypes
         {
-                IDTypeStringSpecialAST *sss = new IDTypeStringSpecialAST($1);
+                IDTypeStringSpecialAST *sss = new IDTypeStringSpecialAST(*$1);
                 $3->push_front(sss);
                 $$ = $3;
         }
         | IdentifierType
         {
-            decafStmtList *list = new decafStmtList();
-            IDTypeStringSpecialAST *sss = new IDTypeStringSpecialAST($1);
+            IDTypeList *list = new IDTypeList();
+            IDTypeStringSpecialAST *sss = new IDTypeStringSpecialAST(*$1);
             list->push_front(sss);
             $$ = list;
         }
         |
         {
-            $$ = new decafStmtList();
+            $$ = new IDTypeList();
         }
         ;
 
@@ -317,6 +321,10 @@ ExternTypes: ExternType T_COMMA ExternTypes
             $$ = externTypeList;
             //delete $1;
         }
+|
+{
+    $$ = new decafStmtList();
+}
 ;
 
 /// TODO: Finished
@@ -596,7 +604,12 @@ Expr: T_ID
             $$ = $1;
         }
 | T_LPAREN Expr T_RPAREN { $$ = $2; }
-| T_ID T_LSB Expr T_RSB { /* Array */ }
+| T_ID T_LSB Expr T_RSB
+        {
+            rvalueAST *rvalue = new rvalueAST(*$1, true, $3);
+            ExprAST *node = new ExprAST(rvalue);
+            $$ = node;
+        }
 ;
 /// TODO: Split Binary Operators into an independent rule
 Binarys: Expr T_PLUS Expr

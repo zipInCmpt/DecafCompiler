@@ -55,6 +55,7 @@ public:
 	string str() { return commaList<class decafAST *>(stmts); }
 };
 
+
 // Package
 class PackageAST : public decafAST {
 	string Name;
@@ -274,15 +275,19 @@ public:
 	IDTypeStringAST(string value, int typeId) { decafASTString = value; methodType = typeId; }
 	~IDTypeStringAST() { }
 	string str() { return decafASTString + "," + getMethodType(methodType); }
+	string getName() { return decafASTString; }
+	int getType() { return methodType; }
 	//string rawStr() { return decafASTString; }
 };
 
 class IDTypeStringSpecialAST : public decafAST {
-	decafAST *strs;
+	IDTypeStringAST *strs;
 public:
-	IDTypeStringSpecialAST(decafAST *node) { strs = node; }
+	IDTypeStringSpecialAST(IDTypeStringAST *node) { strs = node; }
 	~IDTypeStringSpecialAST() { delete strs; }
 	string str() { return string("VarDef(") + getString(strs) + ")"; }
+	string getName() { return strs->getName(); }
+	int getTypeId() { return strs->getType(); }
 };
 
 class RawStringAST : public decafAST {
@@ -425,28 +430,6 @@ public:
 	}
 };
 
-// Method Decl
-class MethodDeclAST : public decafAST {
-	string identifierName;
-	int methodTypeId;
-	decafStmtList *paramList;
-	decafAST *block;
-public:
-	MethodDeclAST(string idName, int methodType, decafStmtList *params, decafAST *blockMethod) {
-		identifierName = idName;
-		methodTypeId = methodType;
-		paramList = params;
-		block = blockMethod;
-	}
-	~MethodDeclAST() {
-		delete paramList;
-		delete block;
-	}
-	string str() {
-		return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str() + "," + block->str() + ")";
-	}
-};
-
 // Break, Continue
 class SimpleStatement : public decafAST {
 	int typeId;
@@ -550,4 +533,43 @@ public:
 
 	~StatementAST() { delete stmtASTNode; }
 	string str() { return getString(stmtASTNode); }
+};
+
+class IDTypeList : public decafAST {
+	list<IDTypeStringSpecialAST *> stmts;
+public:
+	IDTypeList() {}
+	~IDTypeList() {
+		for (list<IDTypeStringSpecialAST *>::iterator i = stmts.begin(); i != stmts.end(); i++) {
+			delete *i;
+		}
+	}
+	int size() { return stmts.size(); }
+	void push_front(IDTypeStringSpecialAST *e) { stmts.push_front(e); }
+	void push_back(IDTypeStringSpecialAST *e) { stmts.push_back(e); }
+	string pop_front() { string value = stmts.back()->str(); stmts.pop_back(); return value; }
+
+	string str() { return commaList<class IDTypeStringSpecialAST *>(stmts); }
+};
+
+// Method Decl
+class MethodDeclAST : public decafAST {
+	string identifierName;
+	int methodTypeId;
+	IDTypeList *paramList;
+	decafAST *block;
+public:
+	MethodDeclAST(string idName, int methodType, IDTypeList *params, decafAST *blockMethod) {
+		identifierName = idName;
+		methodTypeId = methodType;
+		paramList = params;
+		block = blockMethod;
+	}
+	~MethodDeclAST() {
+		delete paramList;
+		delete block;
+	}
+	string str() {
+		return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str() + "," + block->str() + ")";
+	}
 };

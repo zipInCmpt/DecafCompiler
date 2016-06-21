@@ -44,12 +44,7 @@ INFO:root:dev/charvals-7.out Correct!
 INFO:root:Checking dev/onlyfields.out
 INFO:root:dev/onlyfields.out Correct!
 INFO:root:Checking dev/quicksort.out
-INFO:root:Diff between reference and your output for dev/quicksort.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(ExternFunction(print_string,VoidType,VarDef(StringType)),ExternFunction(print_int,VoidType,VarDef(IntType)),Package(QuickSort,FieldDecl(list,IntType,Array(100)),Method(cr,VoidType,None,MethodBlock(None,MethodCall(print_string,StringConstant("\n")))),Method(displayList,VoidType,VarDef(start,IntType),VarDef(len,IntType),MethodBlock(VarDef(j,IntType),MethodCall(print_string,StringConstant("List:\n")),ForStmt(AssignVar(j,VariableExpr(start)),BinaryExpr(Lt,VariableExpr(j),BinaryExpr(Plus,VariableExpr(start),VariableExpr(len))),AssignVar(j,BinaryExpr(Plus,VariableExpr(j),NumberExpr(1))),Block(None,MethodCall(print_int,ArrayLocExpr(list,VariableExpr(j))),MethodCall(print_string,StringConstant(" ")),IfStmt(BinaryExpr(Or,BinaryExpr(Eq,BinaryExpr(Mod,BinaryExpr(Plus,BinaryExpr(Minus,VariableExpr(j),VariableExpr(start)),NumberExpr(1)),NumberExpr(20)),NumberExpr(0)),BinaryExpr(Eq,BinaryExpr(Plus,VariableExpr(j),NumberExpr(1)),BinaryExpr(Plus,VariableExpr(start),VariableExpr(len)))),Block(None,MethodCall(cr,None)),None))))),Method(initList,VoidType,VarDef(size,IntType),MethodBlock(VarDef(i,IntType),ForStmt(AssignVar(i,NumberExpr(0)),BinaryExpr(Lt,VariableExpr(i),VariableExpr(size)),AssignVar(i,BinaryExpr(Plus,VariableExpr(i),NumberExpr(1))),Block(None,AssignArrayLoc(list,VariableExpr(i),BinaryExpr(Mod,BinaryExpr(Mult,VariableExpr(i),NumberExpr(2382983)),NumberExpr(100))))))),Method(swap,VoidType,VarDef(leftPtr,IntType),VarDef(rightPtr,IntType),MethodBlock(VarDef(temp,IntType),AssignVar(temp,ArrayLocExpr(list,VariableExpr(leftPtr))),AssignArrayLoc(list,VariableExpr(leftPtr),ArrayLocExpr(list,VariableExpr(rightPtr))),AssignArrayLoc(list,VariableExpr(rightPtr),VariableExpr(temp)))),Method(quickSort,VoidType,VarDef(left,IntType),VarDef(right,IntType),MethodBlock(None,IfStmt(BinaryExpr(Leq,BinaryExpr(Minus,VariableExpr(right),VariableExpr(left)),NumberExpr(0)),Block(None,ReturnStmt(None)),Block(VarDef(pivot,IntType),VarDef(part,IntType),AssignVar(pivot,ArrayLocExpr(list,VariableExpr(right))),AssignVar(part,MethodCall(partition,VariableExpr(left),VariableExpr(right),VariableExpr(pivot))),MethodCall(quickSort,VariableExpr(left),BinaryExpr(Minus,VariableExpr(part),NumberExpr(1))),MethodCall(quickSort,BinaryExpr(Plus,VariableExpr(part),NumberExpr(1)),VariableExpr(right)))))),Method(main,VoidType,None,MethodBlock(VarDef(size,IntType),AssignVar(size,NumberExpr(100)),MethodCall(initList,VariableExpr(size)),MethodCall(displayList,NumberExpr(0),VariableExpr(size)),MethodCall(quickSort,NumberExpr(0),BinaryExpr(Minus,VariableExpr(size),NumberExpr(1))),MethodCall(print_string,StringConstant("After sorting:\n")),MethodCall(displayList,NumberExpr(0),VariableExpr(size)))),Method(partition,IntType,VarDef(left,IntType),VarDef(right,IntType),VarDef(pivot,IntType),MethodBlock(VarDef(leftPtr,IntType),VarDef(rightPtr,IntType),AssignVar(leftPtr,BinaryExpr(Minus,VariableExpr(left),NumberExpr(1))),AssignVar(rightPtr,VariableExpr(right)),WhileStmt(BoolExpr(True),Block(None,WhileStmt(BoolExpr(True),Block(None,AssignVar(leftPtr,BinaryExpr(Plus,VariableExpr(leftPtr),NumberExpr(1))),IfStmt(BinaryExpr(Geq,ArrayLocExpr(list,VariableExpr(leftPtr)),VariableExpr(pivot)),Block(None,BreakStmt),None))),WhileStmt(BoolExpr(True),Block(None,IfStmt(BinaryExpr(Leq,VariableExpr(rightPtr),NumberExpr(0)),Block(None,BreakStmt),None),AssignVar(rightPtr,BinaryExpr(Minus,VariableExpr(rightPtr),NumberExpr(1))),IfStmt(BinaryExpr(Leq,ArrayLocExpr(list,VariableExpr(rightPtr)),VariableExpr(pivot)),Block(None,BreakStmt),None))),IfStmt(BinaryExpr(Geq,VariableExpr(leftPtr),VariableExpr(rightPtr)),Block(None,BreakStmt),Block(None,MethodCall(swap,VariableExpr(leftPtr),VariableExpr(rightPtr)))))),MethodCall(swap,VariableExpr(leftPtr),VariableExpr(right)),ReturnStmt(VariableExpr(leftPtr))))))
+INFO:root:dev/quicksort.out Correct!
 INFO:root:Checking dev/15.ret
 INFO:root:dev/15.ret Correct!
 INFO:root:Checking dev/methodcall0.out
@@ -143,12 +138,7 @@ INFO:root:dev/charvals-8.out Correct!
 INFO:root:Checking dev/methodcall1.out
 INFO:root:dev/methodcall1.out Correct!
 INFO:root:Checking dev/catalan.out
-INFO:root:Diff between reference and your output for dev/catalan.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(ExternFunction(print_int,VoidType,VarDef(IntType)),ExternFunction(read_int,IntType,None),Package(Catalan,None,Method(main,VoidType,None,MethodBlock(None,MethodCall(print_int,MethodCall(cat,MethodCall(read_int,None))))),Method(fact,IntType,VarDef(n,IntType),MethodBlock(None,IfStmt(BinaryExpr(Eq,VariableExpr(n),NumberExpr(1)),Block(None,ReturnStmt(NumberExpr(1))),Block(None,ReturnStmt(BinaryExpr(Mult,VariableExpr(n),MethodCall(fact,BinaryExpr(Minus,VariableExpr(n),NumberExpr(1))))))))),Method(choose,IntType,VarDef(a,IntType),VarDef(b,IntType),MethodBlock(None,ReturnStmt(BinaryExpr(Div,MethodCall(fact,VariableExpr(a)),BinaryExpr(Mult,MethodCall(fact,VariableExpr(b)),MethodCall(fact,BinaryExpr(Minus,VariableExpr(a),VariableExpr(b)))))))),Method(cat,IntType,VarDef(n,IntType),MethodBlock(None,ReturnStmt(BinaryExpr(Div,MethodCall(choose,BinaryExpr(Mult,NumberExpr(2),VariableExpr(n)),VariableExpr(n)),BinaryExpr(Plus,VariableExpr(n),NumberExpr(1))))))))
+INFO:root:dev/catalan.out Correct!
 INFO:root:Checking dev/methodcall2.out
 INFO:root:dev/methodcall2.out Correct!
 INFO:root:Checking dev/4.ret
@@ -234,12 +224,7 @@ INFO:root:dev/expr-testfile-0.out Correct!
 INFO:root:Checking dev/charexpr-3.out
 INFO:root:dev/charexpr-3.out Correct!
 INFO:root:Checking dev/gcd.out
-INFO:root:Diff between reference and your output for dev/gcd.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(GreatestCommonDivisor,AssignGlobalVar(a,IntType,NumberExpr(10)),AssignGlobalVar(b,IntType,NumberExpr(20)),Method(main,IntType,None,MethodBlock(VarDef(x,IntType),VarDef(y,IntType),VarDef(z,IntType),AssignVar(x,VariableExpr(a)),AssignVar(y,VariableExpr(b)),AssignVar(z,MethodCall(gcd,VariableExpr(x),VariableExpr(y))),MethodCall(print_int,VariableExpr(z)))),Method(gcd,IntType,VarDef(a,IntType),VarDef(b,IntType),MethodBlock(None,IfStmt(BinaryExpr(Eq,VariableExpr(b),NumberExpr(0)),Block(None,ReturnStmt(VariableExpr(a))),Block(None,ReturnStmt(MethodCall(gcd,VariableExpr(b),BinaryExpr(Mod,VariableExpr(a),VariableExpr(b))))))))))
+INFO:root:dev/gcd.out Correct!
 INFO:root:Checking dev/assignmismatch-intofchar-ok.out
 INFO:root:dev/assignmismatch-intofchar-ok.out Correct!
 INFO:root:Checking dev/method0-prev.ret

@@ -15,13 +15,13 @@ package Catalan {
     }
 
     // a choose b
-    func choose(a int, b int) int { 
-       return( fact(a) / (fact(b)*fact(a-b)) ); 
+    func choose(a int, b int) int {
+       return( fact(a) / (fact(b)*fact(a-b)) );
     }
 
     // catalan number of n
-    func cat(n int) int { 
-       return( choose(2*n,n)/(n+1) ); 
+    func cat(n int) int {
+       return( choose(2*n,n)/(n+1) );
     }
     
 }

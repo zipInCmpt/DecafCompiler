@@ -63,7 +63,7 @@ while                      { return T_WHILE; }
 \"[^\n]*[\\][^abtnvfr\\\'\"][^\n]*\"  { return 107; } // string unknown escape sequence
 \"[^\n\"]*[^\n\"]\"|\"\"   { yylval.sval = new string(yytext); return T_STRINGCONSTANT; }  // T_STRINGCONTANT
 ~                          { cerr << "Error: unexpected character in input" << endl; return -1; }
-\/\/[ ]*[^\n]*[\n]*        { return T_COMMENT; }  // T_COMMENT
+\/\/[ ]*[^\n]*[\n]*
 [0-9]+|0[x|X][0-9a-fA-F]+  { yylval.numericalValue = atoi(yytext); return T_INTCONSTANT; }  // T_INTCONSTANT
 [a-zA-Z\_][a-zA-Z\_0-9]*   { yylval.sval = new string(yytext); return T_ID; }   // T_ID
 \{                         { return T_LCB; }

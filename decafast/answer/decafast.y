@@ -490,7 +490,7 @@ Return: T_RETURN T_LPAREN Expr T_RPAREN T_SEMICOLON
         }
       ;
 
-/// TODO: Finished
+/// TODO: Check for ambiguity
 If: T_IF T_LPAREN Expr T_RPAREN Block T_ELSE Block
       {
             IfStmtAST *node = new IfStmtAST($3, $5, $7);

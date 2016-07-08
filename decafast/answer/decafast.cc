@@ -115,7 +115,6 @@ public:
 		if(!isArray) {
 			return string("VariableExpr") + "(" + idName + ")";
 		} else {
-			/// TODO: Double check this statement
 			return string("ArrayLocExpr") + "(" + idName + "," + getString(arrayIndex) + ")";
 		}
 	}
@@ -127,7 +126,6 @@ public:
 	NumberExprAST(int value) { integerValue = value; }
 	~NumberExprAST();
 	string str() {
-		/// TODO: Double check this statement
 		return string("NumberExpr") + "(" + std::to_string(integerValue) + ")";
 	}
 };
@@ -352,7 +350,6 @@ public:
 };
 
 // field size
-/// TODO: Debug issue here. return "Scalar" or scalar value
 class FieldSizeAST : public decafAST {
 	int size;
 	bool isArray;

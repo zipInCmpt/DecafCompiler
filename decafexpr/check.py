@@ -37,6 +37,9 @@ class Check:
     def check_path(self, path, files, zip_data):
         logging.info("path={0}".format(path))
         tally = defaultdict(int)
+        tally['num_correct'] = 0
+        tally['score'] = 0
+        tally['total'] = 0
         for filename in files:
             if path is None or path == '':
                 testfile_path = os.path.abspath(os.path.join(self.ref_dir, filename))
@@ -67,18 +70,39 @@ class Check:
         self.perf[path] = dict(tally)
 
     def check_all(self, zipcontents):
-        zipfile = io.BytesIO(zipcontents)
-        zip_data = iocollect.extract_zip(zipfile) # contents of output zipfile produced by `python zipout.py` as a dict
+        try: 
+            zipfile = io.BytesIO(zipcontents)
+            zip_data = iocollect.extract_zip(zipfile) # contents of output zipfile produced by `python zipout.py` as a dict
+        except:
+            logging.error("Could not process zip file")
+            return None
 
         # check if references has subdirectories
-        ref_subdirs = iocollect.getdirs(os.path.abspath(self.ref_dir))
+        try:
+            ref_subdirs = iocollect.getdirs(os.path.abspath(self.ref_dir))
+        except:
+            logging.error("Internal Error: Could not find references.")
+            return None
+
         if len(ref_subdirs) > 0:
             for subdir in ref_subdirs:
-                files = iocollect.getfiles(os.path.abspath(os.path.join(self.ref_dir, subdir)))
+                try:
+                    files = iocollect.getfiles(os.path.abspath(os.path.join(self.ref_dir, subdir)))
+                except:
+                    logging.error("Internal Error: Could not find references.")
+                    return None
                 self.check_path(subdir, files, zip_data)
         else:
-            files = iocollect.getfiles(os.path.abspath(self.ref_dir))
+            try:
+                files = iocollect.getfiles(os.path.abspath(self.ref_dir))
+            except:
+                logging.error("Internal Error: Could not find references.")
+                return None
             self.check_path(None, files, zip_data)
+
+        if len(self.perf.keys()) == 0:
+            return None
+
         return self.perf
 
 if __name__ == '__main__':
@@ -107,4 +131,5 @@ if __name__ == '__main__':
                 print "Nothing to report!"
     except:
         print >>sys.stderr, "Could not process zipfile: {0}".format(opts.zipfile)
+        raise
 

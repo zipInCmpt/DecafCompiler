@@ -113,7 +113,7 @@ program: extern_list decafpackage
 }
     ;
 
-/// TODO: After ExternDefn
+/// TODO: Finished
 extern_list:  ExternDefn extern_list
         {
             $2->push_front($1);
@@ -130,7 +130,7 @@ extern_list:  ExternDefn extern_list
         { decafStmtList *slist = new decafStmtList(); $$ = slist; }
     ;
 
-/// TODO: Not Finished
+/// TODO: Finished
 decafpackage: T_PACKAGE T_ID T_LCB T_RCB
     { $$ = new PackageAST(*$2, new decafStmtList(), new decafStmtList());  delete $2; }
             | T_PACKAGE T_ID T_LCB FieldDecls MethodDecls T_RCB
@@ -149,7 +149,7 @@ ExternDefn: T_EXTERN T_FUNC T_ID T_LPAREN ExternTypes T_RPAREN MethodType T_SEMI
           ;
 
 
-/// TODO: Finish after Identifiers
+/// TODO: Finished
 FieldDecl: T_VAR Identifiers Type T_SEMICOLON
          {
             decafStmtList *fieldDeclList = new decafStmtList();

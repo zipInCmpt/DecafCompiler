@@ -5,7 +5,7 @@ cc: gcc
 codegen: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr
 stdlib: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c
 generating llvm code:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr ... ok
-; ModuleID = 'C'
+; ModuleID = 'Test'
 
 define i32 @main() {
 entry:

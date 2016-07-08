@@ -1,4 +1,4 @@
-; ModuleID = 'prec'
+; ModuleID = 'Test'
 
 define i32 @main() {
 entry:

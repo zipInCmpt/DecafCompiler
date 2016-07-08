@@ -4,6 +4,7 @@
 #include <string>
 #include <cstdlib>
 #include <list>
+#include <map>
 #include "decafexpr-defs.h"
 
 using namespace std;
@@ -45,8 +46,36 @@ llvm::Function *gen_main_def() {
     return TheFunction;
 }
 
+typedef map<string, descriptor* > DecafSymbolTable;
+typedef list<DecafSymbolTable > DecafSymbolTableList;
+
+DecafSymbolTable currentST;
+DecafSymbolTableList SymbolTableList;
+
+void newSTNode() {
+
+    SymbolTableList.push_front(currentST);
+    currentST.erase();
+
+}
 
 #include "decafexpr.cc"
+
+descriptor *getSymbolTable(string idName) {
+
+    DecafSymbolTable::iterator fetchedObject;
+    if(fetchedObject = currentST.find(idName))
+        return fetchedObject->second;
+    else {
+        for(DecafSymbolTableList::iterator i = SymbolTableList.begin(); i != SymbolTableList.end(); i++) {
+            DecafSymbolTable::iterator fetchedObject;
+            if(fetchedObject = i->find(idName) != i->end()) {
+                return fetchedObject->second;
+            }
+        }
+        return NULL;
+    }
+}
 
 %}
 
@@ -58,6 +87,7 @@ llvm::Function *gen_main_def() {
     class decafStmtList *list;
     class IDTypeList *IDList;
     class IDTypeStringSpecialAST *IDType;
+    DecafSymbolTable *STtype;
     //char* sval;
  }
 
@@ -126,9 +156,19 @@ llvm::Function *gen_main_def() {
 %type <sval> Identifier
 %type <IDList> IdentifierTypes
 %type <IDType> IdentifierType
+%type <STtype> stbegin stend
 %%
 /// TODO: Finished
 start: program
+
+stbegin: T_LCB {
+        newSTNode();
+};
+
+stend: T_RCB {
+        currentST = SymbolTableList.front();
+        SymbolTableList.pop_front();
+};
 
 /// TODO: Finished
 program: extern_list decafpackage
@@ -163,9 +203,9 @@ extern_list:  ExternDefn extern_list
     ;
 
 /// TODO: Finished
-decafpackage: T_PACKAGE T_ID T_LCB T_RCB
+decafpackage: T_PACKAGE T_ID stbegin stend
     { $$ = new PackageAST(*$2, new decafStmtList(), new decafStmtList());  delete $2; }
-            | T_PACKAGE T_ID T_LCB FieldDecls MethodDecls T_RCB
+            | T_PACKAGE T_ID stbegin FieldDecls MethodDecls stend
         { $$ = new PackageAST(*$2, $4, $5);  delete $2; }
     | T_PACKAGE { exit(EXIT_FAILURE); }
     | T_PACKAGE T_ID { exit(EXIT_FAILURE); }
@@ -253,12 +293,19 @@ MethodDecl: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType MethodBlock
         {
                 MethodDeclAST *node = new MethodDeclAST(*$2, $6, $4, $7);
                 $$ = node;
+
+                descriptor *newFuncDecp = new descriptor(*$2, $6, lineno);
+                currentST.insert(*$2, newFuncDecp);
         }
 | T_FUNC T_ID T_LPAREN T_RPAREN MethodType MethodBlock
         {
                 //cout << "Here" << endl;
                 MethodDeclAST *node = new MethodDeclAST(*$2, $5, new IDTypeList(), $6);
                 $$ = node;
+
+                descriptor *newFuncDecp = new descriptor(*$2, $5, lineno);
+                currentST.insert(*$2, newFuncDecp);
+
         }
 ;
 
@@ -397,6 +444,9 @@ VarDecl: T_VAR Identifiers Type T_SEMICOLON
         string name = $2->pop_front();
         TypedSymbol *newNode = new TypedSymbol(name, $3);
         list->push_front(newNode);
+
+        descriptor *newVariableDecpr = new descriptor(name, $3, lineno);
+        currentST.insert(name, newVariableDecpr);
     }
 
     $$ = list;
@@ -422,12 +472,12 @@ VarDecls: VarDecl VarDecls
 ;
 
 /// TODO: Finished
-Block: T_LCB VarDecls statements T_RCB
+Block: stbegin VarDecls statements stend
         {
                 BlockAST *node = new BlockAST($2, $3);
                 $$ = node;
         }
-    | T_LCB T_RCB
+    | stbegin stend
         {
                 BlockAST *node = new BlockAST(new decafStmtList(), new decafStmtList());
                 $$ = node;
@@ -647,92 +697,92 @@ Expr: T_ID
 /// TODO: Split Binary Operators into an independent rule
 Binarys: Expr T_PLUS Expr
         {
-            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(0), $1, $3);
+            BinaryExprAST *node = new BinaryExprAST(0, $1, $3);
             $$ = node;
         }
         | Expr T_MINUS Expr
         {
-            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(1), $1, $3);
+            BinaryExprAST *node = new BinaryExprAST(1, $1, $3);
             $$ = node;
         }
         | Expr T_MULT Expr
         {
-            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(2), $1, $3);
+            BinaryExprAST *node = new BinaryExprAST(2, $1, $3);
             $$ = node;
         }
         | Expr T_DIV Expr
         {
-            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(3), $1, $3);
+            BinaryExprAST *node = new BinaryExprAST(3, $1, $3);
             $$ = node;
         }
         | Expr T_LEFTSHIFT Expr
         {
-            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(4), $1, $3);
+            BinaryExprAST *node = new BinaryExprAST(4, $1, $3);
             $$ = node;
         }
         | Expr T_RIGHTSHIFT Expr
         {
-            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(5), $1, $3);
+            BinaryExprAST *node = new BinaryExprAST(5, $1, $3);
             $$ = node;
         }
         | Expr T_MOD Expr
         {
-            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(6), $1, $3);
+            BinaryExprAST *node = new BinaryExprAST(6, $1, $3);
             $$ = node;
         }
         | T_MINUS Expr %prec T_UMINUS
         {
-             UnaryExprAST *node = new UnaryExprAST(getUnaryOp(15), $2);
+             UnaryExprAST *node = new UnaryExprAST(15, $2);
              $$ = node;
         }
 | Expr T_EQ Expr
 {
-    BinaryExprAST *node = new BinaryExprAST(getBinaryOp(11), $1, $3);
+    BinaryExprAST *node = new BinaryExprAST(11, $1, $3);
     $$ = node;
 }
 | Expr T_NEQ Expr
 {
-    BinaryExprAST *node = new BinaryExprAST(getBinaryOp(12), $1, $3);
+    BinaryExprAST *node = new BinaryExprAST(12, $1, $3);
     $$ = node;
 }
 | Expr T_LT Expr
 {
-    BinaryExprAST *node = new BinaryExprAST(getBinaryOp(7), $1, $3);
+    BinaryExprAST *node = new BinaryExprAST(7, $1, $3);
     $$ = node;
 }
 | Expr T_GT Expr
 {
-    BinaryExprAST *node = new BinaryExprAST(getBinaryOp(8), $1, $3);
+    BinaryExprAST *node = new BinaryExprAST(8, $1, $3);
     $$ = node;
 }
 | Expr T_LEQ Expr
 {
-    BinaryExprAST *node = new BinaryExprAST(getBinaryOp(9), $1, $3);
+    BinaryExprAST *node = new BinaryExprAST(9, $1, $3);
     $$ = node;
 }
         | T_MINUS Expr %prec T_UMINUS
         {
-                UnaryExprAST *node = new UnaryExprAST(getUnaryOp(15), $2);
+                UnaryExprAST *node = new UnaryExprAST(15, $2);
         $$ = node;
         }
         | T_NOT Expr
         {
-             UnaryExprAST *node = new UnaryExprAST(getUnaryOp(16), $2);
+             UnaryExprAST *node = new UnaryExprAST(16, $2);
              $$ = node;
         }
         | Expr T_GEQ Expr
         {
-            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(10), $1, $3);
+            BinaryExprAST *node = new BinaryExprAST(10, $1, $3);
             $$ = node;
         }
         | Expr T_AND Expr
         {
-            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(13), $1, $3);
+            BinaryExprAST *node = new BinaryExprAST(13, $1, $3);
             $$ = node;
         }
         | Expr T_OR Expr
         {
-            BinaryExprAST *node = new BinaryExprAST(getBinaryOp(14), $1, $3);
+            BinaryExprAST *node = new BinaryExprAST(14, $1, $3);
             $$ = node;
         }
         ;

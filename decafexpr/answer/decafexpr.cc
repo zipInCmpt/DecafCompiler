@@ -137,6 +137,96 @@ public:
 	}
 };
 
+
+// Get Binary Operator
+string getBinaryOp (int opId) {
+	switch(opId) {
+		case 0: return string("Plus"); break;
+		case 1: return string("Minus"); break;
+		case 2: return string("Mult"); break;
+		case 3: return string("Div"); break;
+		case 4: return string("Leftshift"); break;
+		case 5: return string("Rightshift"); break;
+		case 6: return string("Mod"); break;
+		case 7: return string("Lt"); break;
+		case 8: return string("Gt"); break;
+		case 9: return string("Leq"); break;
+		case 10: return string("Geq"); break;
+		case 11: return string("Eq"); break;
+		case 12: return string("Neq"); break;
+		case 13: return string("And"); break;
+		case 14: return string("Or"); break;
+		default: return string(""); break;
+	}
+}
+
+Value* BinaryOpExpr(int opId, Value *L, Value *R) {
+	switch(opId) {
+		case 0: return Builder.CreateAdd(L, R, "AddTmp");
+		case 1: return Builder.CreateSub(L, R, "SubTmp");
+		case 2: return Builder.CreateMul(L, R, "MulTmp");
+		case 3: return Builder.CreateSDiv(L, R, "DivTmp");
+		case 4: return Builder.CreateShl(L, R, "LShiftTmp");
+		case 5: return Builder.CreateLShl(L, R, "RShitTmp");
+		case 6: return Builder.CreateSRem(L, R, "RemainTmp");
+		case 7: return Builder.CreatelCmpSLT(L, R, "LTTmp");
+		case 8: return Builder.CreatelCmpSGT(L, R, "GTTmp");
+		case 9: return Builder.CreatelCmpSLE(L, R, "LEQTmp");
+		case 10: return Builder.CreatelCmpSGE(L, R, "GEQTmp");
+		case 11: return Builder.CreatelCmpEQ(L, R, "EQTmp");
+		case 12: return Builder.CreatelCmpNE(L, R, "NEQTmp");
+		case 13: return Builder.CreateAnd(L, R, "AndTmp");
+		case 14: return Builder.CreateOr(L, R, "OrTmp");
+		default: return NULL;
+	}
+}
+
+
+// Get Unary Operator
+string getUnaryOp (int opId) {
+	switch(opId) {
+		case 15: return string("UnaryMinus"); break;
+		case 16: return string("Not"); break;
+		default: return string(""); break;
+	}
+}
+
+Value* UnaryOpExpr(int opId, Value *L) {
+	switch(opId) {
+		case 15: return Builder.CreateNeg(L, "NegTmp");
+		case 16: return Builder.CreateNot(L, "NotTmp");
+		default: return NULL;
+	}
+}
+
+// DecafType
+string getDecafType (int typeIndex) {
+	switch (typeIndex) {
+		case 17: return string("IntType"); break;
+		case 18: return string("BoolType"); break;
+		default: return string(""); break;
+	}
+}
+
+// Method Type
+string getMethodType (int typeIndex) {
+	switch (typeIndex) {
+		case 17: return Builder.getInt32Ty();
+		case 18: return Builder.getInt1Ty();
+		case 19: return Builder.getVoidTy();
+		default: return NULL;
+	}
+}
+
+llvm::Type* getLLVMType(int typeIndex) {
+	switch (typeIndex) {
+		case 17: return getDecafType(typeIndex); break;
+		case 18: return getDecafType(typeIndex); break;
+		case 19: return string("VoidType"); break;
+		default: return string(""); break;
+	}
+}
+
 class BoolConstantAST : public decafAST {
 	bool value;
 public:
@@ -199,11 +289,11 @@ public:
 };
 
 class BinaryExprAST : public decafAST {
-	string binaryOperator;
+	int binaryOperator;
 	decafAST *leftValueNode;
 	decafAST *rightValueNode;
 public:
-	BinaryExprAST(string binaryOp, decafAST *left, decafAST *right) {
+	BinaryExprAST(int binaryOp, decafAST *left, decafAST *right) {
 		binaryOperator = binaryOp;
 		leftValueNode = left;
 		rightValueNode = right;
@@ -211,31 +301,33 @@ public:
 	~BinaryExprAST() {
 		binaryOperator = "";
 		delete leftValueNode;
-		delete  rightValueNode;
+		delete rightValueNode;
 	}
 	string str() {
-		return string("BinaryExpr(") + binaryOperator + "," + getString(leftValueNode) + "," + getString(rightValueNode) + ")";
+		return string("BinaryExpr(") + getBinaryOp(binaryOperator) + "," + getString(leftValueNode) + "," + getString(rightValueNode) + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		Value *L = leftValueNode->Codegen();
+		Value *R = rightValueNode->Codegen();
+		if(L == 0 || R == 0) return 0;
+
+		return BinaryOpExpr(binaryOperator, L, R);
 	}
 };
 
 class UnaryExprAST : public decafAST {
-	string unaryOperator;
+	int unaryOperator;
 	decafAST *opNumber;
 public:
-	UnaryExprAST(string unaryOp, decafAST *exp) {
+	UnaryExprAST(int unaryOp, decafAST *exp) {
 		unaryOperator = unaryOp;
 		opNumber = exp;
 	}
 	~UnaryExprAST() {
-		unaryOperator = "";
 		delete opNumber;
 	}
 	string str() {
-		return string("UnaryExpr(") + unaryOperator + "," + getString(opNumber) + ")";
+		return string("UnaryExpr(") + getUnaryOp(unaryOperator) + "," + getString(opNumber) + ")";
 	}
 	llvm::Value *Codegen() {
 		llvm::Value *val = NULL;
@@ -257,46 +349,6 @@ public:
 	}
 };
 
-// Get Binary Operator
-string getBinaryOp (int opId) {
-	switch(opId) {
-		case 0: return string("Plus"); break;
-		case 1: return string("Minus"); break;
-		case 2: return string("Mult"); break;
-		case 3: return string("Div"); break;
-		case 4: return string("Leftshift"); break;
-		case 5: return string("Rightshift"); break;
-		case 6: return string("Mod"); break;
-		case 7: return string("Lt"); break;
-		case 8: return string("Gt"); break;
-		case 9: return string("Leq"); break;
-		case 10: return string("Geq"); break;
-		case 11: return string("Eq"); break;
-		case 12: return string("Neq"); break;
-		case 13: return string("And"); break;
-		case 14: return string("Or"); break;
-		default: return string(""); break;
-	}
-}
-
-// DecafType
-string getDecafType (int typeIndex) {
-	switch (typeIndex) {
-		case 17: return string("IntType"); break;
-		case 18: return string("BoolType"); break;
-		default: return string(""); break;
-	}
-}
-
-// Method Type
-string getMethodType (int typeIndex) {
-	switch (typeIndex) {
-		case 17: return getDecafType(typeIndex); break;
-		case 18: return getDecafType(typeIndex); break;
-		case 19: return string("VoidType"); break;
-		default: return string(""); break;
-	}
-}
 
 string getExternType (int typeIndex) {
 	if(typeIndex == 17 || typeIndex == 18 || typeIndex == 19) {
@@ -306,14 +358,6 @@ string getExternType (int typeIndex) {
 	}
 }
 
-// Get Unary Operator
-string getUnaryOp (int opId) {
-	switch(opId) {
-		case 15: return string("UnaryMinus"); break;
-		case 16: return string("Not"); break;
-		default: return string(""); break;
-	}
-}
 
 // Method Argument
 class MethodArgumentAST : public decafAST {
@@ -697,11 +741,26 @@ public:
 	string pop_front() { string value = stmts.back()->str(); stmts.pop_back(); return value; }
 
 	string str() { return commaList<class IDTypeStringSpecialAST *>(stmts); }
+
+	vector<llvm::Type *> getTypeList() {
+
+		vector<llvm::Type *> args;
+
+		for (list<IDTypeStringSpecialAST *>::iterator i = stmts.begin(); i != stmts.end(); i++) {
+			int tempTypeId = i->getTypeId();
+			llvm::Type *tempType = getLLVMType(tempTypeId);
+			args.insert(tempType);
+		}
+
+		return args;
+	};
+
 	llvm::Value *Codegen() {
 		llvm::Value *val = NULL;
 		return val;
 	}
 };
+
 
 // Method Decl
 class MethodDeclAST : public decafAST {
@@ -724,7 +783,44 @@ public:
 		return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str() + "," + block->str() + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		llvm::Type *returnType = getLLVMType(methodTypeId);
+		// get the types for every variables
+		vector<llvm::Type *> args = paramList->getTypeList();
+
+		llvm::Function *func = llvm::Function::Create(
+		     llvm::FunctionType::get(returnType, args, false),
+		     llvm::Function::ExternalLinkage,
+		     Name,
+		     TheModule
+		);
+
+		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), identifierName, func);
+		// Symbol table
+		Builder.SetInsertPoint(BB);
+	}
+};
+
+class descriptor {
+	string identifierName;
+	int type;
+	int lineNumber;
+
+public:
+	descriptor(string idName, int targetType, int lineNo) {
+		identifierName = idName;
+		type = targetType;
+		lineNumber = lineNo;
+	}
+	~descriptor() { }
+	void debug() {
+		cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
+	}
+	llvm::type *getType() {
+
+		if(type == 17) return Builder.getInt32Ty();
+		if(type == 18) return Builder.getInt1Ty();
+		if(type == 19) return Builder.getVoidTy();
+
+		return type;
 	}
 };

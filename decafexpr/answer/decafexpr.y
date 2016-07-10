@@ -7,6 +7,7 @@
 #include <map>
 #include "decafexpr-defs.h"
 
+
 using namespace std;
 
 int yylex(void);
@@ -46,6 +47,8 @@ llvm::Function *gen_main_def() {
     return TheFunction;
 }
 
+#include "decafexpr.cc"
+
 typedef map<string, descriptor* > DecafSymbolTable;
 typedef list<DecafSymbolTable > DecafSymbolTableList;
 
@@ -53,23 +56,19 @@ DecafSymbolTable currentST;
 DecafSymbolTableList SymbolTableList;
 
 void newSTNode() {
-
     SymbolTableList.push_front(currentST);
-    currentST.erase();
-
+    currentST.clear();
 }
-
-#include "decafexpr.cc"
 
 descriptor *getSymbolTable(string idName) {
 
     DecafSymbolTable::iterator fetchedObject;
-    if(fetchedObject = currentST.find(idName))
+    if((fetchedObject = currentST.find(idName)) != currentST.end())
         return fetchedObject->second;
     else {
         for(DecafSymbolTableList::iterator i = SymbolTableList.begin(); i != SymbolTableList.end(); i++) {
             DecafSymbolTable::iterator fetchedObject;
-            if(fetchedObject = i->find(idName) != i->end()) {
+            if((fetchedObject = i->find(idName)) != i->end()) {
                 return fetchedObject->second;
             }
         }
@@ -87,7 +86,6 @@ descriptor *getSymbolTable(string idName) {
     class decafStmtList *list;
     class IDTypeList *IDList;
     class IDTypeStringSpecialAST *IDType;
-    DecafSymbolTable *STtype;
     //char* sval;
  }
 
@@ -156,7 +154,6 @@ descriptor *getSymbolTable(string idName) {
 %type <sval> Identifier
 %type <IDList> IdentifierTypes
 %type <IDType> IdentifierType
-%type <STtype> stbegin stend
 %%
 /// TODO: Finished
 start: program
@@ -295,7 +292,7 @@ MethodDecl: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType MethodBlock
                 $$ = node;
 
                 descriptor *newFuncDecp = new descriptor(*$2, $6, lineno);
-                currentST.insert(*$2, newFuncDecp);
+                currentST.insert(std::pair<string, descriptor*>(*$2, newFuncDecp));
         }
 | T_FUNC T_ID T_LPAREN T_RPAREN MethodType MethodBlock
         {
@@ -304,7 +301,7 @@ MethodDecl: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType MethodBlock
                 $$ = node;
 
                 descriptor *newFuncDecp = new descriptor(*$2, $5, lineno);
-                currentST.insert(*$2, newFuncDecp);
+                currentST.insert(std::pair<string, descriptor*>(*$2, newFuncDecp));
 
         }
 ;
@@ -446,7 +443,7 @@ VarDecl: T_VAR Identifiers Type T_SEMICOLON
         list->push_front(newNode);
 
         descriptor *newVariableDecpr = new descriptor(name, $3, lineno);
-        currentST.insert(name, newVariableDecpr);
+        currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
     }
 
     $$ = list;

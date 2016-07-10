@@ -12,6 +12,7 @@
 using namespace std;
 
 /// decafAST - Base class for all abstract syntax tree nodes.
+/// TODO:Done
 class decafAST {
 public:
   virtual ~decafAST() {}
@@ -49,6 +50,7 @@ llvm::Value *listCodegen(list<T> vec) {
 	return val;
 }
 
+/// TODO:Done
 /// decafStmtList - List of Decaf statements
 class decafStmtList : public decafAST {
 	list<decafAST *> stmts;
@@ -69,7 +71,7 @@ public:
 	}
 };
 
-
+/// TODO:Done
 // Package
 class PackageAST : public decafAST {
 	string Name;
@@ -99,6 +101,7 @@ public:
 	}
 };
 
+/// TODO: Not Done
 // Expr
 class ExprAST : public decafAST {
 	decafAST *decafASTNode;
@@ -112,6 +115,7 @@ public:
 	}
 };
 
+/// TODO:Done
 /// ProgramAST - the decaf program
 class ProgramAST : public decafAST {
 	decafStmtList *ExternList;
@@ -156,25 +160,25 @@ string getBinaryOp (int opId) {
 		case 12: return string("Neq"); break;
 		case 13: return string("And"); break;
 		case 14: return string("Or"); break;
-		default: return string(""); break;
+		default: throw runtime_error("Operator not defined.");
 	}
 }
 
-Value* BinaryOpExpr(int opId, Value *L, Value *R) {
+llvm::Value* BinaryOpExpr(int opId, llvm::Value *L, llvm::Value *R) {
 	switch(opId) {
 		case 0: return Builder.CreateAdd(L, R, "AddTmp");
 		case 1: return Builder.CreateSub(L, R, "SubTmp");
 		case 2: return Builder.CreateMul(L, R, "MulTmp");
 		case 3: return Builder.CreateSDiv(L, R, "DivTmp");
 		case 4: return Builder.CreateShl(L, R, "LShiftTmp");
-		case 5: return Builder.CreateLShl(L, R, "RShitTmp");
+		case 5: return Builder.CreateLShr(L, R, "RShitTmp");
 		case 6: return Builder.CreateSRem(L, R, "RemainTmp");
-		case 7: return Builder.CreatelCmpSLT(L, R, "LTTmp");
-		case 8: return Builder.CreatelCmpSGT(L, R, "GTTmp");
-		case 9: return Builder.CreatelCmpSLE(L, R, "LEQTmp");
-		case 10: return Builder.CreatelCmpSGE(L, R, "GEQTmp");
-		case 11: return Builder.CreatelCmpEQ(L, R, "EQTmp");
-		case 12: return Builder.CreatelCmpNE(L, R, "NEQTmp");
+		case 7: return Builder.CreateICmpSLT(L, R, "LTTmp");
+		case 8: return Builder.CreateICmpSGT(L, R, "GTTmp");
+		case 9: return Builder.CreateICmpSLE(L, R, "LEQTmp");
+		case 10: return Builder.CreateICmpSGE(L, R, "GEQTmp");
+		case 11: return Builder.CreateICmpEQ(L, R, "EQTmp");
+		case 12: return Builder.CreateICmpNE(L, R, "NEQTmp");
 		case 13: return Builder.CreateAnd(L, R, "AndTmp");
 		case 14: return Builder.CreateOr(L, R, "OrTmp");
 		default: return NULL;
@@ -191,7 +195,7 @@ string getUnaryOp (int opId) {
 	}
 }
 
-Value* UnaryOpExpr(int opId, Value *L) {
+llvm::Value* UnaryOpExpr(int opId, llvm::Value *L) {
 	switch(opId) {
 		case 15: return Builder.CreateNeg(L, "NegTmp");
 		case 16: return Builder.CreateNot(L, "NotTmp");
@@ -211,15 +215,6 @@ string getDecafType (int typeIndex) {
 // Method Type
 string getMethodType (int typeIndex) {
 	switch (typeIndex) {
-		case 17: return Builder.getInt32Ty();
-		case 18: return Builder.getInt1Ty();
-		case 19: return Builder.getVoidTy();
-		default: return NULL;
-	}
-}
-
-llvm::Type* getLLVMType(int typeIndex) {
-	switch (typeIndex) {
 		case 17: return getDecafType(typeIndex); break;
 		case 18: return getDecafType(typeIndex); break;
 		case 19: return string("VoidType"); break;
@@ -227,6 +222,16 @@ llvm::Type* getLLVMType(int typeIndex) {
 	}
 }
 
+llvm::Type* getLLVMType(int typeIndex) {
+	switch (typeIndex) {
+		case 17: return Builder.getInt32Ty();
+		case 18: return Builder.getInt1Ty();
+		case 19: return Builder.getVoidTy();
+		default: return NULL;
+	}
+}
+
+/// TODO: Not Done
 class BoolConstantAST : public decafAST {
 	bool value;
 public:
@@ -239,6 +244,7 @@ public:
 	}
 };
 
+/// TODO: Not Done
 class rvalueAST : public decafAST {
 	string idName;
 	bool isArray;
@@ -260,6 +266,7 @@ public:
 	}
 };
 
+/// TODO: Done
 class NumberExprAST : public decafAST {
 	int integerValue;
 public:
@@ -269,11 +276,11 @@ public:
 		return string("NumberExpr") + "(" + std::to_string(integerValue) + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		return ConstantInt::get(getGlobalContext(), APInt(32, Val));
 	}
 };
 
+/// TODO: Done
 class BoolExprAST : public decafAST {
 	decafAST *boolASTNode;
 public:
@@ -283,11 +290,11 @@ public:
 		return string("BoolExpr(") + getString(boolASTNode) + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		return boolASTNode->Codegen();
 	}
 };
 
+/// TODO: Done
 class BinaryExprAST : public decafAST {
 	int binaryOperator;
 	decafAST *leftValueNode;
@@ -299,7 +306,6 @@ public:
 		rightValueNode = right;
 	}
 	~BinaryExprAST() {
-		binaryOperator = "";
 		delete leftValueNode;
 		delete rightValueNode;
 	}
@@ -307,14 +313,15 @@ public:
 		return string("BinaryExpr(") + getBinaryOp(binaryOperator) + "," + getString(leftValueNode) + "," + getString(rightValueNode) + ")";
 	}
 	llvm::Value *Codegen() {
-		Value *L = leftValueNode->Codegen();
-		Value *R = rightValueNode->Codegen();
+		llvm::Value *L = leftValueNode->Codegen();
+		llvm::Value *R = rightValueNode->Codegen();
 		if(L == 0 || R == 0) return 0;
 
 		return BinaryOpExpr(binaryOperator, L, R);
 	}
 };
 
+/// TODO: Done
 class UnaryExprAST : public decafAST {
 	int unaryOperator;
 	decafAST *opNumber;
@@ -336,6 +343,7 @@ public:
 };
 
 // Method_Call
+/// TODO: Not Done
 class MethodCallAST : public decafAST {
 	string identifierName;
 	decafStmtList *argumentList;
@@ -360,6 +368,7 @@ string getExternType (int typeIndex) {
 
 
 // Method Argument
+/// TODO: Not Done
 class MethodArgumentAST : public decafAST {
 	decafAST *decafASTNode;
 public:
@@ -375,6 +384,7 @@ public:
 };
 
 // String
+/// TODO: Not Done
 class StringAST : public decafAST {
 	string decafASTString;
 public:
@@ -388,6 +398,7 @@ public:
 	}
 };
 
+/// TODO: Done
 class IDTypeStringAST : public decafAST {
 	string decafASTString;
 	int methodType;
@@ -404,6 +415,7 @@ public:
 	}
 };
 
+/// TODO: Done
 class IDTypeStringSpecialAST : public decafAST {
 	IDTypeStringAST *strs;
 public:
@@ -418,6 +430,7 @@ public:
 	}
 };
 
+/// TODO: Not Done
 class RawStringAST : public decafAST {
 	string decafASTString;
 public:
@@ -432,6 +445,7 @@ public:
 };
 
 // Assign
+/// TODO: Not Done
 class AssignAST : public decafAST {
 	string identifierName;
 	decafAST *value;
@@ -454,9 +468,8 @@ public:
 	}
 };
 
-
-
 // Extern Type
+/// TODO: Not Done
 class ExternType : public decafAST {
 	int externType;
 public:
@@ -472,6 +485,7 @@ public:
 };
 
 // Extern
+/// TODO: Not Done
 class ExternAST : public decafAST {
 	string identifierName;
 	int methodTypeId;
@@ -496,6 +510,7 @@ public:
 };
 
 // field size
+/// TODO: Not Done
 class FieldSizeAST : public decafAST {
 	int size;
 	bool isArray;
@@ -516,6 +531,7 @@ public:
 };
 
 // Field_decl
+/// TODO: Not Done
 class FieldDeclAST : public decafAST {
 	string identifierName;
 	int decafTypeId;
@@ -538,6 +554,7 @@ public:
 };
 
 // typed symbol
+/// TODO: Not Done
 class TypedSymbol : public decafAST {
 	string identifierName;
 	int decafTypeId;
@@ -556,6 +573,7 @@ public:
 	}
 };
 
+/// TODO: Not Done
 class MethodBlockAST : public decafAST {
 	decafAST *block;
 public:
@@ -572,6 +590,7 @@ public:
 
 
 // Block
+/// TODO: Not Done
 class BlockAST : public decafAST {
 	decafStmtList *varDeclList;
 	decafStmtList *statementList;
@@ -594,6 +613,7 @@ public:
 };
 
 // Break, Continue
+/// TODO: Not Done Break Continue
 class SimpleStatement : public decafAST {
 	int typeId;
 public:
@@ -612,6 +632,7 @@ public:
 	}
 };
 
+/// TODO: Not Done
 class IfStmtAST : public decafAST {
 	decafAST *condition;
 	decafAST *ifBlock;
@@ -635,6 +656,7 @@ public:
 	}
 };
 
+/// TODO: Not Done
 class WhileStmt : public decafAST {
 	decafAST *condition;
 	decafAST *whileBlock;
@@ -656,6 +678,7 @@ public:
 	}
 };
 
+/// TODO: Not Done
 class ForStmtAST : public decafAST {
 	decafStmtList *preAssignList;
 	decafStmtList *loopAssignList;
@@ -683,6 +706,7 @@ public:
 	}
 };
 
+/// TODO: Not Done Return
 class ReturnStmtAST : public decafAST {
 	decafAST *returnValue;
 public:
@@ -701,6 +725,7 @@ public:
 	}
 };
 
+/// TODO: Not Done
 class ConstantAST : public decafAST {
 	int constantValue;
 public:
@@ -713,6 +738,7 @@ public:
 	}
 };
 
+/// TODO: Not Done
 class StatementAST : public decafAST {
 	decafAST *stmtASTNode;
 public:
@@ -726,12 +752,13 @@ public:
 	}
 };
 
+/// TODO: Done
 class IDTypeList : public decafAST {
-	list<IDTypeStringSpecialAST *> stmts;
+	list<IDTypeStringSpecialAST* > stmts;
 public:
 	IDTypeList() {}
 	~IDTypeList() {
-		for (list<IDTypeStringSpecialAST *>::iterator i = stmts.begin(); i != stmts.end(); i++) {
+		for (list<IDTypeStringSpecialAST* >::iterator i = stmts.begin(); i != stmts.end(); i++) {
 			delete *i;
 		}
 	}
@@ -742,16 +769,15 @@ public:
 
 	string str() { return commaList<class IDTypeStringSpecialAST *>(stmts); }
 
-	vector<llvm::Type *> getTypeList() {
+	vector<llvm::Type* > getTypeList() {
 
-		vector<llvm::Type *> args;
+		vector<llvm::Type* > args;
 
-		for (list<IDTypeStringSpecialAST *>::iterator i = stmts.begin(); i != stmts.end(); i++) {
-			int tempTypeId = i->getTypeId();
+		for (list<IDTypeStringSpecialAST* >::iterator i = stmts.begin(); i != stmts.end(); i++) {
+			int tempTypeId = (*i)->getTypeId();
 			llvm::Type *tempType = getLLVMType(tempTypeId);
-			args.insert(tempType);
+			args.push_back(tempType);
 		}
-
 		return args;
 	};
 
@@ -761,8 +787,8 @@ public:
 	}
 };
 
-
 // Method Decl
+/// TODO: Not Done
 class MethodDeclAST : public decafAST {
 	string identifierName;
 	int methodTypeId;
@@ -790,7 +816,7 @@ public:
 		llvm::Function *func = llvm::Function::Create(
 		     llvm::FunctionType::get(returnType, args, false),
 		     llvm::Function::ExternalLinkage,
-		     Name,
+			 identifierName,
 		     TheModule
 		);
 
@@ -810,17 +836,16 @@ public:
 		identifierName = idName;
 		type = targetType;
 		lineNumber = lineNo;
+		cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
 	}
 	~descriptor() { }
 	void debug() {
 		cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
 	}
-	llvm::type *getType() {
-
+	llvm::Type *getType() {
 		if(type == 17) return Builder.getInt32Ty();
 		if(type == 18) return Builder.getInt1Ty();
 		if(type == 19) return Builder.getVoidTy();
-
-		return type;
+		else return NULL;
 	}
 };

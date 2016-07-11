@@ -821,7 +821,45 @@ public:
 
 // Method Decl
 /// TODO: Not Done
+
+class MethodDeclHeadAST : public decafAST {
+	string identifierName;
+	int methodTypeId;
+	IDTypeList *paramList;
+public:
+	MethodDeclHeadAST(string idName, int methodType, IDTypeList *params) {
+		identifierName = idName;
+		methodTypeId = methodType;
+		paramList = params;
+	}
+	~MethodDeclHeadAST() {
+		delete paramList;
+	}
+	string str() {
+		return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str()+ "," ; //+ block->str() + ")";
+	}
+	llvm::Value *Codegen() {return NULL;}
+};
+
 class MethodDeclAST : public decafAST {
+	decafAST *head;
+	decafAST *block;
+public:
+	MethodDeclAST(decafAST *headMethod, decafAST *blockMethod) {
+		head = headMethod;
+		block = blockMethod;
+	}
+	~MethodDeclAST() {
+		delete head;
+		delete block;
+	}
+	string str() {
+		return head->str() + block->str() + ")";
+	}
+	llvm::Value *Codegen() {return NULL;}
+};
+
+/*class MethodDeclAST : public decafAST {
 	string identifierName;
 	int methodTypeId;
 	IDTypeList *paramList;
@@ -856,7 +894,7 @@ public:
 		// Symbol table
 		Builder.SetInsertPoint(BB);
 	}
-};
+};*/
 
 class descriptor {
 	string identifierName;

@@ -550,23 +550,38 @@ public:
 };
 
 // Method Decl
-class MethodDeclAST : public decafAST {
+// Modified
+class MethodDeclHeadAST : public decafAST {
 	string identifierName;
 	int methodTypeId;
 	IDTypeList *paramList;
-	decafAST *block;
 public:
-	MethodDeclAST(string idName, int methodType, IDTypeList *params, decafAST *blockMethod) {
+	MethodDeclHeadAST(string idName, int methodType, IDTypeList *params) {
 		identifierName = idName;
 		methodTypeId = methodType;
 		paramList = params;
+	}
+	~MethodDeclHeadAST() {
+		delete paramList;
+	}
+	string str() {
+		return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str()+ "," ; //+ block->str() + ")";
+	}
+};
+
+class MethodDeclAST : public decafAST {
+	decafAST *head;
+	decafAST *block;
+public:
+	MethodDeclAST(decafAST *headMethod, decafAST *blockMethod) {
+		head = headMethod;
 		block = blockMethod;
 	}
 	~MethodDeclAST() {
-		delete paramList;
+		delete head;
 		delete block;
 	}
 	string str() {
-		return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str() + "," + block->str() + ")";
+		return head->str() + block->str() + ")";
 	}
 };

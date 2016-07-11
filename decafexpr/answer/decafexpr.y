@@ -148,7 +148,7 @@ descriptor *getSymbolTable(string idName) {
 %left T_NOT
 %left T_UMINUS
 
-%type <ast> Binarys Constant Assign decafpackage ExternDefn statement MethodCall MethodArg Expr BoolConstant If Block Return ExternType MethodDecl MethodBlock
+%type <ast> Binarys Constant Assign decafpackage ExternDefn statement MethodCall MethodArg Expr BoolConstant If Block Return ExternType MethodDecl MethodDeclHead MethodBlock
 %type <numericalValue> Type MethodType
 %type <list> MethodArgs ExternTypes Assigns VarDecl VarDecls statements FieldDecls extern_list FieldDecl Identifiers MethodDecls
 %type <sval> Identifier
@@ -286,25 +286,25 @@ FieldDecls: FieldDecl FieldDecls
           ;
 
 /// TODO: Finished
-MethodDecl: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType MethodBlock
+/// Modification: Testing
+MethodDecl: MethodDeclHead MethodBlock
         {
-                MethodDeclAST *node = new MethodDeclAST(*$2, $6, $4, $7);
-                $$ = node;
-
-                descriptor *newFuncDecp = new descriptor(*$2, $6, lineno);
-                currentST.insert(std::pair<string, descriptor*>(*$2, newFuncDecp));
+            MethodDeclAST *node = new MethodDeclAST($1,$2);
+            $$ = node;
         }
-| T_FUNC T_ID T_LPAREN T_RPAREN MethodType MethodBlock
+        ;
+
+MethodDeclHead: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType
         {
-                //cout << "Here" << endl;
-                MethodDeclAST *node = new MethodDeclAST(*$2, $5, new IDTypeList(), $6);
-                $$ = node;
-
-                descriptor *newFuncDecp = new descriptor(*$2, $5, lineno);
-                currentST.insert(std::pair<string, descriptor*>(*$2, newFuncDecp));
-
+            MethodDeclHeadAST *node=new MethodDeclHeadAST(*$2, $6, $4);
+            $$ = node;
         }
-;
+        | T_FUNC T_ID T_LPAREN T_RPAREN MethodType
+        {
+            MethodDeclHeadAST *node=new MethodDeclHeadAST(*$2, $5, new IDTypeList());
+            $$ = node;
+        }
+        ;
 
 /// TODO: Finished
 MethodDecls: MethodDecl MethodDecls

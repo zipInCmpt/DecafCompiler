@@ -875,6 +875,7 @@ public:
 		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), "entry", func);
 		// Symbol table
 		Builder.SetInsertPoint(BB);
+		return NULL;
 	}
 };
 
@@ -882,14 +883,26 @@ class descriptor {
 	string identifierName;
 	int type;
 	int lineNumber;
-	llvm::AllocaInst *Alloca;
+	//llvm::AllocaInst *Alloca;
+	void *ptr;
+	bool isFunction;
 
 public:
 	descriptor(string idName, int targetType, int lineNo, llvm::AllocaInst *allocai) {
 		identifierName = idName;
 		type = targetType;
 		lineNumber = lineNo;
-		Alloca = allocai;
+		//Alloca = allocai;
+		ptr = allocai;
+		isFunction = false;
+		//cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
+	}
+	descriptor(string idName, int targetType, int lineNo, llvm::Function *func) {
+		identifierName = idName;
+		type = targetType;
+		lineNumber = lineNo;
+		ptr = func;
+		isFunction = true;
 		//cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
 	}
 	~descriptor() { }
@@ -897,13 +910,12 @@ public:
 		cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
 	}
 	llvm::Type *getType() {
-		/*
-		if(type == 17) return Builder.getInt32Ty();
+		/*if(type == 17) return Builder.getInt32Ty();
 		if(type == 18) return Builder.getInt1Ty();
 		if(type == 19) return Builder.getVoidTy();
-		 */
-		//else return NULL;
-		return Alloca->getType();
+		else return NULL;*/
+		return getLLVMType(type);
+		//return Alloca->getType();
 	}
 
 };

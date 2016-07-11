@@ -526,8 +526,9 @@ public:
 	}
 	llvm::Value *Codegen() {
 		if(!isArray) {
-
 			descriptor *fetchedVarDescriptor = getSymbolTable(identifierName);
+
+			fetchedVarDescriptor->debug();
 			if(fetchedVarDescriptor) {
 				llvm::Type *AllocaType = fetchedVarDescriptor->getType();
 				const llvm::PointerType *ptrTy = value->Codegen()->getType()->getPointerTo();
@@ -657,8 +658,7 @@ public:
 		return string("Method") + getString(block);
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		return block->Codegen();
 	}
 };
 
@@ -908,7 +908,8 @@ public:
 		delete paramList;
 	}
 	string str() {
-		return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str()+ "," ; //+ block->str() + ")";
+		return ideName;
+		//return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str()+ "," ; //+ block->str() + ")";
 	}
 	llvm::Value *Codegen() {
 		llvm::Type *returnType = getLLVMType(methodTypeId);
@@ -944,7 +945,7 @@ public:
 	llvm::Value *Codegen() {
 		llvm::Function *func = (llvm::Function *)head->Codegen();
 
-		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), "entry", func);
+		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), head->str(), func);
 		// Symbol table
 		Builder.SetInsertPoint(BB);
 		return NULL;

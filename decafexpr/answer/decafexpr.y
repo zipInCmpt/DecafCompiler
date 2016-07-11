@@ -606,7 +606,7 @@ Assigns: Assign T_COMMA Assigns
         {
                $3->push_front($1);
                $$ = $3;
-        };
+        }
 | Assign
 {
     decafStmtList *list = new decafStmtList();

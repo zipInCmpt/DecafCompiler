@@ -947,6 +947,7 @@ public:
 		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), "entry", func);
 		// Symbol table
 		Builder.SetInsertPoint(BB);
+		return NULL;
 	}
 };
 

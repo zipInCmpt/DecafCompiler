@@ -54,6 +54,10 @@ public:
 		//else return NULL;
 		return Alloca->getType();
 	}
+	llvm::AllocaInst *getAlloca() {
+		return Alloca;
+	}
+
 };
 
 descriptor *getSymbolTable(string idName) {
@@ -410,8 +414,7 @@ public:
 	~MethodCallAST() { identifierName = ""; delete argumentList; }
 	string str() { return string("MethodCall(") + identifierName + "," + argumentList->str() + ")"; }
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		return argumentList->Codegen();
 	}
 };
 
@@ -436,8 +439,7 @@ public:
 	~MethodArgumentAST() { delete decafASTNode; }
 	string str() { return getString(decafASTNode); }
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		return decafASTNode->Codegen();
 	}
 };
 
@@ -526,16 +528,15 @@ public:
 		if(!isArray) {
 
 			descriptor *fetchedVarDescriptor = getSymbolTable(identifierName);
-
 			if(fetchedVarDescriptor) {
 				llvm::Type *AllocaType = fetchedVarDescriptor->getType();
 				const llvm::PointerType *ptrTy = value->Codegen()->getType()->getPointerTo();
 
-				//if(ptrTy == AllocaType)
-					//llvm::Value *val = Builder.CreateStore(value->Codegen(), )
-
+				if(ptrTy == AllocaType) {
+					llvm::Value *val = Builder.CreateStore(value->Codegen(), fetchedVarDescriptor->getAlloca());
+					return val;
+				}
 			}
-
 		} else
 			return NULL;
 	}
@@ -680,8 +681,8 @@ public:
 		else return string("MethodBlock(") + varDeclList->str() + "," + statementList->str() + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		//varDeclList->Codegen();
+		return NULL;
 	}
 };
 
@@ -851,8 +852,7 @@ public:
 	~StatementAST() { delete stmtASTNode; }
 	string str() { return getString(stmtASTNode); }
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		return stmtASTNode->Codegen();
 	}
 };
 

@@ -230,19 +230,24 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                    fieldDeclList->push_front(fieldNode);
                    //cout << fieldNode->str() << endl;
                    //delete fieldNode;
+                   descriptor *newVariableDecpr = new descriptor(name, $3, lineno);
+                   currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
             }
             //FieldDeclAST *node = new FieldDeclAST(*$2, $3, exprNode, false);
             $$ = fieldDeclList;
          }
         | T_VAR IdentifierType T_SEMICOLON
         {
-                //cout << "hree" << endl;
+                //cout << "here" << endl;
                 decafStmtList *fieldDeclList = new decafStmtList();
                 FieldSizeAST *size = new FieldSizeAST(-1, false);
 
                 FieldDeclAST *fieldNode = new FieldDeclAST($2->getName(), $2->getTypeId(), size, false);
                 fieldDeclList->push_front(fieldNode);
                 $$ = fieldDeclList;
+
+                descriptor *newVariableDecpr = new descriptor($2->getName(), $2->getTypeId(), lineno);
+                currentST.insert(std::pair<string, descriptor* >($2->getName(), newVariableDecpr));
         }
          | T_VAR Identifiers T_LSB T_INTCONSTANT T_RSB Type T_SEMICOLON
         {
@@ -253,6 +258,9 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                 string name = $2->pop_front();
                 FieldDeclAST *fieldNode = new FieldDeclAST(name, $6, size, false);
                 fieldDeclList->push_front(fieldNode);
+
+                descriptor *newVariableDecpr = new descriptor(name, $6, lineno);
+                currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
             }
 
             $$ = fieldDeclList;
@@ -263,6 +271,9 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                 FieldDeclAST *node = new FieldDeclAST($2->getName(), $2->getTypeId(), $4, true);
                 fieldDeclList->push_front(node);
                 $$ = fieldDeclList;
+
+                descriptor *newVariableDecpr = new descriptor($2->getName(), $2->getTypeId(), lineno);
+                currentST.insert(std::pair<string, descriptor* >($2->getName(), newVariableDecpr));
         }
         ;
 
@@ -298,11 +309,17 @@ MethodDeclHead: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType
         {
             MethodDeclHeadAST *node=new MethodDeclHeadAST(*$2, $6, $4);
             $$ = node;
+
+            descriptor *newVariableDecpr = new descriptor(*$2, $6, lineno);
+            currentST.insert(std::pair<string, descriptor* >(*$2, newVariableDecpr));
+
         }
         | T_FUNC T_ID T_LPAREN T_RPAREN MethodType
         {
             MethodDeclHeadAST *node=new MethodDeclHeadAST(*$2, $5, new IDTypeList());
             $$ = node;
+            descriptor *newVariableDecpr = new descriptor(*$2, $5, lineno);
+            currentST.insert(std::pair<string, descriptor* >(*$2, newVariableDecpr));
         }
         ;
 

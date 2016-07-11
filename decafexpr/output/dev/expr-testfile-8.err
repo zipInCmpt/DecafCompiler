@@ -1,17 +1,17 @@
-output prefix: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8
+output prefix: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8
 llvmas: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as
 llc: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc
 cc: gcc
-codegen: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr
-stdlib: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c
-generating llvm code:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr ... ok
+codegen: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr
+stdlib: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c
+generating llvm code:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr ... ok
 ; ModuleID = 'Test'
 
 define i32 @main() {
 entry:
   ret i32 0
 }
-assembling to bitcode:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm" -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.bc" ... ok
-converting to native code:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.bc" -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.s" ... ok
-linking:gcc -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.exec" "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.s" "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c" ... ok
-running:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.exec ... ok
+assembling to bitcode:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm" -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.bc" ... ok
+converting to native code:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.bc" -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.s" ... ok
+linking:gcc -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.exec" "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.s" "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c" ... ok
+running:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-8.llvm.exec ... ok

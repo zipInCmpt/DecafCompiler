@@ -906,7 +906,7 @@ public:
 		identifierName = idName;
 		type = targetType;
 		lineNumber = lineNo;
-		//cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
+		cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
 	}
 	~descriptor() { }
 	void debug() {

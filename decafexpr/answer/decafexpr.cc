@@ -276,7 +276,7 @@ public:
 		return string("NumberExpr") + "(" + std::to_string(integerValue) + ")";
 	}
 	llvm::Value *Codegen() {
-		return ConstantInt::get(getGlobalContext(), APInt(32, Val));
+		return llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, integerValue));
 	}
 };
 
@@ -651,8 +651,40 @@ public:
 		return string("IfStmt(") + getString(condition) + "," + getString(ifBlock) + "," + getString(ElseBlock) + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+
+		llvm::Value *ConditionCode = condition->Codegen();
+		if(!ConditionCode)
+			return NULL;
+
+		ConditionCode = Builder.CreateFCmpONE(ConditionCode, llvm::ConstantFP::get(llvm::getGlobalContext(), llvm::APFloat(0.0)), "IfCond");
+		llvm::Function *TheFunction = Builder.GetInsertBlock()->getParent();
+
+		llvm::BasicBlock *ThenBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "Then", TheFunction);
+		llvm::BasicBlock *EBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "Else");
+		llvm::BasicBlock *MergeBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "IfCont");
+		Builder.CreateCondBr(ConditionCode, ThenBlock, EBlock);
+
+		Builder.SetInsertPoint(ThenBlock);
+
+		llvm::Value *ThenCode = ifBlock->Codegen();
+		if(!ThenCode) return NULL;
+		Builder.CreateBr(MergeBlock);
+		ThenBlock = Builder.GetInsertBlock();
+		TheFunction->getBasicBlockList().push_back(EBlock);
+		Builder.SetInsertPoint(EBlock);
+
+		llvm::Value *ElseCode = ElseBlock->Codegen();
+		if(!ElseCode) return NULL;
+		Builder.CreateBr(MergeBlock);
+		EBlock = Builder.GetInsertBlock();
+		TheFunction->getBasicBlockList().push_back(MergeBlock);
+		Builder.SetInsertPoint(MergeBlock);
+
+		llvm::PHINode *node = Builder.CreatePHI(llvm::Type::getDoubleTy(llvm::getGlobalContext()), 2, "IfTmp");
+		node->addIncoming(ThenCode, ThenBlock);
+		node->addIncoming(ElseCode, EBlock);
+
+		return node;
 	}
 };
 
@@ -836,7 +868,7 @@ public:
 		identifierName = idName;
 		type = targetType;
 		lineNumber = lineNo;
-		cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
+		//cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
 	}
 	~descriptor() { }
 	void debug() {

@@ -1,6 +1,1 @@
-; ModuleID = 'Test'
-
-define i32 @main() {
-entry:
-  ret i32 0
-}
+Assertion failed: (isValidElementType(EltTy) && "Invalid type for pointer element!"), function get, file /private/tmp/llvm3820160316-8183-11u7j5k/llvm-3.8.0.src/lib/IR/Type.cpp, line 684.

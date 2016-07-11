@@ -4,14 +4,6 @@ llc: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc
 cc: gcc
 codegen: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr
 stdlib: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c
-generating llvm code:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr ... ok
-; ModuleID = 'Test'
-
-define i32 @main() {
-entry:
-  ret i32 0
-}
-assembling to bitcode:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/intcall2.llvm" -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/intcall2.llvm.bc" ... ok
-converting to native code:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/intcall2.llvm.bc" -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/intcall2.llvm.s" ... ok
-linking:gcc -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/intcall2.llvm.exec" "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/intcall2.llvm.s" "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c" ... ok
-running:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/intcall2.llvm.exec ... ok
+generating llvm code:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr ... failed (-6)
+Assertion failed: (isValidElementType(EltTy) && "Invalid type for pointer element!"), function get, file /private/tmp/llvm3820160316-8183-11u7j5k/llvm-3.8.0.src/lib/IR/Type.cpp, line 684.
+codegen failed

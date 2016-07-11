@@ -174,6 +174,14 @@ program: extern_list decafpackage
 		if (printAST) {
 			cout << getString(prog) << endl;
 		}
+        try {
+            prog->Codegen();
+        }
+        catch (std::runtime_error &e) {
+            cout << "semantic error: " << e.what() << endl;
+            //cout << prog->str() << endl;
+            exit(EXIT_FAILURE);
+        }
         delete prog;
     }
     |
@@ -217,7 +225,6 @@ ExternDefn: T_EXTERN T_FUNC T_ID T_LPAREN ExternTypes T_RPAREN MethodType T_SEMI
             }
           ;
 
-
 /// TODO: Finished
 FieldDecl: T_VAR Identifiers Type T_SEMICOLON
          {
@@ -230,7 +237,8 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                    fieldDeclList->push_front(fieldNode);
                    //cout << fieldNode->str() << endl;
                    //delete fieldNode;
-                   descriptor *newVariableDecpr = new descriptor(name, $3, lineno);
+                   llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($3), nullptr, name);
+                   descriptor *newVariableDecpr = new descriptor(name, $3, lineno, Alloca);
                    currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
             }
             //FieldDeclAST *node = new FieldDeclAST(*$2, $3, exprNode, false);
@@ -246,7 +254,8 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                 fieldDeclList->push_front(fieldNode);
                 $$ = fieldDeclList;
 
-                descriptor *newVariableDecpr = new descriptor($2->getName(), $2->getTypeId(), lineno);
+                llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($2->getTypeId()), nullptr, $2->getName());
+                descriptor *newVariableDecpr = new descriptor($2->getName(), $2->getTypeId(), lineno, Alloca);
                 currentST.insert(std::pair<string, descriptor* >($2->getName(), newVariableDecpr));
         }
          | T_VAR Identifiers T_LSB T_INTCONSTANT T_RSB Type T_SEMICOLON
@@ -259,7 +268,8 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                 FieldDeclAST *fieldNode = new FieldDeclAST(name, $6, size, false);
                 fieldDeclList->push_front(fieldNode);
 
-                descriptor *newVariableDecpr = new descriptor(name, $6, lineno);
+                llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($6), nullptr, name);
+                descriptor *newVariableDecpr = new descriptor(name, $6, lineno, Alloca);
                 currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
             }
 
@@ -272,7 +282,8 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                 fieldDeclList->push_front(node);
                 $$ = fieldDeclList;
 
-                descriptor *newVariableDecpr = new descriptor($2->getName(), $2->getTypeId(), lineno);
+                llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($2->getTypeId()), nullptr, $2->getName());
+                descriptor *newVariableDecpr = new descriptor($2->getName(), $2->getTypeId(), lineno, Alloca);
                 currentST.insert(std::pair<string, descriptor* >($2->getName(), newVariableDecpr));
         }
         ;
@@ -310,7 +321,8 @@ MethodDeclHead: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType
             MethodDeclHeadAST *node=new MethodDeclHeadAST(*$2, $6, $4);
             $$ = node;
 
-            descriptor *newVariableDecpr = new descriptor(*$2, $6, lineno);
+            llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($6), nullptr, *$2);
+            descriptor *newVariableDecpr = new descriptor(*$2, $6, lineno, Alloca);
             currentST.insert(std::pair<string, descriptor* >(*$2, newVariableDecpr));
 
         }
@@ -318,7 +330,9 @@ MethodDeclHead: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType
         {
             MethodDeclHeadAST *node=new MethodDeclHeadAST(*$2, $5, new IDTypeList());
             $$ = node;
-            descriptor *newVariableDecpr = new descriptor(*$2, $5, lineno);
+
+            llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($5), nullptr, *$2);
+            descriptor *newVariableDecpr = new descriptor(*$2, $5, lineno, Alloca);
             currentST.insert(std::pair<string, descriptor* >(*$2, newVariableDecpr));
         }
         ;
@@ -459,7 +473,8 @@ VarDecl: T_VAR Identifiers Type T_SEMICOLON
         TypedSymbol *newNode = new TypedSymbol(name, $3);
         list->push_front(newNode);
 
-        descriptor *newVariableDecpr = new descriptor(name, $3, lineno);
+        llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($3), nullptr, name);
+        descriptor *newVariableDecpr = new descriptor(name, $3, lineno, Alloca);
         currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
     }
 

@@ -838,7 +838,20 @@ public:
 	string str() {
 		return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str()+ "," ; //+ block->str() + ")";
 	}
-	llvm::Value *Codegen() {return NULL;}
+	llvm::Value *Codegen() {
+		llvm::Type *returnType = getLLVMType(methodTypeId);
+		// get the types for every variables
+		vector<llvm::Type *> args = paramList->getTypeList();
+
+		llvm::Function *func = llvm::Function::Create(
+				llvm::FunctionType::get(returnType, args, false),
+				llvm::Function::ExternalLinkage,
+				identifierName,
+				TheModule
+		);
+
+		return func;
+	}
 };
 
 class MethodDeclAST : public decafAST {
@@ -856,66 +869,41 @@ public:
 	string str() {
 		return head->str() + block->str() + ")";
 	}
-	llvm::Value *Codegen() {return NULL;}
-};
-
-/*class MethodDeclAST : public decafAST {
-	string identifierName;
-	int methodTypeId;
-	IDTypeList *paramList;
-	decafAST *block;
-public:
-	MethodDeclAST(string idName, int methodType, IDTypeList *params, decafAST *blockMethod) {
-		identifierName = idName;
-		methodTypeId = methodType;
-		paramList = params;
-		block = blockMethod;
-	}
-	~MethodDeclAST() {
-		delete paramList;
-		delete block;
-	}
-	string str() {
-		return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str() + "," + block->str() + ")";
-	}
 	llvm::Value *Codegen() {
-		llvm::Type *returnType = getLLVMType(methodTypeId);
-		// get the types for every variables
-		vector<llvm::Type *> args = paramList->getTypeList();
+		llvm::Function *func = (llvm::Function *)head->Codegen();
 
-		llvm::Function *func = llvm::Function::Create(
-		     llvm::FunctionType::get(returnType, args, false),
-		     llvm::Function::ExternalLinkage,
-			 identifierName,
-		     TheModule
-		);
-
-		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), identifierName, func);
+		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), "entry", func);
 		// Symbol table
 		Builder.SetInsertPoint(BB);
 	}
-};*/
+};
 
 class descriptor {
 	string identifierName;
 	int type;
 	int lineNumber;
+	llvm::AllocaInst *Alloca;
 
 public:
-	descriptor(string idName, int targetType, int lineNo) {
+	descriptor(string idName, int targetType, int lineNo, llvm::AllocaInst *allocai) {
 		identifierName = idName;
 		type = targetType;
 		lineNumber = lineNo;
-		cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
+		Alloca = allocai;
+		//cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
 	}
 	~descriptor() { }
 	void debug() {
 		cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
 	}
 	llvm::Type *getType() {
+		/*
 		if(type == 17) return Builder.getInt32Ty();
 		if(type == 18) return Builder.getInt1Ty();
 		if(type == 19) return Builder.getVoidTy();
-		else return NULL;
+		 */
+		//else return NULL;
+		return Alloca->getType();
 	}
+
 };

@@ -1,6 +1,15 @@
-; ModuleID = 'Test'
+; ModuleID = 'prec'
 
 define i32 @main() {
+entry:
+  %main = alloca i32
+  %d = alloca i32
+  %b = alloca i32
+  %a = alloca i32
+  %c = alloca i1
+}
+
+define i32 @main.1() {
 entry:
   ret i32 0
 }

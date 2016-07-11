@@ -13,6 +13,36 @@ using namespace std;
 
 /// decafAST - Base class for all abstract syntax tree nodes.
 /// TODO:Done
+
+class descriptor;
+
+typedef map<string, descriptor* > DecafSymbolTable;
+typedef list<DecafSymbolTable > DecafSymbolTableList;
+
+DecafSymbolTable currentST;
+DecafSymbolTableList SymbolTableList;
+
+void newSTNode() {
+	SymbolTableList.push_front(currentST);
+	currentST.clear();
+}
+
+descriptor *getSymbolTable(string idName) {
+
+	DecafSymbolTable::iterator fetchedObject;
+	if((fetchedObject = currentST.find(idName)) != currentST.end())
+		return fetchedObject->second;
+	else {
+		for(DecafSymbolTableList::iterator i = SymbolTableList.begin(); i != SymbolTableList.end(); i++) {
+			DecafSymbolTable::iterator fetchedObject;
+			if((fetchedObject = i->find(idName)) != i->end()) {
+				return fetchedObject->second;
+			}
+		}
+		return NULL;
+	}
+}
+
 class decafAST {
 public:
   virtual ~decafAST() {}
@@ -101,7 +131,7 @@ public:
 	}
 };
 
-/// TODO: Not Done
+/// TODO: Done
 // Expr
 class ExprAST : public decafAST {
 	decafAST *decafASTNode;
@@ -110,8 +140,7 @@ public:
 	~ExprAST() { delete decafASTNode; }
 	string str() { return getString(decafASTNode); }
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		return decafASTNode->Codegen();
 	}
 };
 
@@ -231,7 +260,7 @@ llvm::Type* getLLVMType(int typeIndex) {
 	}
 }
 
-/// TODO: Not Done
+/// TODO: Done
 class BoolConstantAST : public decafAST {
 	bool value;
 public:
@@ -239,8 +268,8 @@ public:
 	~BoolConstantAST() { }
 	string str() { if(value) return string("BoolExpr(True)"); else return string("BoolExpr(False)"); }
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		if(value) return llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 1));
+		else return llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 0));
 	}
 };
 
@@ -384,7 +413,7 @@ public:
 };
 
 // String
-/// TODO: Not Done
+/// TODO: Done
 class StringAST : public decafAST {
 	string decafASTString;
 public:
@@ -393,8 +422,9 @@ public:
 	string str() { return string("StringConstant") + "(" + decafASTString + ")"; }
 	//string rawStr() { return decafASTString; }
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		llvm::GlobalVariable *GlobalString = Builder.CreateGlobalString(decafASTString, "globalstring");
+		llvm::Value *stringConst = Builder.CreateConstGEP2_32(GlobalString->getValueType(), GS, 0, 0, "cast");
+		return stringConst;
 	}
 };
 
@@ -430,7 +460,7 @@ public:
 	}
 };
 
-/// TODO: Not Done
+/// TODO: Done
 class RawStringAST : public decafAST {
 	string decafASTString;
 public:
@@ -439,8 +469,9 @@ public:
 	string str() { return decafASTString; }
 	//string rawStr() { return decafASTString; }
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		llvm::GlobalVariable *GlobalString = Builder.CreateGlobalString(decafASTString, "globalstring");
+		llvm::Value *stringConst = Builder.CreateConstGEP2_32(GlobalString->getValueType(), GS, 0, 0, "cast");
+		return stringConst;
 	}
 };
 
@@ -463,13 +494,26 @@ public:
 		}
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		if(!isArray) {
+
+			descriptor *fetchedVarDescriptor = getSymbolTable(identifierName);
+
+			if(fetchedVarDescriptor) {
+				llvm::Type *AllocaType = fetchedVarDescriptor->getType();
+				const llvm::PointerType *ptrTy = value->Codegen()->getType()->getPointerTo();
+
+				if(ptrTy == AllocaType)
+					//llvm::Value *val = Builder.CreateStore(value->Codegen(), )
+
+			}
+
+		} else
+			return NULL;
 	}
 };
 
 // Extern Type
-/// TODO: Not Done
+/// TODO: Done
 class ExternType : public decafAST {
 	int externType;
 public:
@@ -479,8 +523,7 @@ public:
 		return string("VarDef(") + getExternType(externType) + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		return getLLVMType(externType);
 	}
 };
 
@@ -613,7 +656,7 @@ public:
 };
 
 // Break, Continue
-/// TODO: Not Done Break Continue
+/// TODO: Not Done - Not Needed
 class SimpleStatement : public decafAST {
 	int typeId;
 public:
@@ -632,7 +675,7 @@ public:
 	}
 };
 
-/// TODO: Not Done
+/// TODO: Done - Not Needed
 class IfStmtAST : public decafAST {
 	decafAST *condition;
 	decafAST *ifBlock;
@@ -688,7 +731,7 @@ public:
 	}
 };
 
-/// TODO: Not Done
+/// TODO: Not Done - Not Needed
 class WhileStmt : public decafAST {
 	decafAST *condition;
 	decafAST *whileBlock;
@@ -710,7 +753,7 @@ public:
 	}
 };
 
-/// TODO: Not Done
+/// TODO: Not Done - Not Needed
 class ForStmtAST : public decafAST {
 	decafStmtList *preAssignList;
 	decafStmtList *loopAssignList;
@@ -757,7 +800,7 @@ public:
 	}
 };
 
-/// TODO: Not Done
+/// TODO: Done
 class ConstantAST : public decafAST {
 	int constantValue;
 public:
@@ -765,8 +808,7 @@ public:
 	~ConstantAST() { }
 	string str() { return string("NumberExpr(") + std::to_string(constantValue) + ")"; }
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		return llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, constantValue));
 	}
 };
 

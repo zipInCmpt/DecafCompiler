@@ -49,33 +49,6 @@ llvm::Function *gen_main_def() {
 
 #include "decafexpr.cc"
 
-typedef map<string, descriptor* > DecafSymbolTable;
-typedef list<DecafSymbolTable > DecafSymbolTableList;
-
-DecafSymbolTable currentST;
-DecafSymbolTableList SymbolTableList;
-
-void newSTNode() {
-    SymbolTableList.push_front(currentST);
-    currentST.clear();
-}
-
-descriptor *getSymbolTable(string idName) {
-
-    DecafSymbolTable::iterator fetchedObject;
-    if((fetchedObject = currentST.find(idName)) != currentST.end())
-        return fetchedObject->second;
-    else {
-        for(DecafSymbolTableList::iterator i = SymbolTableList.begin(); i != SymbolTableList.end(); i++) {
-            DecafSymbolTable::iterator fetchedObject;
-            if((fetchedObject = i->find(idName)) != i->end()) {
-                return fetchedObject->second;
-            }
-        }
-        return NULL;
-    }
-}
-
 %}
 
 %union{
@@ -623,6 +596,7 @@ Assign: Identifier T_ASSIGN Expr
         }
 |   Identifier T_LSB Expr T_RSB T_ASSIGN Expr
 {
+        // Array. Just ignore in HW3
         AssignAST *node = new AssignAST(*$1, $3, $6);
         $$ = node;
 }

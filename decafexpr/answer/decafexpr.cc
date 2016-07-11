@@ -27,6 +27,35 @@ void newSTNode() {
 	currentST.clear();
 }
 
+class descriptor {
+	string identifierName;
+	int type;
+	int lineNumber;
+	llvm::AllocaInst *Alloca;
+
+public:
+	descriptor(string idName, int targetType, int lineNo, llvm::AllocaInst *allocai) {
+		identifierName = idName;
+		type = targetType;
+		lineNumber = lineNo;
+		Alloca = allocai;
+		//cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
+	}
+	~descriptor() { }
+	void debug() {
+		cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
+	}
+	llvm::Type *getType() {
+		/*
+		if(type == 17) return Builder.getInt32Ty();
+		if(type == 18) return Builder.getInt1Ty();
+		if(type == 19) return Builder.getVoidTy();
+		 */
+		//else return NULL;
+		return Alloca->getType();
+	}
+};
+
 descriptor *getSymbolTable(string idName) {
 
 	DecafSymbolTable::iterator fetchedObject;
@@ -423,7 +452,7 @@ public:
 	//string rawStr() { return decafASTString; }
 	llvm::Value *Codegen() {
 		llvm::GlobalVariable *GlobalString = Builder.CreateGlobalString(decafASTString, "globalstring");
-		llvm::Value *stringConst = Builder.CreateConstGEP2_32(GlobalString->getValueType(), GS, 0, 0, "cast");
+		llvm::Value *stringConst = Builder.CreateConstGEP2_32(GlobalString->getValueType(), GlobalString, 0, 0, "cast");
 		return stringConst;
 	}
 };
@@ -470,7 +499,7 @@ public:
 	//string rawStr() { return decafASTString; }
 	llvm::Value *Codegen() {
 		llvm::GlobalVariable *GlobalString = Builder.CreateGlobalString(decafASTString, "globalstring");
-		llvm::Value *stringConst = Builder.CreateConstGEP2_32(GlobalString->getValueType(), GS, 0, 0, "cast");
+		llvm::Value *stringConst = Builder.CreateConstGEP2_32(GlobalString->getValueType(), GlobalString, 0, 0, "cast");
 		return stringConst;
 	}
 };
@@ -502,7 +531,7 @@ public:
 				llvm::Type *AllocaType = fetchedVarDescriptor->getType();
 				const llvm::PointerType *ptrTy = value->Codegen()->getType()->getPointerTo();
 
-				if(ptrTy == AllocaType)
+				//if(ptrTy == AllocaType)
 					//llvm::Value *val = Builder.CreateStore(value->Codegen(), )
 
 			}
@@ -523,7 +552,8 @@ public:
 		return string("VarDef(") + getExternType(externType) + ")";
 	}
 	llvm::Value *Codegen() {
-		return getLLVMType(externType);
+		//return getLLVMType(externType);
+		return NULL;
 	}
 };
 
@@ -921,43 +951,3 @@ public:
 	}
 };
 
-class descriptor {
-	string identifierName;
-	int type;
-	int lineNumber;
-	//llvm::AllocaInst *Alloca;
-	void *ptr;
-	bool isFunction;
-
-public:
-	descriptor(string idName, int targetType, int lineNo, llvm::AllocaInst *allocai) {
-		identifierName = idName;
-		type = targetType;
-		lineNumber = lineNo;
-		//Alloca = allocai;
-		ptr = allocai;
-		isFunction = false;
-		//cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
-	}
-	descriptor(string idName, int targetType, int lineNo, llvm::Function *func) {
-		identifierName = idName;
-		type = targetType;
-		lineNumber = lineNo;
-		ptr = func;
-		isFunction = true;
-		//cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
-	}
-	~descriptor() { }
-	void debug() {
-		cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
-	}
-	llvm::Type *getType() {
-		/*if(type == 17) return Builder.getInt32Ty();
-		if(type == 18) return Builder.getInt1Ty();
-		if(type == 19) return Builder.getVoidTy();
-		else return NULL;*/
-		return getLLVMType(type);
-		//return Alloca->getType();
-	}
-
-};

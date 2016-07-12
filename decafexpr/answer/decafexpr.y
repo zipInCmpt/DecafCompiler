@@ -46,7 +46,7 @@ llvm::Function *gen_main_def() {
     Builder.SetInsertPoint(BB);
     return TheFunction;
 }
-
+/*
 llvm::Function *genPrintIntDef() {
     // create a extern definition for print_int
     std::vector<llvm::Type*> args;
@@ -60,6 +60,7 @@ llvm::Function *genPrintStringDef() {
     args.push_back(Builder.getInt8PtrTy()); // print_string takes one string argument
     return llvm::Function::Create(llvm::FunctionType::get(Builder.getVoidTy(), args, false), llvm::Function::ExternalLinkage, "print_string", TheModule);
 }
+*/
 
 #include "decafexpr.cc"
 
@@ -821,7 +822,7 @@ int main() {
     TheModule = new llvm::Module("Test", Context);
     // set up symbol table
     // set up dummy main function
-    TheFunction = gen_main_def();
+    //TheFunction = gen_main_def();
     // parse the input and create the abstract syntax tree
     // parse the input and create the abstract syntax tree
     int retval = yyparse();
@@ -830,9 +831,9 @@ int main() {
     // return 0 from main, which is EXIT_SUCCESS
     Builder.CreateRet(llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)));
     // Validate the generated code, checking for consistency.
-    verifyFunction(*TheFunction);
+    //verifyFunction(*TheFunction);
     // Print out all of the generated code to stderr
-    //TheModule->dump();
+    TheModule->dump();
     return(retval >= 1 ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 

@@ -1,0 +1,24 @@
+; ModuleID = 'Test'
+
+declare void @print_int(i32)
+
+define void @test3(i1, i32) {
+entry:
+}
+
+define void @test2b(i32, i1) {
+entry:
+}
+
+define void @test2a(i32, i1) {
+entry:
+}
+
+define void @test1(i1, i32) {
+entry:
+}
+
+define i32 @main() {
+entry:
+  ret i32 0
+}

@@ -29,10 +29,10 @@ class descriptor {
 	string identifierName;
 	int type;
 	int lineNumber;
-	llvm::AllocaInst *Alloca;
+	llvm::Value *Alloca;
 
 public:
-	descriptor(string idName, int targetType, int lineNo, llvm::AllocaInst *allocai) {
+	descriptor(string idName, int targetType, int lineNo, llvm::Value *allocai) {
 		identifierName = idName;
 		type = targetType;
 		lineNumber = lineNo;
@@ -52,8 +52,12 @@ public:
 		//else return NULL;
 		return Alloca->getType();
 	}
-	llvm::AllocaInst *getAlloca() {
+	llvm::Value *getAlloca() {
 		return Alloca;
+	}
+
+	void setAlloca(llvm::AllocaInst *allocai) {
+		Alloca = allocai;
 	}
 
 };
@@ -168,7 +172,7 @@ public:
 			val = FieldDeclList->Codegen();
 		}
 		if (NULL != MethodDeclList) {
-			printf("Debug message: Generating MethodDecls...\n");
+			//printf("Debug message: Generating MethodDecls...\n");
 			val = MethodDeclList->Codegen();
 		}
 		// Q: should we enter the class name into the symbol table?
@@ -473,7 +477,8 @@ public:
 	~MethodCallAST() { identifierName = ""; delete argumentList; }
 	string str() { return string("MethodCall(") + identifierName + "," + argumentList->str() + ")"; }
 	llvm::Value *Codegen() {
-		printf("Debug message: Generating method call...\n");
+		printf("Debug message: Generating method call... \n");
+		cout << identifierName << endl;
 
 		llvm::Function *TheFunction = TheModule->getFunction(identifierName);
 		//return NULL;
@@ -622,20 +627,25 @@ public:
 		}
 	}
 	llvm::Value *Codegen() {
-		/*if(!isArray) {
+		if(!isArray) {
 			descriptor *fetchedVarDescriptor = getSymbolTable(identifierName);
 
-			fetchedVarDescriptor->debug();
 			if(fetchedVarDescriptor) {
+				fetchedVarDescriptor->debug();
 				llvm::Type *AllocaType = fetchedVarDescriptor->getType();
 				const llvm::PointerType *ptrTy = value->Codegen()->getType()->getPointerTo();
 
 				if(ptrTy == AllocaType) {
-					llvm::Value *val = Builder.CreateStore(value->Codegen(), fetchedVarDescriptor->getAlloca());
+					cout << "Codegen for Assign to " << identifierName << endl;
+					llvm::Value *val = Builder.CreateStore(value->Codegen(), (llvm::AllocaInst *)fetchedVarDescriptor->getAlloca());
 					return val;
+				} else {
+					return NULL;
 				}
+			} else {
+				return NULL;
 			}
-		} else*/
+		} else
 			return NULL;
 	}
 	void insertSymbolIntoSymbolTable() {
@@ -781,11 +791,15 @@ public:
 	}
 	llvm::Value *Codegen() {
 		llvm::Value *val = NULL;
+		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+		descriptor *temp = getSymbolTable(identifierName);
+		temp->setAlloca(Alloca);
+
 		return val;
 	}
 	void insertSymbolIntoSymbolTable() {
-		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
-		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, Alloca);
+		//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, NULL);
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 	}
 };
@@ -831,13 +845,23 @@ public:
 		else return string("MethodBlock(") + varDeclList->str() + "," + statementList->str() + ")";
 	}
 	llvm::Value *Codegen() {
-		SymbolTableList.push_front(currentST);
-		//if(!isMethod) checkTable(currentST);
-		if(varDeclList != NULL) varDeclList->Codegen();
-		if(statementList != NULL) statementList->Codegen();
-		SymbolTableList.pop_front();
-		return NULL;
+
+		llvm::Value *val = NULL;
+
+		if(!isMethod) {
+			SymbolTableList.push_front(currentST);
+			//if(!isMethod) checkTable(currentST);
+			if(varDeclList != NULL) val = varDeclList->Codegen();
+			if(statementList != NULL) val = statementList->Codegen();
+			SymbolTableList.pop_front();
+		} else {
+			if(varDeclList != NULL) val = varDeclList->Codegen();
+			if(statementList != NULL) val = statementList->Codegen();
+		}
+
+		return val;
 	}
+
 	void insertSymbolIntoSymbolTable() {
 		if(!isMethod) {
 			this->currentST = new DecafSymbolTable;
@@ -1110,6 +1134,7 @@ public:
 		//return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str()+ "," ; //+ block->str() + ")";
 	}
 	llvm::Value *Codegen() {
+		cout << "Generating MethodDecl Heads..." << identifierName << endl;
 		llvm::Type *returnType = getLLVMType(methodTypeId);
 		// get the types for every variables
 		vector<llvm::Type *> args = paramList->getTypeList();
@@ -1130,6 +1155,10 @@ public:
 	void insertHead() {
 		descriptor *newDesp = new descriptor(identifierName, methodTypeId, startpos, NULL);
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDesp));
+	}
+
+	int getType() {
+		return methodTypeId;
 	}
 };
 
@@ -1161,9 +1190,24 @@ public:
 		// Symbol table
 		Builder.SetInsertPoint(BB);
 
-		if(block != NULL) block->Codegen();
+		if(block != NULL) {
+			block->Codegen();
+		}
+
+		MethodDeclHeadAST *tempHead = (MethodDeclHeadAST *)head;
+		llvm::Value *typedefault;
+		switch(tempHead->getType()) {
+			case 17: typedefault = (llvm::Value *)Builder.getInt32Ty(); break;
+			//case 18: Builder.CreateRet(Builder.get()); break;
+			case 19: typedefault = (llvm::Value *)Builder.getVoidTy(); break;
+			//case 20: typedefault = Builder.getInt8PtrTy(); break;
+		}
+
+		Builder.CreateRet(typedefault);
 
 		SymbolTableList.pop_front();
+
+		verifyFunction(*func);
 
 		return func;
 	}

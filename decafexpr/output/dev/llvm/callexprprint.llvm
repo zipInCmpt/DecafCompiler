@@ -1,0 +1,10 @@
+; ModuleID = 'Test'
+
+declare i32 @read_int()
+
+declare void @print_int(i32)
+
+define i32 @main() {
+entry:
+  ret i32 0
+}

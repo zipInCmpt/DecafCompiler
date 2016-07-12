@@ -1087,9 +1087,12 @@ public:
 		return func;
 	}
 	void insertSymbolIntoSymbolTable() {
+		
+		paramList->insertSymbolIntoSymbolTable();
+	}
+	void insertHead() {
 		descriptor *newDesp = new descriptor(identifierName, methodTypeId, startpos, NULL);
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDesp));
-		paramList->insertSymbolIntoSymbolTable();
 	}
 };
 
@@ -1126,6 +1129,9 @@ public:
 		return NULL;
 	}
 	void insertSymbolIntoSymbolTable() {
+
+		MethodDeclHeadAST *headAST = (MethodDeclHeadAST *)head;
+		headAST->insertHead();
 
 		this->currentST = new DecafSymbolTable;
 		SymbolTableList.push_front(this->currentST);

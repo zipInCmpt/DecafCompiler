@@ -385,7 +385,7 @@ MethodBlock: Block
         ;
 
 /// TODO: Finished
-ExternType: T_STRINGTYPE { ExternType *type = new ExternType(0); $$ = type; }
+ExternType: T_STRINGTYPE { ExternType *type = new ExternType(20); $$ = type; }
 | Type { ExternType *type = new ExternType($1); $$ = type; }
 ;
 

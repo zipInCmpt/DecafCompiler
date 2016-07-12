@@ -12,6 +12,7 @@
 
 using namespace std;
 
+extern llvm::Function *gen_main_def();
 
 class descriptor;
 
@@ -163,9 +164,11 @@ public:
 		llvm::Value *val = NULL;
 		TheModule->setModuleIdentifier(llvm::StringRef(Name));
 		if (NULL != FieldDeclList) {
+			printf("Debug message: Generating FieldDecls...\n");
 			val = FieldDeclList->Codegen();
 		}
 		if (NULL != MethodDeclList) {
+			printf("Debug message: Generating MethodDecls...\n");
 			val = MethodDeclList->Codegen();
 		}
 		// Q: should we enter the class name into the symbol table?
@@ -473,7 +476,7 @@ public:
 		printf("Debug message: Generating method call...\n");
 
 		llvm::Function *TheFunction = TheModule->getFunction(identifierName);
-
+		//return NULL;
 		if(TheFunction==NULL) {
 			throw runtime_error("Undefined function is called.");
 			return NULL;
@@ -682,12 +685,13 @@ public:
 		return string("ExternFunction(") + identifierName + "," + getMethodType(methodTypeId) + "," + typeList->str() + ")";
 	}
 	llvm::Value *Codegen() {
+
 		std::vector<llvm::Type*> args;
 		printf("Debug message: Generating extern function...\n");
 		for (list<decafAST *>::iterator i = typeList->stmts.begin(); i != typeList->stmts.end(); i++) {
 			//printf("%d\n", ((ExternType *)(*i))->externType );
-			printf("%d\n", ((ExternType *)(*i)) ->externType );
-			args.push_back( getLLVMType( ((ExternType *)(*i)) ->externType) );
+			printf("%d\n", ((ExternType *) (*i))->externType);
+			args.push_back(getLLVMType(((ExternType *) (*i))->externType));
 		}
 		llvm::Type *returnTy=getLLVMType(methodTypeId);
 		llvm::Function *func = llvm::Function::Create(
@@ -696,7 +700,9 @@ public:
 		    identifierName,
 		    TheModule
 		);
+
 		return func;
+		//return NULL;
 	}
 	void insertSymbolIntoSymbolTable() {
 		descriptor *newDescp = new descriptor(identifierName, methodTypeId, linepos, NULL);
@@ -1147,17 +1153,19 @@ public:
 		SymbolTableList.push_front(currentST);
 
 		//checkTable(currentST);
+		printf("Debug message: Generating MethodDecl...\n");
 
 		llvm::Function *func = (llvm::Function *)head->Codegen();
 
-		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), head->str(), func);
+		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), "entry", func);
 		// Symbol table
 		Builder.SetInsertPoint(BB);
 
 		if(block != NULL) block->Codegen();
 
 		SymbolTableList.pop_front();
-		return NULL;
+
+		return func;
 	}
 	void insertSymbolIntoSymbolTable() {
 

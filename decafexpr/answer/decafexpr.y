@@ -47,6 +47,20 @@ llvm::Function *gen_main_def() {
     return TheFunction;
 }
 
+llvm::Function *genPrintIntDef() {
+    // create a extern definition for print_int
+    std::vector<llvm::Type*> args;
+    args.push_back(Builder.getInt32Ty()); // print_int takes one i32 argument
+    return llvm::Function::Create(llvm::FunctionType::get(Builder.getVoidTy(), args, false), llvm::Function::ExternalLinkage, "print_int", TheModule);
+}
+
+llvm::Function *genPrintStringDef() {
+    // create a extern definition for print_string
+    std::vector<llvm::Type*> args;
+    args.push_back(Builder.getInt8PtrTy()); // print_string takes one string argument
+    return llvm::Function::Create(llvm::FunctionType::get(Builder.getVoidTy(), args, false), llvm::Function::ExternalLinkage, "print_string", TheModule);
+}
+
 #include "decafexpr.cc"
 
 %}

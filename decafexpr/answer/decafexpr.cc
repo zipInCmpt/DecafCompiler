@@ -25,6 +25,8 @@ DecafSymbolTableList SymbolTableList;
 /// decafAST - Base class for all abstract syntax tree nodes.
 /// TODO:Done
 
+bool isDebugging = true;
+
 class descriptor {
 	string identifierName;
 	int type;
@@ -41,7 +43,7 @@ public:
 	}
 	~descriptor() { }
 	void debug() {
-		cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
+		cout << "Defind variable in line " << lineNumber << " : " << identifierName << endl;
 	}
 	llvm::Type *getType() {
 		/*
@@ -56,7 +58,7 @@ public:
 		return Alloca;
 	}
 
-	void setAlloca(llvm::AllocaInst *allocai) {
+	void setAlloca(llvm::Value *allocai) {
 		Alloca = allocai;
 	}
 
@@ -71,6 +73,8 @@ descriptor *getSymbolTable(string idName) {
 			return fetchedObject->second;
 		}
 	}
+	return NULL;
+
 }
 
 void checkTable(DecafSymbolTable *table) {
@@ -168,7 +172,7 @@ public:
 		llvm::Value *val = NULL;
 		TheModule->setModuleIdentifier(llvm::StringRef(Name));
 		if (NULL != FieldDeclList) {
-			printf("Debug message: Generating FieldDecls...\n");
+			if(isDebugging) printf("Debug message: Generating FieldDecls...\n");
 			val = FieldDeclList->Codegen();
 		}
 		if (NULL != MethodDeclList) {
@@ -220,17 +224,17 @@ public:
 	}
 	string str() { return string("Program") + "(" + getString(ExternList) + "," + getString(PackageDef) + ")"; }
 	llvm::Value *Codegen() {
-		printf("Debug message: Generating program...\n");
+		if(isDebugging) printf("Debug message: Generating program...\n");
 		llvm::Value *val = NULL;
 		SymbolTableList.push_front(currentST);
 		//checkTable(currentST);
 
-		if (NULL != ExternList) {
-			printf("Debug message: Generating Extern List...\n");
+		/*if (NULL != ExternList) {
+			if(isDebugging) printf("Debug message: Generating Extern List...\n");
 			val = ExternList->Codegen();
-		}
+		}*/
 		if (NULL != PackageDef) {
-			printf("Debug message: Generating package...\n");
+			if(isDebugging) printf("Debug message: Generating package...\n");
 			val = PackageDef->Codegen();
 		} else {
 			throw runtime_error("no package definition in decaf program");
@@ -477,8 +481,10 @@ public:
 	~MethodCallAST() { identifierName = ""; delete argumentList; }
 	string str() { return string("MethodCall(") + identifierName + "," + argumentList->str() + ")"; }
 	llvm::Value *Codegen() {
-		printf("Debug message: Generating method call... \n");
-		cout << identifierName << endl;
+		if(isDebugging) {
+			printf("Debug message: Generating method call... Calling ");
+			cout << identifierName << endl;
+		}
 
 		llvm::Function *TheFunction = TheModule->getFunction(identifierName);
 		//return NULL;
@@ -631,7 +637,7 @@ public:
 			descriptor *fetchedVarDescriptor = getSymbolTable(identifierName);
 
 			if(fetchedVarDescriptor) {
-				fetchedVarDescriptor->debug();
+				if(isDebugging) fetchedVarDescriptor->debug();
 				llvm::Type *AllocaType = fetchedVarDescriptor->getType();
 				const llvm::PointerType *ptrTy = value->Codegen()->getType()->getPointerTo();
 
@@ -696,7 +702,7 @@ public:
 	}
 	llvm::Value *Codegen() {
 
-		std::vector<llvm::Type*> args;
+		/*std::vector<llvm::Type*> args;
 		printf("Debug message: Generating extern function...\n");
 		for (list<decafAST *>::iterator i = typeList->stmts.begin(); i != typeList->stmts.end(); i++) {
 			//printf("%d\n", ((ExternType *)(*i))->externType );
@@ -711,11 +717,28 @@ public:
 		    TheModule
 		);
 
-		return func;
-		//return NULL;
+		return func;*/
+		return NULL;
 	}
 	void insertSymbolIntoSymbolTable() {
-		descriptor *newDescp = new descriptor(identifierName, methodTypeId, linepos, NULL);
+
+		std::vector<llvm::Type*> args;
+		if(isDebugging) printf("Debug message: Generating extern function...\nArg Type: ");
+		for (list<decafAST *>::iterator i = typeList->stmts.begin(); i != typeList->stmts.end(); i++) {
+			//printf("%d\n", ((ExternType *)(*i))->externType );
+			if(isDebugging) printf("%d ", ((ExternType *) (*i))->externType);
+			args.push_back(getLLVMType(((ExternType *) (*i))->externType));
+		}
+		if(isDebugging) printf("\n");
+		llvm::Type *returnTy=getLLVMType(methodTypeId);
+		llvm::Function *func = llvm::Function::Create(
+		    llvm::FunctionType::get(returnTy, args, false),
+		    llvm::Function::ExternalLinkage,
+		    identifierName,
+		    TheModule
+		);
+
+		descriptor *newDescp = new descriptor(identifierName, methodTypeId, linepos, (llvm::Value *)func);
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 	}
 };
@@ -863,6 +886,7 @@ public:
 	}
 
 	void insertSymbolIntoSymbolTable() {
+		if(isDebugging) printf("Inserting block into symbol table...\n");
 		if(!isMethod) {
 			this->currentST = new DecafSymbolTable;
 			SymbolTableList.push_front(this->currentST);
@@ -955,6 +979,7 @@ public:
 
 		return node;
 		*/
+		return NULL;
 	}
 	void insertSymbolIntoSymbolTable() {
 
@@ -1031,8 +1056,9 @@ public:
 		return string("ReturnStmt(") + getString(returnValue) + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		if(returnValue != NULL)
+			return Builder.CreateRet(returnValue->Codegen());
+		else return NULL;
 	}
 	void insertSymbolIntoSymbolTable() {
 
@@ -1093,9 +1119,7 @@ public:
 		vector<llvm::Type* > args;
 
 		for (list<IDTypeStringSpecialAST* >::iterator i = stmts.begin(); i != stmts.end(); i++) {
-			int tempTypeId = (*i)->getTypeId();
-			llvm::Type *tempType = getLLVMType(tempTypeId);
-			args.push_back(tempType);
+			args.push_back(getLLVMType((*i)->getTypeId()));
 		}
 		return args;
 	};
@@ -1134,7 +1158,7 @@ public:
 		//return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str()+ "," ; //+ block->str() + ")";
 	}
 	llvm::Value *Codegen() {
-		cout << "Generating MethodDecl Heads..." << identifierName << endl;
+		/*cout << "Generating MethodDecl Heads..." << identifierName << endl;
 		llvm::Type *returnType = getLLVMType(methodTypeId);
 		// get the types for every variables
 		vector<llvm::Type *> args = paramList->getTypeList();
@@ -1146,15 +1170,30 @@ public:
 				TheModule
 		);
 
-		return func;
+		return func;*/
+		return NULL;
 	}
 	void insertSymbolIntoSymbolTable() {
-		
+		// insert the argument list into the function symbol table
 		paramList->insertSymbolIntoSymbolTable();
 	}
-	void insertHead() {
-		descriptor *newDesp = new descriptor(identifierName, methodTypeId, startpos, NULL);
+	llvm::Function* insertMethodDeclIntoParentSymbolTable() {
+		if(isDebugging) printf("Inserting method decl into symbol table...\n");
+
+		llvm::Type *returnType = getLLVMType(methodTypeId);
+		// get the types for every variables
+		vector<llvm::Type *> args = paramList->getTypeList();
+
+		llvm::Function *func = llvm::Function::Create(
+				llvm::FunctionType::get(returnType, args, false),
+				llvm::Function::ExternalLinkage,
+				identifierName,
+				TheModule
+		);
+
+		descriptor *newDesp = new descriptor(identifierName, methodTypeId, startpos, (llvm::Value *)func);
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDesp));
+		return func;
 	}
 
 	int getType() {
@@ -1166,6 +1205,7 @@ class MethodDeclAST : public decafAST {
 	decafAST *head;
 	decafAST *block;
 	DecafSymbolTable *currentST;
+	llvm::Function *func;
 public:
 	MethodDeclAST(decafAST *headMethod, decafAST *blockMethod) {
 		head = headMethod;
@@ -1182,9 +1222,7 @@ public:
 		SymbolTableList.push_front(currentST);
 
 		//checkTable(currentST);
-		printf("Debug message: Generating MethodDecl...\n");
-
-		llvm::Function *func = (llvm::Function *)head->Codegen();
+		if(isDebugging) printf("Debug message: Generating MethodDecl...\n");
 
 		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), "entry", func);
 		// Symbol table
@@ -1213,16 +1251,19 @@ public:
 	}
 	void insertSymbolIntoSymbolTable() {
 
-		MethodDeclHeadAST *headAST = (MethodDeclHeadAST *)head;
-		headAST->insertHead();
+		MethodDeclHeadAST * headAST = ((MethodDeclHeadAST *)head);
+		MethodBlockAST * blockAST = ((MethodBlockAST *)block);
+
+		func = headAST->insertMethodDeclIntoParentSymbolTable();
 
 		this->currentST = new DecafSymbolTable;
 		SymbolTableList.push_front(this->currentST);
 
-		head->insertSymbolIntoSymbolTable();
-		block->insertSymbolIntoSymbolTable();
+		headAST ->insertSymbolIntoSymbolTable();
+		blockAST->insertSymbolIntoSymbolTable();
 
 		SymbolTableList.pop_front();
+		
 	}
 };
 

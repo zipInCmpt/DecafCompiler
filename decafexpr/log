@@ -1,0 +1,761 @@
+INFO:root:path=dev
+INFO:root:Checking dev/expr-testfile-6.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-6.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-01
+INFO:root:Checking dev/and.out
+INFO:root:Diff between reference and your output for dev/and.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1000
+INFO:root:Checking dev/bgr.out
+INFO:root:Diff between reference and your output for dev/bgr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-1
++Codegen for Assign to b
++Codegen for Assign to b
++Codegen for Assign to b
+INFO:root:Checking dev/charescapevals.out
+INFO:root:Diff between reference and your output for dev/charescapevals.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-911131071289239
+INFO:root:Checking dev/method0.out
+INFO:root:Diff between reference and your output for dev/method0.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-11
++Codegen for Assign to x
+INFO:root:Checking dev/expr-testfile-3.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++Codegen for Assign to y
+INFO:root:Checking dev/intcall2.out
+INFO:root:Diff between reference and your output for dev/intcall2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-12
+INFO:root:Checking dev/charvals.out
+INFO:root:Diff between reference and your output for dev/charvals.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-97109122657790485557451253494
+INFO:root:Checking dev/boolcall2.out
+INFO:root:Diff between reference and your output for dev/boolcall2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-2
+INFO:root:Checking dev/intvar.out
+INFO:root:Diff between reference and your output for dev/intvar.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-112
++Codegen for Assign to x
+INFO:root:Checking dev/intcallchain3expr.out
+INFO:root:Diff between reference and your output for dev/intcallchain3expr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-123
+INFO:root:Checking dev/prec.out
+INFO:root:Diff between reference and your output for dev/prec.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,2 @@
+-371-3
++Codegen for Assign to a
++Codegen for Assign to b
+INFO:root:Checking dev/default-passes-ok.out
+INFO:root:dev/default-passes-ok.out Correct!
+INFO:root:Checking dev/intcall1.out
+INFO:root:Diff between reference and your output for dev/intcall1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1
+INFO:root:Checking dev/var3.out
+INFO:root:Diff between reference and your output for dev/var3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-000111
++Codegen for Assign to x
++Codegen for Assign to y
++Codegen for Assign to z
+INFO:root:Checking dev/rshift.out
+INFO:root:Diff between reference and your output for dev/rshift.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-741
+INFO:root:Checking dev/leq.out
+INFO:root:Diff between reference and your output for dev/leq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-110
+INFO:root:Checking dev/var2.out
+INFO:root:Diff between reference and your output for dev/var2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,2 @@
+-11
++Codegen for Assign to x
++Codegen for Assign to y
+INFO:root:Checking dev/neg.out
+INFO:root:Diff between reference and your output for dev/neg.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+--777
+INFO:root:Checking dev/times.out
+INFO:root:Diff between reference and your output for dev/times.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-35-35
+INFO:root:Checking dev/div.out
+INFO:root:Diff between reference and your output for dev/div.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-12-2
+INFO:root:Checking dev/intcallchain2.out
+INFO:root:Diff between reference and your output for dev/intcallchain2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-11
+INFO:root:Checking dev/mod.out
+INFO:root:Diff between reference and your output for dev/mod.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-0011
+INFO:root:Checking dev/or.out
+INFO:root:Diff between reference and your output for dev/or.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1110
+INFO:root:Checking dev/shadow.out
+INFO:root:Diff between reference and your output for dev/shadow.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,2 @@
+-11002100310041005100
++Codegen for Assign to x
++Codegen for Assign to y
+INFO:root:Checking dev/charescapes.out
+INFO:root:Diff between reference and your output for dev/charescapes.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-911131071289239
++Codegen for Assign to c
+INFO:root:Checking dev/externreadint.out
+INFO:root:Diff between reference and your output for dev/externreadint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-3
++Codegen for Assign to x
+INFO:root:Checking dev/lt.out
+INFO:root:Diff between reference and your output for dev/lt.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-100
+INFO:root:Checking dev/returnmismatch-intofchar-ok.out
+INFO:root:Diff between reference and your output for dev/returnmismatch-intofchar-ok.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-120
+INFO:root:Checking dev/boolcallchain3.out
+INFO:root:Diff between reference and your output for dev/boolcallchain3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-111
+INFO:root:Checking dev/boolcallchain2.out
+INFO:root:Diff between reference and your output for dev/boolcallchain2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-11
+INFO:root:Checking dev/expr-testfile-8.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-8.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-958
++Codegen for Assign to x
+INFO:root:Checking dev/expr-testfile-9.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-9.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1020
++Codegen for Assign to x
+INFO:root:Checking dev/intcallcallerexpr.out
+INFO:root:Diff between reference and your output for dev/intcallcallerexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1
+INFO:root:Checking dev/blt.out
+INFO:root:Diff between reference and your output for dev/blt.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-0
++Codegen for Assign to b
++Codegen for Assign to b
++Codegen for Assign to b
+INFO:root:Checking dev/intconst.out
+INFO:root:Diff between reference and your output for dev/intconst.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-012345-12345
+INFO:root:Checking dev/boolconst.out
+INFO:root:Diff between reference and your output for dev/boolconst.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-103
+INFO:root:Checking dev/bboolneq.out
+INFO:root:Diff between reference and your output for dev/bboolneq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-0
++Codegen for Assign to b
++Codegen for Assign to b
++Codegen for Assign to b
++Codegen for Assign to b
+INFO:root:Checking dev/backward.out
+INFO:root:Diff between reference and your output for dev/backward.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1013
+INFO:root:Checking dev/noexterns.out
+INFO:root:Diff between reference and your output for dev/noexterns.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-2
++Codegen for Assign to x
+INFO:root:Checking dev/expr-testfile-7.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-7.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-28660
++Codegen for Assign to x
+INFO:root:Checking dev/charvar.out
+INFO:root:Diff between reference and your output for dev/charvar.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,2 @@
+-5
++Codegen for Assign to x
++Codegen for Assign to y
+INFO:root:Checking dev/multvar.out
+INFO:root:Diff between reference and your output for dev/multvar.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,2 @@
+-11
++Codegen for Assign to x
++Codegen for Assign to y
+INFO:root:Checking dev/method1.out
+INFO:root:Diff between reference and your output for dev/method1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-111111
++Codegen for Assign to x
+INFO:root:Checking dev/callexpr.out
+INFO:root:Diff between reference and your output for dev/callexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-3
++Codegen for Assign to x
+INFO:root:Checking dev/intconst-var.out
+INFO:root:Diff between reference and your output for dev/intconst-var.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-012345-12345
++Codegen for Assign to x
+INFO:root:Checking dev/expr-testfile-5.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-5.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,2 @@
+-1
++Codegen for Assign to x
++Codegen for Assign to y
+INFO:root:Checking dev/expr-testfile-4.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-4.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+--3
+INFO:root:Checking dev/charexpr.out
+INFO:root:Diff between reference and your output for dev/charexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-5
++Codegen for Assign to x
+INFO:root:Checking dev/stringconst.out
+INFO:root:Diff between reference and your output for dev/stringconst.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-hello, world
+INFO:root:Checking dev/default-passes.out
+INFO:root:dev/default-passes.out Correct!
+INFO:root:Checking dev/boolneq.out
+INFO:root:Diff between reference and your output for dev/boolneq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-01103
+INFO:root:Checking dev/boolconst-var.out
+INFO:root:Diff between reference and your output for dev/boolconst-var.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-10
++Codegen for Assign to b
+INFO:root:Checking dev/intneq.out
+INFO:root:Diff between reference and your output for dev/intneq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-101
+INFO:root:Checking dev/bleq.out
+INFO:root:Diff between reference and your output for dev/bleq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-0
++Codegen for Assign to b
++Codegen for Assign to b
++Codegen for Assign to b
+INFO:root:Checking dev/boolcallchain3expr.out
+INFO:root:Diff between reference and your output for dev/boolcallchain3expr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-101
+INFO:root:Checking dev/inteq.out
+INFO:root:Diff between reference and your output for dev/inteq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-010
+INFO:root:Checking dev/not.out
+INFO:root:Diff between reference and your output for dev/not.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-011001
+INFO:root:Checking dev/charprint.out
+INFO:root:Diff between reference and your output for dev/charprint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-97
++Codegen for Assign to x
+INFO:root:Checking dev/bgeq.out
+INFO:root:Diff between reference and your output for dev/bgeq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-1
++Codegen for Assign to b
++Codegen for Assign to b
++Codegen for Assign to b
+INFO:root:Checking dev/onlystate.out
+INFO:root:Diff between reference and your output for dev/onlystate.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-0
+INFO:root:Checking dev/mixedcallchainexprmultibranch.out
+INFO:root:Diff between reference and your output for dev/mixedcallchainexprmultibranch.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1120312020
+INFO:root:Checking dev/forward.out
+INFO:root:Diff between reference and your output for dev/forward.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1013
+INFO:root:Checking dev/stringescapes.out
+INFO:root:Diff between reference and your output for dev/stringescapes.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1,3 +0,0 @@
+-1	23
+-4
+-5678\9"10
+INFO:root:Checking dev/callexprprint.out
+INFO:root:Diff between reference and your output for dev/callexprprint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-300
++Codegen for Assign to x
+INFO:root:Checking dev/binteq.out
+INFO:root:Diff between reference and your output for dev/binteq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-0
++Codegen for Assign to b
++Codegen for Assign to b
++Codegen for Assign to b
+INFO:root:Checking dev/geq.out
+INFO:root:Diff between reference and your output for dev/geq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-011
+INFO:root:Checking dev/minus.out
+INFO:root:Diff between reference and your output for dev/minus.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+--212
+INFO:root:Checking dev/gr.out
+INFO:root:Diff between reference and your output for dev/gr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-001
+INFO:root:Checking dev/lshift.out
+INFO:root:Diff between reference and your output for dev/lshift.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1628104
+INFO:root:Checking dev/externprintint.out
+INFO:root:Diff between reference and your output for dev/externprintint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++Codegen for Assign to x
+INFO:root:Checking dev/emptymethod.out
+INFO:root:Diff between reference and your output for dev/emptymethod.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1013
+INFO:root:Checking dev/booleq.out
+INFO:root:Diff between reference and your output for dev/booleq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-10013
+INFO:root:Checking dev/stringescapequote.out
+INFO:root:Diff between reference and your output for dev/stringescapequote.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-"
+INFO:root:Checking dev/expr-testfile-2.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-958
++Codegen for Assign to x
+INFO:root:Checking dev/arith1.out
+INFO:root:Diff between reference and your output for dev/arith1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-0
++Codegen for Assign to a
++Codegen for Assign to b
++Codegen for Assign to c
+INFO:root:Checking dev/boolcallcallerexpr.out
+INFO:root:Diff between reference and your output for dev/boolcallcallerexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1
+INFO:root:Checking dev/expr-testfile-0.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-0.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-13
+INFO:root:Checking dev/onlyvar.out
+INFO:root:Diff between reference and your output for dev/onlyvar.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-0
+INFO:root:Checking dev/mixedcallchainexpr.out
+INFO:root:Diff between reference and your output for dev/mixedcallchainexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-112031
+INFO:root:Checking dev/boolcall1.out
+INFO:root:Diff between reference and your output for dev/boolcall1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1
+INFO:root:Checking dev/boolcallcalleeexpr.out
+INFO:root:Diff between reference and your output for dev/boolcallcalleeexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1
+INFO:root:Checking dev/expr-testfile-1.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-13
++Codegen for Assign to x
+INFO:root:Checking dev/stringconst2.out
+INFO:root:Diff between reference and your output for dev/stringconst2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-hello, world
+INFO:root:Checking dev/stringconst3.out
+INFO:root:Diff between reference and your output for dev/stringconst3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-hello, world
+INFO:root:Checking dev/method2.out
+INFO:root:Diff between reference and your output for dev/method2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1121
++Codegen for Assign to x
+INFO:root:Checking dev/returnemptyparens.out
+INFO:root:Diff between reference and your output for dev/returnemptyparens.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-1
+INFO:root:Checking dev/call0.out
+INFO:root:Diff between reference and your output for dev/call0.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-0
+INFO:root:Checking dev/bintneq.out
+INFO:root:Diff between reference and your output for dev/bintneq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-1
++Codegen for Assign to b
++Codegen for Assign to b
++Codegen for Assign to b
+INFO:root:Checking dev/bbooleq.out
+INFO:root:Diff between reference and your output for dev/bbooleq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1
++Codegen for Assign to b
++Codegen for Assign to b
++Codegen for Assign to b
++Codegen for Assign to b
+INFO:root:Checking dev/plus.out
+INFO:root:Diff between reference and your output for dev/plus.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-12-2
+INFO:root:Checking dev/boolvar.out
+INFO:root:Diff between reference and your output for dev/boolvar.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++Codegen for Assign to x
+INFO:root:Checking dev/intcallcalleeexpr.out
+INFO:root:Diff between reference and your output for dev/intcallcalleeexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-11
+INFO:root:Checking dev/externprintstring.out
+INFO:root:Diff between reference and your output for dev/externprintstring.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-hello world
++Codegen for Assign to x
+INFO:root:Checking dev/charexprprint.out
+INFO:root:Diff between reference and your output for dev/charexprprint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-5
++Codegen for Assign to x
+INFO:root:Checking dev/arith4.out
+INFO:root:Diff between reference and your output for dev/arith4.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-0
+INFO:root:Checking dev/intcallchain3.out
+INFO:root:Diff between reference and your output for dev/intcallchain3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-111
+INFO:root:Checking dev/emptyblock.out
+INFO:root:Diff between reference and your output for dev/emptyblock.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-0
+INFO:root:Checking dev/intmethod.out
+INFO:root:Diff between reference and your output for dev/intmethod.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1 @@
+-1
++Codegen for Assign to x
+INFO:root:Checking dev/inthexconst.out
+INFO:root:Diff between reference and your output for dev/inthexconst.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +0,0 @@
+-06575-6575

@@ -1,8 +1,8 @@
-output prefix: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/boolconst-var
+output prefix: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/boolconst-var
 llvmas: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as
 llc: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc
 cc: gcc
-codegen: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr
-stdlib: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c
-generating llvm code:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr ... failed (-11)
+codegen: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr
+stdlib: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c
+generating llvm code:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr ... failed (-11)
 codegen failed

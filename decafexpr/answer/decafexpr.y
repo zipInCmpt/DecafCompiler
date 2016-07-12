@@ -14,7 +14,7 @@ int yylex(void);
 int yyerror(char *); 
 
 // print AST?
-bool printAST = true;
+bool printAST = false;
 
 // this global variable contains all the generated code
 static llvm::Module *TheModule;

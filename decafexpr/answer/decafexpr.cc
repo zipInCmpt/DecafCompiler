@@ -159,7 +159,7 @@ public:
 	}
 	llvm::Value *Codegen() {
 		SymbolTableList.push_front(currentST);
-		checkTable(currentST);
+		//checkTable(currentST);
 		llvm::Value *val = NULL;
 		TheModule->setModuleIdentifier(llvm::StringRef(Name));
 		if (NULL != FieldDeclList) {
@@ -213,14 +213,17 @@ public:
 	}
 	string str() { return string("Program") + "(" + getString(ExternList) + "," + getString(PackageDef) + ")"; }
 	llvm::Value *Codegen() {
+		printf("Debug message: Generating program...\n");
 		llvm::Value *val = NULL;
 		SymbolTableList.push_front(currentST);
-		checkTable(currentST);
+		//checkTable(currentST);
 
 		if (NULL != ExternList) {
+			printf("Debug message: Generating Extern List...\n");
 			val = ExternList->Codegen();
 		}
 		if (NULL != PackageDef) {
+			printf("Debug message: Generating package...\n");
 			val = PackageDef->Codegen();
 		} else {
 			throw runtime_error("no package definition in decaf program");
@@ -467,13 +470,25 @@ public:
 	~MethodCallAST() { identifierName = ""; delete argumentList; }
 	string str() { return string("MethodCall(") + identifierName + "," + argumentList->str() + ")"; }
 	llvm::Value *Codegen() {
+		printf("Debug message: Generating method call...\n");
+
 		llvm::Function *TheFunction = TheModule->getFunction(identifierName);
 
-		if(!TheFunction) {
-			//throw runtime_error("Undefined function is called.");
+		if(TheFunction==NULL) {
+			throw runtime_error("Undefined function is called.");
 			return NULL;
 		} else {
-			return NULL;
+			std::vector<llvm::Value *> args;
+			for (list<decafAST *>::iterator i = argumentList->stmts.begin(); i != argumentList->stmts.end(); i++) {
+				args.push_back( (*i)->Codegen() );
+			}
+			bool isVoid = TheFunction->getReturnType()->isVoidTy();
+			llvm::Value *val = Builder.CreateCall(
+			    TheFunction,
+			    args,
+			    isVoid ? "" : "calltmp"
+			);
+			return val;
 		}
 	}
 	void insertSymbolIntoSymbolTable() {
@@ -667,21 +682,21 @@ public:
 		return string("ExternFunction(") + identifierName + "," + getMethodType(methodTypeId) + "," + typeList->str() + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
 		std::vector<llvm::Type*> args;
-
+		printf("Debug message: Generating extern function...\n");
 		for (list<decafAST *>::iterator i = typeList->stmts.begin(); i != typeList->stmts.end(); i++) {
 			//printf("%d\n", ((ExternType *)(*i))->externType );
+			printf("%d\n", ((ExternType *)(*i)) ->externType );
 			args.push_back( getLLVMType( ((ExternType *)(*i)) ->externType) );
 		}
-		/*llvm::Type *returnTy=getLLVMType(methodTypeId);
+		llvm::Type *returnTy=getLLVMType(methodTypeId);
 		llvm::Function *func = llvm::Function::Create(
 		    llvm::FunctionType::get(returnTy, args, false),
 		    llvm::Function::ExternalLinkage,
 		    identifierName,
 		    TheModule
-		);*/
-		return val;
+		);
+		return func;
 	}
 	void insertSymbolIntoSymbolTable() {
 		descriptor *newDescp = new descriptor(identifierName, methodTypeId, linepos, NULL);
@@ -811,7 +826,7 @@ public:
 	}
 	llvm::Value *Codegen() {
 		SymbolTableList.push_front(currentST);
-		if(!isMethod) checkTable(currentST);
+		//if(!isMethod) checkTable(currentST);
 		if(varDeclList != NULL) varDeclList->Codegen();
 		if(statementList != NULL) statementList->Codegen();
 		SymbolTableList.pop_front();
@@ -1131,7 +1146,7 @@ public:
 	llvm::Value *Codegen() {
 		SymbolTableList.push_front(currentST);
 
-		checkTable(currentST);
+		//checkTable(currentST);
 
 		llvm::Function *func = (llvm::Function *)head->Codegen();
 

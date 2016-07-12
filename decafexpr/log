@@ -1,0 +1,1187 @@
+INFO:root:path=dev
+INFO:root:Checking dev/expr-testfile-6.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-6.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-01
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_int,UnaryExpr(Not,BoolExpr(True))),MethodCall(print_int,UnaryExpr(Not,BoolExpr(False)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
+INFO:root:Checking dev/and.out
+INFO:root:Diff between reference and your output for dev/and.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1000
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(And,BoolExpr(True),BoolExpr(True))),MethodCall(print_int,BinaryExpr(And,BoolExpr(True),BoolExpr(False))),MethodCall(print_int,BinaryExpr(And,BoolExpr(False),BoolExpr(True))),MethodCall(print_int,BinaryExpr(And,BoolExpr(False),BoolExpr(False)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/bgr.out
+INFO:root:Diff between reference and your output for dev/bgr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(b,BoolType),AssignVar(b,BinaryExpr(Gt,NumberExpr(13),NumberExpr(15))),AssignVar(b,BinaryExpr(Gt,NumberExpr(13),NumberExpr(13))),AssignVar(b,BinaryExpr(Gt,NumberExpr(15),NumberExpr(13))),MethodCall(print_int,VariableExpr(b))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : b
+INFO:root:Checking dev/charescapevals.out
+INFO:root:Diff between reference and your output for dev/charescapevals.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-911131071289239
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_int,NumberExpr(9)),MethodCall(print_int,NumberExpr(11)),MethodCall(print_int,NumberExpr(13)),MethodCall(print_int,NumberExpr(10)),MethodCall(print_int,NumberExpr(7)),MethodCall(print_int,NumberExpr(12)),MethodCall(print_int,NumberExpr(8)),MethodCall(print_int,NumberExpr(92)),MethodCall(print_int,NumberExpr(39))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
+INFO:root:Checking dev/method0.out
+INFO:root:Diff between reference and your output for dev/method0.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,6 @@
+-11
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_int,NumberExpr(1)),MethodCall(print_int,VariableExpr(x)))),mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_int,NumberExpr(1)),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 10 : main
++Defined variable in line 4 : test
++Defined variable in line 5 : x
++Defined variable in line 11 : x
+INFO:root:Checking dev/expr-testfile-3.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(y,BoolType),AssignVar(y,BoolExpr(True)),MethodCall(print_int,VariableExpr(y))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 4 : y
+INFO:root:Checking dev/intcall2.out
+INFO:root:Diff between reference and your output for dev/intcall2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,6 @@
+-12
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(print_int,VariableExpr(b)))),mainMethodMethodBlock(None,MethodCall(test,NumberExpr(1),NumberExpr(2))))))
++Defined variable in line 1 : print_int
++Defined variable in line 8 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
++Defined variable in line 4 : b
+INFO:root:Checking dev/charvals.out
+INFO:root:Diff between reference and your output for dev/charvals.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-97109122657790485557451253494
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_int,NumberExpr(97)),MethodCall(print_int,NumberExpr(109)),MethodCall(print_int,NumberExpr(122)),MethodCall(print_int,NumberExpr(65)),MethodCall(print_int,NumberExpr(77)),MethodCall(print_int,NumberExpr(90)),MethodCall(print_int,NumberExpr(48)),MethodCall(print_int,NumberExpr(55)),MethodCall(print_int,NumberExpr(57)),MethodCall(print_int,NumberExpr(45)),MethodCall(print_int,NumberExpr(125)),MethodCall(print_int,NumberExpr(34)),MethodCall(print_int,NumberExpr(94))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
+INFO:root:Checking dev/boolcall2.out
+INFO:root:Diff between reference and your output for dev/boolcall2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,6 @@
+-2
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,MethodCall(print_int,NumberExpr(2)))),mainMethodMethodBlock(None,MethodCall(test,BoolExpr(True),BoolExpr(False))))))
++Defined variable in line 1 : print_int
++Defined variable in line 7 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
++Defined variable in line 4 : b
+INFO:root:Checking dev/intvar.out
+INFO:root:Diff between reference and your output for dev/intvar.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-112
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_int,NumberExpr(1)),MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,NumberExpr(2))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/intcallchain3expr.out
+INFO:root:Diff between reference and your output for dev/intcallchain3expr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,9 @@
+-123
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,test3MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)))),test2MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(test3,BinaryExpr(Plus,VariableExpr(a),NumberExpr(1))))),test1MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(test2,BinaryExpr(Plus,VariableExpr(a),NumberExpr(1))))),mainMethodMethodBlock(None,MethodCall(test1,NumberExpr(1))))))
++Defined variable in line 1 : print_int
++Defined variable in line 15 : main
++Defined variable in line 11 : test1
++Defined variable in line 7 : test2
++Defined variable in line 4 : test3
++Defined variable in line 4 : a
++Defined variable in line 7 : a
++Defined variable in line 11 : a
+INFO:root:Checking dev/prec.out
+INFO:root:Diff between reference and your output for dev/prec.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,7 @@
+-371-3
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(prec,None,mainMethodMethodBlock(VarDef(a,IntType),VarDef(b,IntType),VarDef(d,IntType),VarDef(c,BoolType),AssignVar(a,BinaryExpr(Plus,BinaryExpr(Rightshift,NumberExpr(1),NumberExpr(2)),NumberExpr(3))),AssignVar(b,BinaryExpr(Plus,NumberExpr(1),BinaryExpr(Mult,NumberExpr(2),NumberExpr(3)))),AssignVar(c,BinaryExpr(Or,UnaryExpr(Not,BoolExpr(False)),BoolExpr(True))),AssignVar(d,BinaryExpr(Plus,BinaryExpr(Div,NumberExpr(1),NumberExpr(2)),UnaryExpr(UnaryMinus,NumberExpr(3)))),MethodCall(print_int,VariableExpr(a)),MethodCall(print_int,VariableExpr(b)),MethodCall(print_int,VariableExpr(c)),MethodCall(print_int,VariableExpr(d))))))
++Defined variable in line 1 : print_int
++Defined variable in line 4 : main
++Defined variable in line 5 : a
++Defined variable in line 5 : b
++Defined variable in line 6 : c
++Defined variable in line 5 : d
+INFO:root:Checking dev/default-passes-ok.out
+INFO:root:Diff between reference and your output for dev/default-passes-ok.out
+INFO:root:
+--- reference
++++ your-output
+@@ -0,0 +1,2 @@
++Program(None,Package(Test,None,mainMethodMethodBlock(None,None))))
++Defined variable in line 2 : main
+INFO:root:Checking dev/intcall1.out
+INFO:root:Diff between reference and your output for dev/intcall1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,MethodCall(print_int,NumberExpr(1)))),mainMethodMethodBlock(None,MethodCall(test,NumberExpr(1))))))
++Defined variable in line 1 : print_int
++Defined variable in line 7 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
+INFO:root:Checking dev/var3.out
+INFO:root:Diff between reference and your output for dev/var3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,6 @@
+-000111
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),VarDef(y,IntType),VarDef(z,IntType),AssignVar(x,NumberExpr(0)),AssignVar(y,NumberExpr(0)),AssignVar(z,NumberExpr(0)),MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(y)),MethodCall(print_int,VariableExpr(z)),AssignVar(x,NumberExpr(1)),AssignVar(y,NumberExpr(1)),AssignVar(z,NumberExpr(1)),MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(y)),MethodCall(print_int,VariableExpr(z))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
++Defined variable in line 6 : y
++Defined variable in line 7 : z
+INFO:root:Checking dev/rshift.out
+INFO:root:Diff between reference and your output for dev/rshift.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-741
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Rightshift,NumberExpr(14),NumberExpr(1))),MethodCall(print_int,BinaryExpr(Rightshift,NumberExpr(8),NumberExpr(1))),MethodCall(print_int,BinaryExpr(Rightshift,NumberExpr(13),NumberExpr(3)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/leq.out
+INFO:root:Diff between reference and your output for dev/leq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-110
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Leq,NumberExpr(13),NumberExpr(15))),MethodCall(print_int,BinaryExpr(Leq,NumberExpr(13),NumberExpr(13))),MethodCall(print_int,BinaryExpr(Leq,NumberExpr(15),NumberExpr(13)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/var2.out
+INFO:root:Diff between reference and your output for dev/var2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-11
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),VarDef(y,IntType),AssignVar(x,NumberExpr(1)),AssignVar(y,NumberExpr(1)),MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(y))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
++Defined variable in line 6 : y
+INFO:root:Checking dev/neg.out
+INFO:root:Diff between reference and your output for dev/neg.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+--777
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,UnaryExpr(UnaryMinus,NumberExpr(7))),MethodCall(print_int,UnaryExpr(UnaryMinus,UnaryExpr(UnaryMinus,NumberExpr(7)))),MethodCall(print_int,UnaryExpr(UnaryMinus,UnaryExpr(UnaryMinus,NumberExpr(7))))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/times.out
+INFO:root:Diff between reference and your output for dev/times.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-35-35
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Mult,NumberExpr(5),NumberExpr(7))),MethodCall(print_int,BinaryExpr(Mult,NumberExpr(5),UnaryExpr(UnaryMinus,NumberExpr(7))))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/div.out
+INFO:root:Diff between reference and your output for dev/div.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-12-2
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Div,NumberExpr(5),NumberExpr(5))),MethodCall(print_int,BinaryExpr(Div,NumberExpr(5),NumberExpr(2))),MethodCall(print_int,BinaryExpr(Div,NumberExpr(5),UnaryExpr(UnaryMinus,NumberExpr(2))))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/intcallchain2.out
+INFO:root:Diff between reference and your output for dev/intcallchain2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,7 @@
+-11
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,test2MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)))),test1MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(test2,VariableExpr(a)))),mainMethodMethodBlock(None,MethodCall(test1,NumberExpr(1))))))
++Defined variable in line 1 : print_int
++Defined variable in line 11 : main
++Defined variable in line 7 : test1
++Defined variable in line 4 : test2
++Defined variable in line 4 : a
++Defined variable in line 7 : a
+INFO:root:Checking dev/mod.out
+INFO:root:Diff between reference and your output for dev/mod.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-0011
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Mod,NumberExpr(10),NumberExpr(2))),MethodCall(print_int,BinaryExpr(Mod,NumberExpr(10),NumberExpr(5))),MethodCall(print_int,BinaryExpr(Mod,NumberExpr(10),NumberExpr(3))),MethodCall(print_int,BinaryExpr(Mod,NumberExpr(13),NumberExpr(3)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/or.out
+INFO:root:Diff between reference and your output for dev/or.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1110
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Or,BoolExpr(True),BoolExpr(True))),MethodCall(print_int,BinaryExpr(Or,BoolExpr(True),BoolExpr(False))),MethodCall(print_int,BinaryExpr(Or,BoolExpr(False),BoolExpr(True))),MethodCall(print_int,BinaryExpr(Or,BoolExpr(False),BoolExpr(False)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/shadow.out
+INFO:root:Diff between reference and your output for dev/shadow.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,9 @@
+-11002100310041005100
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),VarDef(y,IntType),AssignVar(x,NumberExpr(1)),AssignVar(y,NumberExpr(100)),MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(y)),Block(VarDef(x,IntType),AssignVar(x,NumberExpr(2)),MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(y)),Block(VarDef(x,IntType),AssignVar(x,NumberExpr(3)),MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(y)),Block(VarDef(x,IntType),AssignVar(x,NumberExpr(4)),MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(y)),Block(VarDef(x,IntType),AssignVar(x,NumberExpr(5)),MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(y))))))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
++Defined variable in line 5 : y
++Defined variable in line 11 : x
++Defined variable in line 16 : x
++Defined variable in line 21 : x
++Defined variable in line 26 : x
+INFO:root:Checking dev/charescapes.out
+INFO:root:Diff between reference and your output for dev/charescapes.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-911131071289239
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(c,IntType),AssignVar(c,NumberExpr(9)),MethodCall(print_int,VariableExpr(c)),AssignVar(c,NumberExpr(11)),MethodCall(print_int,VariableExpr(c)),AssignVar(c,NumberExpr(13)),MethodCall(print_int,VariableExpr(c)),AssignVar(c,NumberExpr(10)),MethodCall(print_int,VariableExpr(c)),AssignVar(c,NumberExpr(7)),MethodCall(print_int,VariableExpr(c)),AssignVar(c,NumberExpr(12)),MethodCall(print_int,VariableExpr(c)),AssignVar(c,NumberExpr(8)),MethodCall(print_int,VariableExpr(c)),AssignVar(c,NumberExpr(92)),MethodCall(print_int,VariableExpr(c)),AssignVar(c,NumberExpr(39)),MethodCall(print_int,VariableExpr(c))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : c
+INFO:root:Checking dev/externreadint.out
+INFO:root:Diff between reference and your output for dev/externreadint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-3
++Program(ExternFunction(read_int,IntType,None),ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,MethodCall(read_int,None)),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 2 : print_int
++Defined variable in line 1 : read_int
++Defined variable in line 5 : main
++Defined variable in line 6 : x
+INFO:root:Checking dev/lt.out
+INFO:root:Diff between reference and your output for dev/lt.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-100
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Lt,NumberExpr(13),NumberExpr(15))),MethodCall(print_int,BinaryExpr(Lt,NumberExpr(13),NumberExpr(13))),MethodCall(print_int,BinaryExpr(Lt,NumberExpr(15),NumberExpr(13)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/returnmismatch-intofchar-ok.out
+INFO:root:Diff between reference and your output for dev/returnmismatch-intofchar-ok.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-120
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,ReturnStmt(NumberExpr(120)))),mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,MethodCall(test,None)),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 7 : main
++Defined variable in line 4 : test
++Defined variable in line 8 : x
+INFO:root:Checking dev/boolcallchain3.out
+INFO:root:Diff between reference and your output for dev/boolcallchain3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,9 @@
+-111
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,test3MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)))),test2MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(test3,VariableExpr(a)))),test1MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(test2,VariableExpr(a)))),mainMethodMethodBlock(None,MethodCall(test1,BoolExpr(True))))))
++Defined variable in line 1 : print_int
++Defined variable in line 15 : main
++Defined variable in line 11 : test1
++Defined variable in line 7 : test2
++Defined variable in line 4 : test3
++Defined variable in line 4 : a
++Defined variable in line 7 : a
++Defined variable in line 11 : a
+INFO:root:Checking dev/boolcallchain2.out
+INFO:root:Diff between reference and your output for dev/boolcallchain2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,7 @@
+-11
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,test2MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)))),test1MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(test2,VariableExpr(a)))),mainMethodMethodBlock(None,MethodCall(test1,BoolExpr(True))))))
++Defined variable in line 1 : print_int
++Defined variable in line 11 : main
++Defined variable in line 7 : test1
++Defined variable in line 4 : test2
++Defined variable in line 4 : a
++Defined variable in line 7 : a
+INFO:root:Checking dev/expr-testfile-8.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-8.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,7 @@
+-958
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),VarDef(y,BoolType),AssignVar(x,BinaryExpr(Plus,BinaryExpr(Plus,BinaryExpr(Plus,NumberExpr(2),BinaryExpr(Mult,NumberExpr(2),NumberExpr(3))),NumberExpr(5)),BinaryExpr(Minus,BinaryExpr(Mult,NumberExpr(43),NumberExpr(23)),NumberExpr(44)))),Block(VarDef(y,IntType),VarDef(x,IntType),AssignVar(y,BinaryExpr(Plus,BinaryExpr(Mult,VariableExpr(x),UnaryExpr(UnaryMinus,NumberExpr(30))),BinaryExpr(Mult,NumberExpr(40),NumberExpr(2)))),AssignVar(x,UnaryExpr(UnaryMinus,VariableExpr(y)))),AssignVar(y,UnaryExpr(Not,BoolExpr(True))),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 4 : x
++Defined variable in line 5 : y
++Defined variable in line 8 : x
++Defined variable in line 7 : y
+INFO:root:Checking dev/expr-testfile-9.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-9.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1020
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(10)),MethodCall(print_int,VariableExpr(x)),AssignVar(x,BinaryExpr(Plus,VariableExpr(x),NumberExpr(10))),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 4 : x
+INFO:root:Checking dev/intcallcallerexpr.out
+INFO:root:Diff between reference and your output for dev/intcallcallerexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,MethodCall(print_int,NumberExpr(1)))),mainMethodMethodBlock(None,MethodCall(test,BinaryExpr(Plus,NumberExpr(1),NumberExpr(11)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 7 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
+INFO:root:Checking dev/blt.out
+INFO:root:Diff between reference and your output for dev/blt.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-0
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(b,BoolType),AssignVar(b,BinaryExpr(Lt,NumberExpr(13),NumberExpr(15))),AssignVar(b,BinaryExpr(Lt,NumberExpr(13),NumberExpr(13))),AssignVar(b,BinaryExpr(Lt,NumberExpr(15),NumberExpr(13))),MethodCall(print_int,VariableExpr(b))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : b
+INFO:root:Checking dev/intconst.out
+INFO:root:Diff between reference and your output for dev/intconst.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-012345-12345
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,NumberExpr(0)),MethodCall(print_int,NumberExpr(12345)),MethodCall(print_int,UnaryExpr(UnaryMinus,NumberExpr(12345)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/boolconst.out
+INFO:root:Diff between reference and your output for dev/boolconst.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-103
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BoolExpr(True)),MethodCall(print_int,BoolExpr(False)),AssignVar(x,NumberExpr(3)),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/bboolneq.out
+INFO:root:Diff between reference and your output for dev/bboolneq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-0
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(b,BoolType),AssignVar(b,BinaryExpr(Neq,BoolExpr(True),BoolExpr(True))),AssignVar(b,BinaryExpr(Neq,BoolExpr(True),BoolExpr(False))),AssignVar(b,BinaryExpr(Neq,BoolExpr(False),BoolExpr(True))),AssignVar(b,BinaryExpr(Neq,BoolExpr(False),BoolExpr(False))),MethodCall(print_int,VariableExpr(b))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : b
+INFO:root:Checking dev/backward.out
+INFO:root:Diff between reference and your output for dev/backward.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,6 @@
+-1013
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(test,NumberExpr(10),NumberExpr(13)))),testMethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(print_int,VariableExpr(b))))))
++Defined variable in line 1 : print_int
++Defined variable in line 4 : main
++Defined variable in line 7 : test
++Defined variable in line 7 : a
++Defined variable in line 7 : b
+INFO:root:Checking dev/noexterns.out
+INFO:root:Diff between reference and your output for dev/noexterns.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-2
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_int,BinaryExpr(Plus,VariableExpr(x),NumberExpr(1)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 4 : x
+INFO:root:Checking dev/expr-testfile-7.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-7.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,6 @@
+-28660
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),VarDef(y,BoolType),AssignVar(x,BinaryExpr(Plus,BinaryExpr(Plus,BinaryExpr(Plus,NumberExpr(2),BinaryExpr(Mult,NumberExpr(2),NumberExpr(3))),NumberExpr(5)),BinaryExpr(Minus,BinaryExpr(Mult,NumberExpr(43),NumberExpr(23)),NumberExpr(44)))),Block(VarDef(y,IntType),AssignVar(y,BinaryExpr(Plus,BinaryExpr(Mult,VariableExpr(x),UnaryExpr(UnaryMinus,NumberExpr(30))),BinaryExpr(Mult,NumberExpr(40),NumberExpr(2)))),AssignVar(x,UnaryExpr(UnaryMinus,VariableExpr(y)))),AssignVar(y,UnaryExpr(Not,BoolExpr(True))),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 4 : x
++Defined variable in line 5 : y
++Defined variable in line 7 : y
+INFO:root:Checking dev/charvar.out
+INFO:root:Diff between reference and your output for dev/charvar.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-5
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),VarDef(y,IntType),AssignVar(x,NumberExpr(102)),AssignVar(y,NumberExpr(97)),MethodCall(print_int,BinaryExpr(Minus,VariableExpr(x),VariableExpr(y)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
++Defined variable in line 6 : y
+INFO:root:Checking dev/multvar.out
+INFO:root:Diff between reference and your output for dev/multvar.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-11
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),VarDef(y,IntType),AssignVar(x,NumberExpr(1)),AssignVar(y,NumberExpr(1)),MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(y))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
++Defined variable in line 5 : y
+INFO:root:Checking dev/method1.out
+INFO:root:Diff between reference and your output for dev/method1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,7 @@
+-111111
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_int,NumberExpr(1)),MethodCall(print_int,VariableExpr(x)))),mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_int,NumberExpr(1)),MethodCall(test,NumberExpr(1)),MethodCall(print_int,VariableExpr(x)),MethodCall(test,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 10 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
++Defined variable in line 5 : x
++Defined variable in line 11 : x
+INFO:root:Checking dev/callexpr.out
+INFO:root:Diff between reference and your output for dev/callexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-3
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),ExternFunction(read_int,IntType,None),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,MethodCall(read_int,None)),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 2 : read_int
++Defined variable in line 5 : main
++Defined variable in line 6 : x
+INFO:root:Checking dev/intconst-var.out
+INFO:root:Diff between reference and your output for dev/intconst-var.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-012345-12345
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(0)),MethodCall(print_int,VariableExpr(x)),AssignVar(x,NumberExpr(12345)),MethodCall(print_int,VariableExpr(x)),AssignVar(x,UnaryExpr(UnaryMinus,NumberExpr(12345))),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/expr-testfile-5.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-5.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,6 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,BoolType),VarDef(y,BoolType),VarDef(z,BoolType),AssignVar(x,BinaryExpr(Geq,NumberExpr(2),NumberExpr(1))),AssignVar(y,BinaryExpr(Neq,NumberExpr(2),NumberExpr(1))),AssignVar(z,BinaryExpr(And,VariableExpr(x),VariableExpr(y))),MethodCall(print_int,VariableExpr(z))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
++Defined variable in line 6 : y
++Defined variable in line 7 : z
+INFO:root:Checking dev/expr-testfile-4.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-4.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+--3
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_int,UnaryExpr(UnaryMinus,BinaryExpr(Plus,BinaryExpr(Plus,NumberExpr(2),BinaryExpr(Mult,NumberExpr(2),NumberExpr(3))),UnaryExpr(UnaryMinus,NumberExpr(5)))))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
+INFO:root:Checking dev/charexpr.out
+INFO:root:Diff between reference and your output for dev/charexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-5
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,BinaryExpr(Minus,NumberExpr(102),NumberExpr(97))),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/stringconst.out
+INFO:root:Diff between reference and your output for dev/stringconst.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-hello, world
++Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_string,StringConstant("hello, world\n"))))))
++Defined variable in line 1 : print_string
++Defined variable in line 4 : main
+INFO:root:Checking dev/default-passes.out
+INFO:root:Diff between reference and your output for dev/default-passes.out
+INFO:root:
+--- reference
++++ your-output
+@@ -0,0 +1,2 @@
++Program(None,Package(Foo,None,mainMethodMethodBlock(None,None))))
++Defined variable in line 1 : main
+INFO:root:Checking dev/boolneq.out
+INFO:root:Diff between reference and your output for dev/boolneq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-01103
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Neq,BoolExpr(True),BoolExpr(True))),MethodCall(print_int,BinaryExpr(Neq,BoolExpr(True),BoolExpr(False))),MethodCall(print_int,BinaryExpr(Neq,BoolExpr(False),BoolExpr(True))),MethodCall(print_int,BinaryExpr(Neq,BoolExpr(False),BoolExpr(False))),AssignVar(x,NumberExpr(3)),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/boolconst-var.out
+INFO:root:Diff between reference and your output for dev/boolconst-var.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-10
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(b,BoolType),AssignVar(b,BoolExpr(True)),MethodCall(print_int,VariableExpr(b)),AssignVar(b,BoolExpr(False)),MethodCall(print_int,VariableExpr(b))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : b
+INFO:root:Checking dev/intneq.out
+INFO:root:Diff between reference and your output for dev/intneq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-101
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Neq,NumberExpr(13),NumberExpr(15))),MethodCall(print_int,BinaryExpr(Neq,NumberExpr(13),NumberExpr(13))),MethodCall(print_int,BinaryExpr(Neq,NumberExpr(15),NumberExpr(13)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/bleq.out
+INFO:root:Diff between reference and your output for dev/bleq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-0
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(b,BoolType),AssignVar(b,BinaryExpr(Leq,NumberExpr(13),NumberExpr(15))),AssignVar(b,BinaryExpr(Leq,NumberExpr(13),NumberExpr(13))),AssignVar(b,BinaryExpr(Leq,NumberExpr(15),NumberExpr(13))),MethodCall(print_int,VariableExpr(b))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : b
+INFO:root:Checking dev/boolcallchain3expr.out
+INFO:root:Diff between reference and your output for dev/boolcallchain3expr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,9 @@
+-101
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,test3MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)))),test2MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(test3,UnaryExpr(Not,VariableExpr(a))))),test1MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(test2,UnaryExpr(Not,VariableExpr(a))))),mainMethodMethodBlock(None,MethodCall(test1,BoolExpr(True))))))
++Defined variable in line 1 : print_int
++Defined variable in line 15 : main
++Defined variable in line 11 : test1
++Defined variable in line 7 : test2
++Defined variable in line 4 : test3
++Defined variable in line 4 : a
++Defined variable in line 7 : a
++Defined variable in line 11 : a
+INFO:root:Checking dev/inteq.out
+INFO:root:Diff between reference and your output for dev/inteq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-010
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Eq,NumberExpr(13),NumberExpr(15))),MethodCall(print_int,BinaryExpr(Eq,NumberExpr(13),NumberExpr(13))),MethodCall(print_int,BinaryExpr(Eq,NumberExpr(15),NumberExpr(13)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/not.out
+INFO:root:Diff between reference and your output for dev/not.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-011001
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_int,UnaryExpr(Not,BoolExpr(True))),MethodCall(print_int,UnaryExpr(Not,BoolExpr(False))),MethodCall(print_int,UnaryExpr(Not,UnaryExpr(Not,BoolExpr(True)))),MethodCall(print_int,UnaryExpr(Not,UnaryExpr(Not,BoolExpr(False)))),MethodCall(print_int,UnaryExpr(Not,UnaryExpr(Not,UnaryExpr(Not,BoolExpr(True))))),MethodCall(print_int,UnaryExpr(Not,UnaryExpr(Not,UnaryExpr(Not,BoolExpr(False)))))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
+INFO:root:Checking dev/charprint.out
+INFO:root:Diff between reference and your output for dev/charprint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-97
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(97)),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/bgeq.out
+INFO:root:Diff between reference and your output for dev/bgeq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(b,BoolType),AssignVar(b,BinaryExpr(Geq,NumberExpr(13),NumberExpr(15))),AssignVar(b,BinaryExpr(Geq,NumberExpr(13),NumberExpr(13))),AssignVar(b,BinaryExpr(Geq,NumberExpr(15),NumberExpr(13))),MethodCall(print_int,VariableExpr(b))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : b
+INFO:root:Checking dev/onlystate.out
+INFO:root:Diff between reference and your output for dev/onlystate.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-0
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_int,NumberExpr(0))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
+INFO:root:Checking dev/mixedcallchainexprmultibranch.out
+INFO:root:Diff between reference and your output for dev/mixedcallchainexprmultibranch.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,15 @@
+-1120312020
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,test3MethodMethodBlock(None,MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(a)))),test2bMethodMethodBlock(None,MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(a)),MethodCall(test3,VariableExpr(a),VariableExpr(x)))),test2aMethodMethodBlock(None,MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(a)),MethodCall(test3,UnaryExpr(Not,VariableExpr(a)),BinaryExpr(Plus,VariableExpr(x),NumberExpr(1))))),test1MethodMethodBlock(None,MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(a)),MethodCall(test2a,BinaryExpr(Plus,VariableExpr(x),NumberExpr(1)),UnaryExpr(Not,VariableExpr(a))),MethodCall(test2b,BinaryExpr(Plus,VariableExpr(x),NumberExpr(1)),UnaryExpr(Not,VariableExpr(a))))),mainMethodMethodBlock(None,MethodCall(test1,BoolExpr(True),NumberExpr(1))))))
++Defined variable in line 1 : print_int
++Defined variable in line 24 : main
++Defined variable in line 18 : test1
++Defined variable in line 13 : test2a
++Defined variable in line 8 : test2b
++Defined variable in line 4 : test3
++Defined variable in line 4 : a
++Defined variable in line 4 : x
++Defined variable in line 8 : a
++Defined variable in line 8 : x
++Defined variable in line 13 : a
++Defined variable in line 13 : x
++Defined variable in line 18 : a
++Defined variable in line 18 : x
+INFO:root:Checking dev/forward.out
+INFO:root:Diff between reference and your output for dev/forward.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,6 @@
+-1013
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(print_int,VariableExpr(b)))),mainMethodMethodBlock(None,MethodCall(test,NumberExpr(10),NumberExpr(13))))))
++Defined variable in line 1 : print_int
++Defined variable in line 8 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
++Defined variable in line 4 : b
+INFO:root:Checking dev/stringescapes.out
+INFO:root:Diff between reference and your output for dev/stringescapes.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1,3 +1,3 @@
+-1	23
+-4
+-5678\9"10
++Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_string,StringConstant("1\t2\v3\r4\n5\a6\f7\b8\\9\"10"))))))
++Defined variable in line 1 : print_string
++Defined variable in line 4 : main
+INFO:root:Checking dev/callexprprint.out
+INFO:root:Diff between reference and your output for dev/callexprprint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-300
++Program(ExternFunction(read_int,IntType,None),ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,BinaryExpr(Mult,MethodCall(read_int,None),NumberExpr(100))),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 2 : print_int
++Defined variable in line 1 : read_int
++Defined variable in line 5 : main
++Defined variable in line 6 : x
+INFO:root:Checking dev/binteq.out
+INFO:root:Diff between reference and your output for dev/binteq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-0
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(b,BoolType),AssignVar(b,BinaryExpr(Eq,NumberExpr(13),NumberExpr(15))),AssignVar(b,BinaryExpr(Eq,NumberExpr(13),NumberExpr(13))),AssignVar(b,BinaryExpr(Eq,NumberExpr(15),NumberExpr(13))),MethodCall(print_int,VariableExpr(b))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : b
+INFO:root:Checking dev/geq.out
+INFO:root:Diff between reference and your output for dev/geq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-011
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Geq,NumberExpr(13),NumberExpr(15))),MethodCall(print_int,BinaryExpr(Geq,NumberExpr(13),NumberExpr(13))),MethodCall(print_int,BinaryExpr(Geq,NumberExpr(15),NumberExpr(13)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/minus.out
+INFO:root:Diff between reference and your output for dev/minus.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+--212
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Minus,NumberExpr(5),NumberExpr(7))),MethodCall(print_int,BinaryExpr(Minus,NumberExpr(5),UnaryExpr(UnaryMinus,NumberExpr(7))))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/gr.out
+INFO:root:Diff between reference and your output for dev/gr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-001
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Gt,NumberExpr(13),NumberExpr(15))),MethodCall(print_int,BinaryExpr(Gt,NumberExpr(13),NumberExpr(13))),MethodCall(print_int,BinaryExpr(Gt,NumberExpr(15),NumberExpr(13)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/lshift.out
+INFO:root:Diff between reference and your output for dev/lshift.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1628104
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Leftshift,NumberExpr(8),NumberExpr(1))),MethodCall(print_int,BinaryExpr(Leftshift,NumberExpr(14),NumberExpr(1))),MethodCall(print_int,BinaryExpr(Leftshift,NumberExpr(13),NumberExpr(3)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/externprintint.out
+INFO:root:Diff between reference and your output for dev/externprintint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 4 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/emptymethod.out
+INFO:root:Diff between reference and your output for dev/emptymethod.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,6 @@
+-1013
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(print_int,VariableExpr(b)))),mainMethodMethodBlock(None,MethodCall(test,NumberExpr(10),NumberExpr(13))))))
++Defined variable in line 1 : print_int
++Defined variable in line 8 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
++Defined variable in line 4 : b
+INFO:root:Checking dev/booleq.out
+INFO:root:Diff between reference and your output for dev/booleq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-10013
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Eq,BoolExpr(True),BoolExpr(True))),MethodCall(print_int,BinaryExpr(Eq,BoolExpr(True),BoolExpr(False))),MethodCall(print_int,BinaryExpr(Eq,BoolExpr(False),BoolExpr(True))),MethodCall(print_int,BinaryExpr(Eq,BoolExpr(False),BoolExpr(False))),AssignVar(x,NumberExpr(3)),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/stringescapequote.out
+INFO:root:Diff between reference and your output for dev/stringescapequote.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-"
++Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_string,StringConstant("\""))))))
++Defined variable in line 1 : print_string
++Defined variable in line 4 : main
+INFO:root:Checking dev/expr-testfile-2.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,6 @@
+-958
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),VarDef(y,BoolType),VarDef(z,BoolType),AssignVar(x,BinaryExpr(Plus,BinaryExpr(Plus,BinaryExpr(Plus,NumberExpr(2),BinaryExpr(Mult,NumberExpr(2),NumberExpr(3))),NumberExpr(5)),BinaryExpr(Minus,BinaryExpr(Mult,NumberExpr(43),NumberExpr(23)),NumberExpr(44)))),AssignVar(x,UnaryExpr(UnaryMinus,VariableExpr(x))),AssignVar(y,BoolExpr(True)),AssignVar(z,BoolExpr(False)),AssignVar(y,BinaryExpr(Or,BinaryExpr(And,BoolExpr(True),VariableExpr(y)),VariableExpr(z))),MethodCall(print_int,UnaryExpr(UnaryMinus,VariableExpr(x)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 4 : x
++Defined variable in line 5 : y
++Defined variable in line 5 : z
+INFO:root:Checking dev/arith1.out
+INFO:root:Diff between reference and your output for dev/arith1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,8 @@
+-0
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(foo,None,mainMethodMethodBlock(VarDef(flag,BoolType),VarDef(a,BoolType),VarDef(b,BoolType),VarDef(c,BoolType),VarDef(size,IntType),AssignVar(a,BoolExpr(True)),AssignVar(b,BoolExpr(False)),AssignVar(c,BoolExpr(True)),AssignVar(flag,BinaryExpr(Or,VariableExpr(a),BinaryExpr(And,VariableExpr(b),UnaryExpr(Not,VariableExpr(c))))),AssignVar(size,BinaryExpr(Minus,BinaryExpr(Plus,BinaryExpr(Rightshift,NumberExpr(1),NumberExpr(3)),BinaryExpr(Mod,BinaryExpr(Div,NumberExpr(1),UnaryExpr(UnaryMinus,NumberExpr(2))),NumberExpr(10))),BinaryExpr(Leftshift,BinaryExpr(Div,BinaryExpr(Mult,NumberExpr(5),NumberExpr(2)),NumberExpr(20)),NumberExpr(2)))),MethodCall(print_int,VariableExpr(size))))))
++Defined variable in line 1 : print_int
++Defined variable in line 4 : main
++Defined variable in line 6 : a
++Defined variable in line 6 : b
++Defined variable in line 6 : c
++Defined variable in line 5 : flag
++Defined variable in line 7 : size
+INFO:root:Checking dev/boolcallcallerexpr.out
+INFO:root:Diff between reference and your output for dev/boolcallcallerexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,MethodCall(print_int,NumberExpr(1)))),mainMethodMethodBlock(None,MethodCall(test,BinaryExpr(And,BoolExpr(True),BoolExpr(True)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 7 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
+INFO:root:Checking dev/expr-testfile-0.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-0.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-13
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_int,BinaryExpr(Plus,BinaryExpr(Plus,NumberExpr(2),BinaryExpr(Mult,NumberExpr(2),NumberExpr(3))),NumberExpr(5)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
+INFO:root:Checking dev/onlyvar.out
+INFO:root:Diff between reference and your output for dev/onlyvar.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-0
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,NumberExpr(0))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/mixedcallchainexpr.out
+INFO:root:Diff between reference and your output for dev/mixedcallchainexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,12 @@
+-112031
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,test3MethodMethodBlock(None,MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(a)))),test2MethodMethodBlock(None,MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(a)),MethodCall(test3,UnaryExpr(Not,VariableExpr(a)),BinaryExpr(Plus,VariableExpr(x),NumberExpr(1))))),test1MethodMethodBlock(None,MethodCall(print_int,VariableExpr(x)),MethodCall(print_int,VariableExpr(a)),MethodCall(test2,BinaryExpr(Plus,VariableExpr(x),NumberExpr(1)),UnaryExpr(Not,VariableExpr(a))))),mainMethodMethodBlock(None,MethodCall(test1,BoolExpr(True),NumberExpr(1))))))
++Defined variable in line 1 : print_int
++Defined variable in line 18 : main
++Defined variable in line 13 : test1
++Defined variable in line 8 : test2
++Defined variable in line 4 : test3
++Defined variable in line 4 : a
++Defined variable in line 4 : x
++Defined variable in line 8 : a
++Defined variable in line 8 : x
++Defined variable in line 13 : a
++Defined variable in line 13 : x
+INFO:root:Checking dev/boolcall1.out
+INFO:root:Diff between reference and your output for dev/boolcall1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,MethodCall(print_int,NumberExpr(1)))),mainMethodMethodBlock(None,MethodCall(test,BoolExpr(True))))))
++Defined variable in line 1 : print_int
++Defined variable in line 7 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
+INFO:root:Checking dev/boolcallcalleeexpr.out
+INFO:root:Diff between reference and your output for dev/boolcallcalleeexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,MethodCall(print_int,BinaryExpr(Or,VariableExpr(a),BoolExpr(False))))),mainMethodMethodBlock(None,MethodCall(test,BoolExpr(True))))))
++Defined variable in line 1 : print_int
++Defined variable in line 7 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
+INFO:root:Checking dev/expr-testfile-1.out
+INFO:root:Diff between reference and your output for dev/expr-testfile-1.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-13
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,BinaryExpr(Plus,BinaryExpr(Plus,NumberExpr(2),BinaryExpr(Mult,NumberExpr(2),NumberExpr(3))),NumberExpr(5))),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 4 : x
+INFO:root:Checking dev/stringconst2.out
+INFO:root:Diff between reference and your output for dev/stringconst2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-hello, world
++Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_string,StringConstant("hello,")),MethodCall(print_string,StringConstant(" world\n"))))))
++Defined variable in line 1 : print_string
++Defined variable in line 4 : main
+INFO:root:Checking dev/stringconst3.out
+INFO:root:Diff between reference and your output for dev/stringconst3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-hello, world
++Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_string,StringConstant("hello,")),MethodCall(print_string,StringConstant(" world")),MethodCall(print_string,StringConstant("\n"))))))
++Defined variable in line 1 : print_string
++Defined variable in line 4 : main
+INFO:root:Checking dev/method2.out
+INFO:root:Diff between reference and your output for dev/method2.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,8 @@
+-1121
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_int,VariableExpr(a)),MethodCall(print_int,VariableExpr(b)),MethodCall(print_int,VariableExpr(x)))),mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_int,VariableExpr(x)),MethodCall(test,VariableExpr(x),BinaryExpr(Plus,VariableExpr(x),NumberExpr(1)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 11 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
++Defined variable in line 4 : b
++Defined variable in line 5 : x
++Defined variable in line 12 : x
+INFO:root:Checking dev/returnemptyparens.out
+INFO:root:Diff between reference and your output for dev/returnemptyparens.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(C,None,fMethodMethodBlock(None,MethodCall(print_int,NumberExpr(1)),ReturnStmt(None))),mainMethodMethodBlock(None,MethodCall(f,None)))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : f
++Defined variable in line 7 : main
+INFO:root:Checking dev/call0.out
+INFO:root:Diff between reference and your output for dev/call0.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-0
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,MethodCall(print_int,NumberExpr(0)))),mainMethodMethodBlock(None,MethodCall(test,None)))))
++Defined variable in line 1 : print_int
++Defined variable in line 7 : main
++Defined variable in line 4 : test
+INFO:root:Checking dev/bintneq.out
+INFO:root:Diff between reference and your output for dev/bintneq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(b,BoolType),AssignVar(b,BinaryExpr(Neq,NumberExpr(13),NumberExpr(15))),AssignVar(b,BinaryExpr(Neq,NumberExpr(13),NumberExpr(13))),AssignVar(b,BinaryExpr(Neq,NumberExpr(15),NumberExpr(13))),MethodCall(print_int,VariableExpr(b))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : b
+INFO:root:Checking dev/bbooleq.out
+INFO:root:Diff between reference and your output for dev/bbooleq.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(b,BoolType),AssignVar(b,BinaryExpr(Eq,BoolExpr(True),BoolExpr(True))),AssignVar(b,BinaryExpr(Eq,BoolExpr(True),BoolExpr(False))),AssignVar(b,BinaryExpr(Eq,BoolExpr(False),BoolExpr(True))),AssignVar(b,BinaryExpr(Eq,BoolExpr(False),BoolExpr(False))),MethodCall(print_int,VariableExpr(b))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : b
+INFO:root:Checking dev/plus.out
+INFO:root:Diff between reference and your output for dev/plus.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-12-2
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,BinaryExpr(Plus,NumberExpr(5),NumberExpr(7))),MethodCall(print_int,BinaryExpr(Plus,NumberExpr(5),UnaryExpr(UnaryMinus,NumberExpr(7))))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/boolvar.out
+INFO:root:Diff between reference and your output for dev/boolvar.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,BoolType),AssignVar(x,BoolExpr(True)),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/intcallcalleeexpr.out
+INFO:root:Diff between reference and your output for dev/intcallcalleeexpr.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,5 @@
+-11
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(None,MethodCall(print_int,BinaryExpr(Plus,VariableExpr(a),NumberExpr(10))))),mainMethodMethodBlock(None,MethodCall(test,NumberExpr(1))))))
++Defined variable in line 1 : print_int
++Defined variable in line 7 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
+INFO:root:Checking dev/externprintstring.out
+INFO:root:Diff between reference and your output for dev/externprintstring.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-hello world
++Program(ExternFunction(print_string,VoidType,VarDef(StringType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_string,StringConstant("hello world\n"))))))
++Defined variable in line 1 : print_string
++Defined variable in line 4 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/charexprprint.out
+INFO:root:Diff between reference and your output for dev/charexprprint.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-5
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(102)),MethodCall(print_int,BinaryExpr(Minus,VariableExpr(x),NumberExpr(97)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x
+INFO:root:Checking dev/arith4.out
+INFO:root:Diff between reference and your output for dev/arith4.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-0
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(foo,None,mainMethodMethodBlock(VarDef(size,IntType),AssignVar(size,BinaryExpr(Minus,BinaryExpr(Plus,BinaryExpr(Rightshift,NumberExpr(1),NumberExpr(3)),BinaryExpr(Mod,BinaryExpr(Div,NumberExpr(1),UnaryExpr(UnaryMinus,NumberExpr(2))),NumberExpr(10))),BinaryExpr(Leftshift,BinaryExpr(Div,BinaryExpr(Mult,NumberExpr(5),NumberExpr(2)),NumberExpr(20)),NumberExpr(2)))),MethodCall(print_int,VariableExpr(size))))))
++Defined variable in line 1 : print_int
++Defined variable in line 4 : main
++Defined variable in line 5 : size
+INFO:root:Checking dev/intcallchain3.out
+INFO:root:Diff between reference and your output for dev/intcallchain3.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,9 @@
+-111
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,test3MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)))),test2MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(test3,VariableExpr(a)))),test1MethodMethodBlock(None,MethodCall(print_int,VariableExpr(a)),MethodCall(test2,VariableExpr(a)))),mainMethodMethodBlock(None,MethodCall(test1,NumberExpr(1))))))
++Defined variable in line 1 : print_int
++Defined variable in line 15 : main
++Defined variable in line 11 : test1
++Defined variable in line 7 : test2
++Defined variable in line 4 : test3
++Defined variable in line 4 : a
++Defined variable in line 7 : a
++Defined variable in line 11 : a
+INFO:root:Checking dev/emptyblock.out
+INFO:root:Diff between reference and your output for dev/emptyblock.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,3 @@
+-0
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(None,MethodCall(print_int,NumberExpr(0))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
+INFO:root:Checking dev/intmethod.out
+INFO:root:Diff between reference and your output for dev/intmethod.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,7 @@
+-1
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,testMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_int,VariableExpr(x)))),mainMethodMethodBlock(VarDef(x,IntType),AssignVar(x,NumberExpr(1)),MethodCall(print_int,VariableExpr(x))))))
++Defined variable in line 1 : print_int
++Defined variable in line 9 : main
++Defined variable in line 4 : test
++Defined variable in line 4 : a
++Defined variable in line 5 : x
++Defined variable in line 10 : x
+INFO:root:Checking dev/inthexconst.out
+INFO:root:Diff between reference and your output for dev/inthexconst.out
+INFO:root:
+--- reference
++++ your-output
+@@ -1 +1,4 @@
+-06575-6575
++Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(Test,None,mainMethodMethodBlock(VarDef(x,IntType),MethodCall(print_int,NumberExpr(0)),MethodCall(print_int,NumberExpr(0)),MethodCall(print_int,UnaryExpr(UnaryMinus,NumberExpr(0)))))))
++Defined variable in line 1 : print_int
++Defined variable in line 3 : main
++Defined variable in line 5 : x

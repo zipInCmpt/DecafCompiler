@@ -115,9 +115,10 @@ llvm::Value *listCodegen(list<T> vec) {
 /// TODO:Done
 /// decafStmtList - List of Decaf statements
 class decafStmtList : public decafAST {
+public: 
 	list<decafAST *> stmts;
 	//DecafSymbolTable *currentST;
-public:
+//public:
 	decafStmtList() {}
 	~decafStmtList() {
 		for (list<decafAST *>::iterator i = stmts.begin(); i != stmts.end(); i++) { 
@@ -626,8 +627,9 @@ public:
 // Extern Type
 /// TODO: Done
 class ExternType : public decafAST {
-	int externType;
 public:
+	int externType;
+//public:
 	ExternType(int typeIndex) { externType = typeIndex; }
 	~ExternType() { }
 	string str() {
@@ -665,6 +667,19 @@ public:
 	}
 	llvm::Value *Codegen() {
 		llvm::Value *val = NULL;
+		std::vector<llvm::Type*> args;
+
+		for (list<decafAST *>::iterator i = typeList->stmts.begin(); i != typeList->stmts.end(); i++) {
+			//printf("%d\n", ((ExternType *)(*i))->externType );
+			args.push_back( getLLVMType( ((ExternType *)(*i)) ->externType) );
+		}
+		/*llvm::Type *returnTy=getLLVMType(methodTypeId);
+		llvm::Function *func = llvm::Function::Create(
+		    llvm::FunctionType::get(returnTy, args, false),
+		    llvm::Function::ExternalLinkage,
+		    identifierName,
+		    TheModule
+		);*/
 		return val;
 	}
 	void insertSymbolIntoSymbolTable() {

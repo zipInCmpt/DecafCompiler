@@ -1,26 +1,17 @@
-output prefix: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/geq
+output prefix: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/geq
 llvmas: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as
 llc: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc
 cc: gcc
-codegen: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr
-stdlib: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c
-generating llvm code:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr ... ok
+codegen: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr
+stdlib: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c
+generating llvm code:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr ... ok
 ; ModuleID = 'Test'
 
 define i32 @main() {
 entry:
-  %main = alloca i32
-  %x = alloca i32
-}
-
-define i32 @main.1() {
-entry:
   ret i32 0
 }
-assembling to bitcode:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm" -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.bc" ... failed (1)
-/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm:7:1: error: expected instruction opcode
-}
-^
-converting to native code:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.bc" -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.s" ... ok
-linking:gcc -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.exec" "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.s" "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c" ... ok
-running:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.exec ... ok
+assembling to bitcode:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm" -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.bc" ... ok
+converting to native code:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.bc" -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.s" ... ok
+linking:gcc -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.exec" "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.s" "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c" ... ok
+running:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/geq.llvm.exec ... ok

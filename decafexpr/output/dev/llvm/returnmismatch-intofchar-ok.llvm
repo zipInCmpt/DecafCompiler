@@ -2,16 +2,5 @@
 
 define i32 @main() {
 entry:
-  %test = alloca i32
-  %main = alloca i32
-  %x = alloca i32
-}
-
-define i32 @test() {
-entry:
-}
-
-define i32 @main.1() {
-entry:
   ret i32 0
 }

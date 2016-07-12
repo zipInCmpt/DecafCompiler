@@ -375,8 +375,13 @@ public:
 		}
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		if(isDebugging) cout << "Codegen for RValue " << idName << endl;
+		if(!isArray) {
+			llvm::Value *fetchedVar = getSymbolTable(idName)->getAlloca();
+			return fetchedVar;
+		} else {
+			return NULL;
+		};
 	}
 	void insertSymbolIntoSymbolTable() {
 
@@ -464,7 +469,10 @@ public:
 	}
 	llvm::Value *Codegen() {
 		llvm::Value *val = NULL;
-		return val;
+		llvm::Value *opNum = opNumber->Codegen();
+		if(opNum == 0) return 0;
+
+		return UnaryOpExpr(unaryOperator, opNum);
 	}
 	void insertSymbolIntoSymbolTable() {
 
@@ -482,8 +490,7 @@ public:
 	string str() { return string("MethodCall(") + identifierName + "," + argumentList->str() + ")"; }
 	llvm::Value *Codegen() {
 		if(isDebugging) {
-			printf("Debug message: Generating method call... Calling ");
-			cout << identifierName << endl;
+			cout << "Debug message: Generating method call... Calling " << identifierName << endl;
 		}
 
 		llvm::Function *TheFunction = TheModule->getFunction(identifierName);
@@ -495,6 +502,7 @@ public:
 			std::vector<llvm::Value *> args;
 			for (list<decafAST *>::iterator i = argumentList->stmts.begin(); i != argumentList->stmts.end(); i++) {
 				args.push_back( (*i)->Codegen() );
+				cout << (*i)->str();
 			}
 			bool isVoid = TheFunction->getReturnType()->isVoidTy();
 			llvm::Value *val = Builder.CreateCall(
@@ -813,12 +821,15 @@ public:
 		return string("VarDef(") + identifierName + "," + getDecafType(decafTypeId) + ")";
 	}
 	llvm::Value *Codegen() {
+
+		if(isDebugging) cout << "Codegen for Var definition..." << endl;
+
 		llvm::Value *val = NULL;
 		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
 		descriptor *temp = getSymbolTable(identifierName);
 		temp->setAlloca(Alloca);
 
-		return val;
+		return Alloca;
 	}
 	void insertSymbolIntoSymbolTable() {
 		//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);

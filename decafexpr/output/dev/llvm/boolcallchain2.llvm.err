@@ -1,0 +1,1 @@
+Assertion failed: ((i >= FTy->getNumParams() || FTy->getParamType(i) == Args[i]->getType()) && "Calling a function with a bad signature!"), function init, file /private/tmp/llvm3820160316-8183-11u7j5k/llvm-3.8.0.src/lib/IR/Instructions.cpp, line 245.

@@ -13,3 +13,4 @@ Codegen for Assign to x
 Defind variable in line 3 : y
 Codegen for Assign to y
 Debug message: Generating method call... Calling print_int
+Codegen for RValue x

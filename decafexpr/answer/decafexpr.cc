@@ -323,6 +323,7 @@ llvm::Type* getLLVMType(int typeIndex) {
 		case 17: return Builder.getInt32Ty();
 		case 18: return Builder.getInt1Ty();
 		case 19: return Builder.getVoidTy();
+		case 20: return Builder.getInt8PtrTy();
 		default: return NULL;
 	}
 }

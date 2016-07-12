@@ -14,7 +14,7 @@ int yylex(void);
 int yyerror(char *); 
 
 // print AST?
-bool printAST = false;
+bool printAST = true;
 
 // this global variable contains all the generated code
 static llvm::Module *TheModule;
@@ -132,12 +132,12 @@ llvm::Function *gen_main_def() {
 start: program
 
 stbegin: T_LCB {
-        newSTNode();
+
 };
 
 stend: T_RCB {
-        currentST = SymbolTableList.front();
-        SymbolTableList.pop_front();
+        //currentST = SymbolTableList.front();
+        //SymbolTableList.pop_front();
 };
 
 /// TODO: Finished
@@ -148,6 +148,7 @@ program: extern_list decafpackage
 			cout << getString(prog) << endl;
 		}
         try {
+            prog->insertSymbolIntoSymbolTable();
             prog->Codegen();
         }
         catch (std::runtime_error &e) {
@@ -164,7 +165,7 @@ program: extern_list decafpackage
     ;
 
 /// TODO: Finished
-extern_list:  ExternDefn extern_list
+extern_list: ExternDefn extern_list
         {
             $2->push_front($1);
             $$ = $2;
@@ -193,7 +194,8 @@ decafpackage: T_PACKAGE T_ID stbegin stend
 /// TODO: Finished
 ExternDefn: T_EXTERN T_FUNC T_ID T_LPAREN ExternTypes T_RPAREN MethodType T_SEMICOLON
             {
-                ExternAST *node = new ExternAST(*$3, $7, $5);
+                ExternAST *node = new ExternAST(*$3, $7, $5, lineno);
+                //node->insertSymbolIntoSymbolTable();
                 $$ = node;
             }
           ;
@@ -206,13 +208,16 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
 
             while($2->size() > 0) {
                    string name = $2->pop_front();
-                   FieldDeclAST *fieldNode = new FieldDeclAST(name, $3, size, false);
+                   //llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($3), nullptr, name);
+                   FieldDeclAST *fieldNode = new FieldDeclAST(name, $3, size, false, lineno);
+                   //fieldNode->insertSymbolIntoSymbolTable();
+                   //fieldNode->insertSymbolIntoSymbolTable(name, newVariableDecpr);
                    fieldDeclList->push_front(fieldNode);
                    //cout << fieldNode->str() << endl;
                    //delete fieldNode;
-                   llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($3), nullptr, name);
-                   descriptor *newVariableDecpr = new descriptor(name, $3, lineno, Alloca);
-                   currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
+
+                   //currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
+
             }
             //FieldDeclAST *node = new FieldDeclAST(*$2, $3, exprNode, false);
             $$ = fieldDeclList;
@@ -223,13 +228,10 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                 decafStmtList *fieldDeclList = new decafStmtList();
                 FieldSizeAST *size = new FieldSizeAST(-1, false);
 
-                FieldDeclAST *fieldNode = new FieldDeclAST($2->getName(), $2->getTypeId(), size, false);
+                FieldDeclAST *fieldNode = new FieldDeclAST($2->getName(), $2->getTypeId(), size, false, lineno);
+                //fieldNode->insertSymbolIntoSymbolTable();
                 fieldDeclList->push_front(fieldNode);
                 $$ = fieldDeclList;
-
-                llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($2->getTypeId()), nullptr, $2->getName());
-                descriptor *newVariableDecpr = new descriptor($2->getName(), $2->getTypeId(), lineno, Alloca);
-                currentST.insert(std::pair<string, descriptor* >($2->getName(), newVariableDecpr));
         }
          | T_VAR Identifiers T_LSB T_INTCONSTANT T_RSB Type T_SEMICOLON
         {
@@ -238,12 +240,13 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
 
             while($2->size() > 0) {
                 string name = $2->pop_front();
-                FieldDeclAST *fieldNode = new FieldDeclAST(name, $6, size, false);
+                FieldDeclAST *fieldNode = new FieldDeclAST(name, $6, size, false, lineno);
+                //fieldNode->insertSymbolIntoSymbolTable();
                 fieldDeclList->push_front(fieldNode);
 
-                llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($6), nullptr, name);
-                descriptor *newVariableDecpr = new descriptor(name, $6, lineno, Alloca);
-                currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
+                //llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($6), nullptr, name);
+                //descriptor *newVariableDecpr = new descriptor(name, $6, lineno, Alloca);
+                //currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
             }
 
             $$ = fieldDeclList;
@@ -251,13 +254,14 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
         | T_VAR IdentifierType T_ASSIGN Constant T_SEMICOLON
         {
                 decafStmtList *fieldDeclList = new decafStmtList();
-                FieldDeclAST *node = new FieldDeclAST($2->getName(), $2->getTypeId(), $4, true);
+                FieldDeclAST *node = new FieldDeclAST($2->getName(), $2->getTypeId(), $4, true, lineno);
+                //node->insertSymbolIntoSymbolTable();
                 fieldDeclList->push_front(node);
                 $$ = fieldDeclList;
 
-                llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($2->getTypeId()), nullptr, $2->getName());
-                descriptor *newVariableDecpr = new descriptor($2->getName(), $2->getTypeId(), lineno, Alloca);
-                currentST.insert(std::pair<string, descriptor* >($2->getName(), newVariableDecpr));
+                //llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($2->getTypeId()), nullptr, $2->getName());
+                //descriptor *newVariableDecpr = new descriptor($2->getName(), $2->getTypeId(), lineno, Alloca);
+                //currentST.insert(std::pair<string, descriptor* >($2->getName(), newVariableDecpr));
         }
         ;
 
@@ -285,28 +289,22 @@ FieldDecls: FieldDecl FieldDecls
 MethodDecl: MethodDeclHead MethodBlock
         {
             MethodDeclAST *node = new MethodDeclAST($1,$2);
+            //node->insertSymbolIntoSymbolTable();
             $$ = node;
         }
         ;
 
 MethodDeclHead: T_FUNC T_ID T_LPAREN IdentifierTypes T_RPAREN MethodType
         {
-            MethodDeclHeadAST *node=new MethodDeclHeadAST(*$2, $6, $4);
+            MethodDeclHeadAST *node=new MethodDeclHeadAST(*$2, $6, $4, lineno);
+            //node->insertSymbolIntoSymbolTable();
             $$ = node;
-
-            llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($6), nullptr, *$2);
-            descriptor *newVariableDecpr = new descriptor(*$2, $6, lineno, Alloca);
-            currentST.insert(std::pair<string, descriptor* >(*$2, newVariableDecpr));
-
         }
         | T_FUNC T_ID T_LPAREN T_RPAREN MethodType
         {
-            MethodDeclHeadAST *node=new MethodDeclHeadAST(*$2, $5, new IDTypeList());
+            MethodDeclHeadAST *node=new MethodDeclHeadAST(*$2, $5, new IDTypeList(), lineno);
+            //node->insertSymbolIntoSymbolTable();
             $$ = node;
-
-            llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($5), nullptr, *$2);
-            descriptor *newVariableDecpr = new descriptor(*$2, $5, lineno, Alloca);
-            currentST.insert(std::pair<string, descriptor* >(*$2, newVariableDecpr));
         }
         ;
 
@@ -352,7 +350,7 @@ Identifier: T_ID { $$ = $1; };
 IdentifierType: T_ID Type
 {
     //cout << "Here" << endl;
-    IDTypeStringAST *nnode = new IDTypeStringAST(*$1, $2);
+    IDTypeStringAST *nnode = new IDTypeStringAST(*$1, $2, lineno);
     IDTypeStringSpecialAST *node = new IDTypeStringSpecialAST(nnode);
     $$ = node;
 }
@@ -379,7 +377,9 @@ IdentifierTypes: IdentifierType T_COMMA IdentifierTypes
 
 MethodBlock: Block
         {
-            MethodBlockAST *node = new MethodBlockAST($1);
+            BlockAST *block = (BlockAST *)$1;
+            block->turnToMethod();
+            MethodBlockAST *node = new MethodBlockAST(block);
             $$ = node;
         }
         ;
@@ -434,6 +434,10 @@ Constant: T_INTCONSTANT
     ConstantAST *node = new ConstantAST($1);
     $$ = node;
 }
+| BoolConstant
+{
+    $$ = $1;
+}
 ;
 
 /// TODO: Finished
@@ -443,16 +447,14 @@ VarDecl: T_VAR Identifiers Type T_SEMICOLON
 
     while($2->size() > 0) {
         string name = $2->pop_front();
-        TypedSymbol *newNode = new TypedSymbol(name, $3);
+        TypedSymbol *newNode = new TypedSymbol(name, $3, lineno);
+        //newNode->insertSymbolIntoSymbolTable();
         list->push_front(newNode);
-
-        llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($3), nullptr, name);
-        descriptor *newVariableDecpr = new descriptor(name, $3, lineno, Alloca);
-        currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
+        //llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($3), nullptr, name);
+        //descriptor *newVariableDecpr = new descriptor(name, $3, lineno, Alloca);
+        //currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
     }
-
     $$ = list;
-
 };
 
 /// TODO: Finished
@@ -477,11 +479,13 @@ VarDecls: VarDecl VarDecls
 Block: stbegin VarDecls statements stend
         {
                 BlockAST *node = new BlockAST($2, $3);
+                //node->insertSymbolIntoSymbolTable();
                 $$ = node;
         }
     | stbegin stend
         {
                 BlockAST *node = new BlockAST(new decafStmtList(), new decafStmtList());
+                //node->insertSymbolIntoSymbolTable();
                 $$ = node;
         }
 
@@ -509,12 +513,14 @@ statement: T_BREAK T_SEMICOLON
                 /// TODO: Finish after figure out the Block
                 ForStmtAST *forStmt = new ForStmtAST($3, $5, $7, $9);
                 $$ = forStmt;
+                //$9->insertSymbolIntoSymbolTable();
         }
 | T_WHILE T_LPAREN Expr T_RPAREN Block
         {
                 WhileStmt *whileStmt = new WhileStmt($3, $5);
                 StatementAST *node = new StatementAST(whileStmt);
                 $$ = node;
+                $5->insertSymbolIntoSymbolTable();
         }
 | If
         {
@@ -528,7 +534,9 @@ statement: T_BREAK T_SEMICOLON
         }
 | Block
         {
-                StatementAST *node = new StatementAST($1); $$ = node;
+                StatementAST *node = new StatementAST($1);
+                //node->insertSymbolIntoSymbolTable();
+                $$ = node;
         }
 | MethodCall T_SEMICOLON
         {
@@ -801,8 +809,8 @@ int main() {
     // set up dummy main function
     TheFunction = gen_main_def();
     // parse the input and create the abstract syntax tree
-  // parse the input and create the abstract syntax tree
-  int retval = yyparse();
+    // parse the input and create the abstract syntax tree
+    int retval = yyparse();
     // remove symbol table
     // Finish off the main function. (see the WARNING above)
     // return 0 from main, which is EXIT_SUCCESS
@@ -810,7 +818,7 @@ int main() {
     // Validate the generated code, checking for consistency.
     verifyFunction(*TheFunction);
     // Print out all of the generated code to stderr
-    TheModule->dump();
+    //TheModule->dump();
     return(retval >= 1 ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 

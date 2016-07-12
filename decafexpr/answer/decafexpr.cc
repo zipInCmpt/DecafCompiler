@@ -1,6 +1,7 @@
 
 #include "decafexpr-defs.h"
 #include <list>
+#include <stack>
 #include <ostream>
 #include <iostream>
 #include <sstream>
@@ -11,21 +12,17 @@
 
 using namespace std;
 
-/// decafAST - Base class for all abstract syntax tree nodes.
-/// TODO:Done
 
 class descriptor;
 
 typedef map<string, descriptor* > DecafSymbolTable;
-typedef list<DecafSymbolTable > DecafSymbolTableList;
+typedef list<DecafSymbolTable* > DecafSymbolTableList;
 
-DecafSymbolTable currentST;
+//DecafSymbolTable GlobalCurrentST;
 DecafSymbolTableList SymbolTableList;
 
-void newSTNode() {
-	SymbolTableList.push_front(currentST);
-	currentST.clear();
-}
+/// decafAST - Base class for all abstract syntax tree nodes.
+/// TODO:Done
 
 class descriptor {
 	string identifierName;
@@ -63,16 +60,17 @@ public:
 descriptor *getSymbolTable(string idName) {
 
 	DecafSymbolTable::iterator fetchedObject;
-	if((fetchedObject = currentST.find(idName)) != currentST.end())
-		return fetchedObject->second;
-	else {
-		for(DecafSymbolTableList::iterator i = SymbolTableList.begin(); i != SymbolTableList.end(); i++) {
-			DecafSymbolTable::iterator fetchedObject;
-			if((fetchedObject = i->find(idName)) != i->end()) {
-				return fetchedObject->second;
-			}
+	for(DecafSymbolTableList::iterator i = SymbolTableList.begin(); i != SymbolTableList.end(); i++) {
+		DecafSymbolTable::iterator fetchedObject;
+		if((fetchedObject = (*i)->find(idName)) != (*i)->end()) {
+			return fetchedObject->second;
 		}
-		return NULL;
+	}
+}
+
+void checkTable(DecafSymbolTable *table) {
+	for(DecafSymbolTable::iterator i = table->begin(); i != table->end(); i++) {
+		(*i).second->debug();
 	}
 }
 
@@ -81,6 +79,7 @@ public:
   virtual ~decafAST() {}
   virtual string str() { return string(""); }
 	virtual llvm::Value *Codegen() = 0;
+	virtual void insertSymbolIntoSymbolTable() = 0;
 };
 
 string getString(decafAST *d) {
@@ -117,6 +116,7 @@ llvm::Value *listCodegen(list<T> vec) {
 /// decafStmtList - List of Decaf statements
 class decafStmtList : public decafAST {
 	list<decafAST *> stmts;
+	//DecafSymbolTable *currentST;
 public:
 	decafStmtList() {}
 	~decafStmtList() {
@@ -132,6 +132,11 @@ public:
 	llvm::Value *Codegen() {
 		return listCodegen<decafAST *>(stmts);
 	}
+	void insertSymbolIntoSymbolTable() {
+		for (list<decafAST *>::iterator i = stmts.begin(); i != stmts.end(); i++) {
+			(*i)->insertSymbolIntoSymbolTable();
+		}
+	}
 };
 
 /// TODO:Done
@@ -140,6 +145,7 @@ class PackageAST : public decafAST {
 	string Name;
 	decafStmtList *FieldDeclList;
 	decafStmtList *MethodDeclList;
+	DecafSymbolTable *currentST;
 public:
 	PackageAST(string name, decafStmtList *fieldlist, decafStmtList *methodlist) 
 		: Name(name), FieldDeclList(fieldlist), MethodDeclList(methodlist) {}
@@ -151,6 +157,8 @@ public:
 		return string("Package") + "(" + Name + "," + getString(FieldDeclList) + "," + getString(MethodDeclList) + ")";
 	}
 	llvm::Value *Codegen() {
+		SymbolTableList.push_front(currentST);
+		checkTable(currentST);
 		llvm::Value *val = NULL;
 		TheModule->setModuleIdentifier(llvm::StringRef(Name));
 		if (NULL != FieldDeclList) {
@@ -160,7 +168,17 @@ public:
 			val = MethodDeclList->Codegen();
 		}
 		// Q: should we enter the class name into the symbol table?
+		SymbolTableList.pop_front();
 		return val;
+	}
+	void insertSymbolIntoSymbolTable() {
+		this->currentST = new DecafSymbolTable;
+		SymbolTableList.push_front(currentST);
+
+		FieldDeclList->insertSymbolIntoSymbolTable();
+		MethodDeclList->insertSymbolIntoSymbolTable();
+
+		SymbolTableList.pop_front();
 	}
 };
 
@@ -175,6 +193,9 @@ public:
 	llvm::Value *Codegen() {
 		return decafASTNode->Codegen();
 	}
+	void insertSymbolIntoSymbolTable() {
+		decafASTNode->insertSymbolIntoSymbolTable();
+	}
 };
 
 /// TODO:Done
@@ -182,6 +203,7 @@ public:
 class ProgramAST : public decafAST {
 	decafStmtList *ExternList;
 	PackageAST *PackageDef;
+	DecafSymbolTable *currentST;
 public:
 	ProgramAST(decafStmtList *externs, PackageAST *c) : ExternList(externs), PackageDef(c) {}
 	~ProgramAST() { 
@@ -191,6 +213,9 @@ public:
 	string str() { return string("Program") + "(" + getString(ExternList) + "," + getString(PackageDef) + ")"; }
 	llvm::Value *Codegen() {
 		llvm::Value *val = NULL;
+		SymbolTableList.push_front(currentST);
+		checkTable(currentST);
+
 		if (NULL != ExternList) {
 			val = ExternList->Codegen();
 		}
@@ -199,7 +224,15 @@ public:
 		} else {
 			throw runtime_error("no package definition in decaf program");
 		}
+		SymbolTableList.pop_front();
 		return val;
+	}
+	void insertSymbolIntoSymbolTable() {
+		this->currentST = new DecafSymbolTable;
+		SymbolTableList.push_front(this->currentST);
+		if(ExternList != NULL) ExternList->insertSymbolIntoSymbolTable();
+		if(PackageDef != NULL) PackageDef->insertSymbolIntoSymbolTable();
+		SymbolTableList.pop_front();
 	}
 };
 
@@ -304,6 +337,9 @@ public:
 		if(value) return llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 1));
 		else return llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 0));
 	}
+	void insertSymbolIntoSymbolTable() {
+
+	}
 };
 
 /// TODO: Not Done
@@ -326,6 +362,9 @@ public:
 		llvm::Value *val = NULL;
 		return val;
 	}
+	void insertSymbolIntoSymbolTable() {
+
+	}
 };
 
 /// TODO: Done
@@ -340,6 +379,9 @@ public:
 	llvm::Value *Codegen() {
 		return llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, integerValue));
 	}
+	void insertSymbolIntoSymbolTable() {
+
+	}
 };
 
 /// TODO: Done
@@ -353,6 +395,9 @@ public:
 	}
 	llvm::Value *Codegen() {
 		return boolASTNode->Codegen();
+	}
+	void insertSymbolIntoSymbolTable() {
+
 	}
 };
 
@@ -381,6 +426,9 @@ public:
 
 		return BinaryOpExpr(binaryOperator, L, R);
 	}
+	void insertSymbolIntoSymbolTable() {
+
+	}
 };
 
 /// TODO: Done
@@ -402,6 +450,9 @@ public:
 		llvm::Value *val = NULL;
 		return val;
 	}
+	void insertSymbolIntoSymbolTable() {
+
+	}
 };
 
 // Method_Call
@@ -414,10 +465,19 @@ public:
 	~MethodCallAST() { identifierName = ""; delete argumentList; }
 	string str() { return string("MethodCall(") + identifierName + "," + argumentList->str() + ")"; }
 	llvm::Value *Codegen() {
-		return argumentList->Codegen();
+		llvm::Function *TheFunction = TheModule->getFunction(identifierName);
+
+		if(!TheFunction) {
+			//throw runtime_error("Undefined function is called.");
+			return NULL;
+		} else {
+			return NULL;
+		}
+	}
+	void insertSymbolIntoSymbolTable() {
+
 	}
 };
-
 
 string getExternType (int typeIndex) {
 	if(typeIndex == 17 || typeIndex == 18 || typeIndex == 19) {
@@ -426,7 +486,6 @@ string getExternType (int typeIndex) {
 		return string("StringType");
 	}
 }
-
 
 // Method Argument
 /// TODO: Not Done
@@ -440,6 +499,9 @@ public:
 	string str() { return getString(decafASTNode); }
 	llvm::Value *Codegen() {
 		return decafASTNode->Codegen();
+	}
+	void insertSymbolIntoSymbolTable() {
+
 	}
 };
 
@@ -457,14 +519,18 @@ public:
 		llvm::Value *stringConst = Builder.CreateConstGEP2_32(GlobalString->getValueType(), GlobalString, 0, 0, "cast");
 		return stringConst;
 	}
+	void insertSymbolIntoSymbolTable() {
+
+	}
 };
 
 /// TODO: Done
 class IDTypeStringAST : public decafAST {
 	string decafASTString;
 	int methodType;
+	int linepos;
 public:
-	IDTypeStringAST(string value, int typeId) { decafASTString = value; methodType = typeId; }
+	IDTypeStringAST(string value, int typeId, int pos) { decafASTString = value; methodType = typeId; linepos = pos; }
 	~IDTypeStringAST() { }
 	string str() { return decafASTString + "," + getMethodType(methodType); }
 	string getName() { return decafASTString; }
@@ -473,6 +539,11 @@ public:
 	llvm::Value *Codegen() {
 		llvm::Value *val = NULL;
 		return val;
+	}
+	void insertSymbolIntoSymbolTable() {
+		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(methodType), nullptr, decafASTString);
+		descriptor *newDecp = new descriptor(decafASTString, methodType, linepos, Alloca);
+		SymbolTableList.front()->insert(std::pair<string, descriptor* >(decafASTString, newDecp));
 	}
 };
 
@@ -489,6 +560,9 @@ public:
 		llvm::Value *val = NULL;
 		return val;
 	}
+	void insertSymbolIntoSymbolTable() {
+		strs->insertSymbolIntoSymbolTable();
+	}
 };
 
 /// TODO: Done
@@ -503,6 +577,9 @@ public:
 		llvm::GlobalVariable *GlobalString = Builder.CreateGlobalString(decafASTString, "globalstring");
 		llvm::Value *stringConst = Builder.CreateConstGEP2_32(GlobalString->getValueType(), GlobalString, 0, 0, "cast");
 		return stringConst;
+	}
+	void insertSymbolIntoSymbolTable() {
+
 	}
 };
 
@@ -525,7 +602,7 @@ public:
 		}
 	}
 	llvm::Value *Codegen() {
-		if(!isArray) {
+		/*if(!isArray) {
 			descriptor *fetchedVarDescriptor = getSymbolTable(identifierName);
 
 			fetchedVarDescriptor->debug();
@@ -538,8 +615,11 @@ public:
 					return val;
 				}
 			}
-		} else
+		} else*/
 			return NULL;
+	}
+	void insertSymbolIntoSymbolTable() {
+
 	}
 };
 
@@ -557,6 +637,9 @@ public:
 		//return getLLVMType(externType);
 		return NULL;
 	}
+	void insertSymbolIntoSymbolTable() {
+
+	}
 };
 
 // Extern
@@ -565,11 +648,13 @@ class ExternAST : public decafAST {
 	string identifierName;
 	int methodTypeId;
 	decafStmtList *typeList;
+	int linepos;
 public:
-	ExternAST(string IdName, int typeId, decafStmtList *list) {
+	ExternAST(string IdName, int typeId, decafStmtList *list, int pos) {
 		identifierName = IdName;
 		methodTypeId = typeId;
 		typeList = list;
+		linepos = pos;
 	}
 	~ExternAST() {
 		identifierName = "";
@@ -581,6 +666,10 @@ public:
 	llvm::Value *Codegen() {
 		llvm::Value *val = NULL;
 		return val;
+	}
+	void insertSymbolIntoSymbolTable() {
+		descriptor *newDescp = new descriptor(identifierName, methodTypeId, linepos, NULL);
+		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 	}
 };
 
@@ -603,6 +692,9 @@ public:
 		llvm::Value *val = NULL;
 		return val;
 	}
+	void insertSymbolIntoSymbolTable() {
+
+	}
 };
 
 // Field_decl
@@ -612,8 +704,9 @@ class FieldDeclAST : public decafAST {
 	int decafTypeId;
 	bool isGlobal;
 	decafAST *expr;
+	int linepos;
 public:
-	FieldDeclAST(string idName, int typeId, decafAST *exprNode, bool global) { identifierName = idName; decafTypeId = typeId; isGlobal = global; expr = exprNode; }
+	FieldDeclAST(string idName, int typeId, decafAST *exprNode, bool global, int pos) { identifierName = idName; decafTypeId = typeId; isGlobal = global; expr = exprNode; linepos = pos; }
 	~FieldDeclAST() { }
 	string str() {
 		if(isGlobal)
@@ -626,6 +719,11 @@ public:
 		llvm::Value *val = NULL;
 		return val;
 	}
+	void insertSymbolIntoSymbolTable() {
+		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, Alloca);
+		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
+	}
 };
 
 // typed symbol
@@ -633,10 +731,12 @@ public:
 class TypedSymbol : public decafAST {
 	string identifierName;
 	int decafTypeId;
+	int linepos;
 public:
-	TypedSymbol(string idName, int typeId) {
+	TypedSymbol(string idName, int typeId, int pos) {
 		identifierName = idName;
 		decafTypeId = typeId;
+		linepos = pos;
 	}
 	~TypedSymbol() { }
 	string str() {
@@ -645,6 +745,11 @@ public:
 	llvm::Value *Codegen() {
 		llvm::Value *val = NULL;
 		return val;
+	}
+	void insertSymbolIntoSymbolTable() {
+		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, Alloca);
+		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 	}
 };
 
@@ -658,7 +763,12 @@ public:
 		return string("Method") + getString(block);
 	}
 	llvm::Value *Codegen() {
-		return block->Codegen();
+		if(block != NULL) return block->Codegen();
+		else return NULL;
+	}
+	void insertSymbolIntoSymbolTable() {
+		if (block != NULL)
+			block->insertSymbolIntoSymbolTable();
 	}
 };
 
@@ -668,11 +778,14 @@ public:
 class BlockAST : public decafAST {
 	decafStmtList *varDeclList;
 	decafStmtList *statementList;
+	DecafSymbolTable *currentST;
 	bool isMethod;
 public:
 	BlockAST(decafStmtList *varDecl, decafStmtList *stmt) {
 		varDeclList = varDecl;
 		statementList = stmt;
+		currentST = NULL;
+		isMethod = false;
 	}
 	~BlockAST() { delete varDeclList; delete statementList; };
 	void turnToMethod() { isMethod = true; }
@@ -681,8 +794,26 @@ public:
 		else return string("MethodBlock(") + varDeclList->str() + "," + statementList->str() + ")";
 	}
 	llvm::Value *Codegen() {
-		//varDeclList->Codegen();
+		SymbolTableList.push_front(currentST);
+		if(!isMethod) checkTable(currentST);
+		if(varDeclList != NULL) varDeclList->Codegen();
+		if(statementList != NULL) statementList->Codegen();
+		SymbolTableList.pop_front();
 		return NULL;
+	}
+	void insertSymbolIntoSymbolTable() {
+		if(!isMethod) {
+			this->currentST = new DecafSymbolTable;
+			SymbolTableList.push_front(this->currentST);
+
+			if(varDeclList != NULL) varDeclList->insertSymbolIntoSymbolTable();
+			if(statementList != NULL) statementList->insertSymbolIntoSymbolTable();
+
+			SymbolTableList.pop_front();
+		} else {
+			varDeclList->insertSymbolIntoSymbolTable();
+			statementList->insertSymbolIntoSymbolTable();
+		}
 	}
 };
 
@@ -703,6 +834,9 @@ public:
 	llvm::Value *Codegen() {
 		llvm::Value *val = NULL;
 		return val;
+	}
+	void insertSymbolIntoSymbolTable() {
+
 	}
 };
 
@@ -725,7 +859,7 @@ public:
 		return string("IfStmt(") + getString(condition) + "," + getString(ifBlock) + "," + getString(ElseBlock) + ")";
 	}
 	llvm::Value *Codegen() {
-
+/*
 		llvm::Value *ConditionCode = condition->Codegen();
 		if(!ConditionCode)
 			return NULL;
@@ -759,6 +893,10 @@ public:
 		node->addIncoming(ElseCode, EBlock);
 
 		return node;
+		*/
+	}
+	void insertSymbolIntoSymbolTable() {
+
 	}
 };
 
@@ -781,6 +919,9 @@ public:
 	llvm::Value *Codegen() {
 		llvm::Value *val = NULL;
 		return val;
+	}
+	void insertSymbolIntoSymbolTable() {
+
 	}
 };
 
@@ -810,6 +951,9 @@ public:
 		llvm::Value *val = NULL;
 		return val;
 	}
+	void insertSymbolIntoSymbolTable() {
+
+	}
 };
 
 /// TODO: Not Done Return
@@ -829,6 +973,9 @@ public:
 		llvm::Value *val = NULL;
 		return val;
 	}
+	void insertSymbolIntoSymbolTable() {
+
+	}
 };
 
 /// TODO: Done
@@ -841,6 +988,9 @@ public:
 	llvm::Value *Codegen() {
 		return llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, constantValue));
 	}
+	void insertSymbolIntoSymbolTable() {
+
+	}
 };
 
 /// TODO: Not Done
@@ -852,7 +1002,11 @@ public:
 	~StatementAST() { delete stmtASTNode; }
 	string str() { return getString(stmtASTNode); }
 	llvm::Value *Codegen() {
-		return stmtASTNode->Codegen();
+		if(stmtASTNode != NULL) return stmtASTNode->Codegen();
+		else return NULL;
+	}
+	void insertSymbolIntoSymbolTable() {
+		stmtASTNode->insertSymbolIntoSymbolTable();
 	}
 };
 
@@ -889,6 +1043,11 @@ public:
 		llvm::Value *val = NULL;
 		return val;
 	}
+	void insertSymbolIntoSymbolTable() {
+		for (list<IDTypeStringSpecialAST* >::iterator i = stmts.begin(); i != stmts.end(); i++) {
+			if((*i) != NULL) (*i)->insertSymbolIntoSymbolTable();
+		}
+	}
 };
 
 // Method Decl
@@ -898,17 +1057,19 @@ class MethodDeclHeadAST : public decafAST {
 	string identifierName;
 	int methodTypeId;
 	IDTypeList *paramList;
+	int startpos;
 public:
-	MethodDeclHeadAST(string idName, int methodType, IDTypeList *params) {
+	MethodDeclHeadAST(string idName, int methodType, IDTypeList *params, int linepos) {
 		identifierName = idName;
 		methodTypeId = methodType;
 		paramList = params;
+		startpos = linepos;
 	}
 	~MethodDeclHeadAST() {
 		delete paramList;
 	}
 	string str() {
-		return ideName;
+		return identifierName;
 		//return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str()+ "," ; //+ block->str() + ")";
 	}
 	llvm::Value *Codegen() {
@@ -925,11 +1086,17 @@ public:
 
 		return func;
 	}
+	void insertSymbolIntoSymbolTable() {
+		descriptor *newDesp = new descriptor(identifierName, methodTypeId, startpos, NULL);
+		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDesp));
+		paramList->insertSymbolIntoSymbolTable();
+	}
 };
 
 class MethodDeclAST : public decafAST {
 	decafAST *head;
 	decafAST *block;
+	DecafSymbolTable *currentST;
 public:
 	MethodDeclAST(decafAST *headMethod, decafAST *blockMethod) {
 		head = headMethod;
@@ -943,12 +1110,30 @@ public:
 		return head->str() + block->str() + ")";
 	}
 	llvm::Value *Codegen() {
+		SymbolTableList.push_front(currentST);
+
+		checkTable(currentST);
+
 		llvm::Function *func = (llvm::Function *)head->Codegen();
 
 		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), head->str(), func);
 		// Symbol table
 		Builder.SetInsertPoint(BB);
+
+		if(block != NULL) block->Codegen();
+
+		SymbolTableList.pop_front();
 		return NULL;
+	}
+	void insertSymbolIntoSymbolTable() {
+
+		this->currentST = new DecafSymbolTable;
+		SymbolTableList.push_front(this->currentST);
+
+		head->insertSymbolIntoSymbolTable();
+		block->insertSymbolIntoSymbolTable();
+
+		SymbolTableList.pop_front();
 	}
 };
 

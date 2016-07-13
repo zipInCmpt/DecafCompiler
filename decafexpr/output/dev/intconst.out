@@ -8,5 +8,8 @@ Debug message: Generating FieldDecls...
 Debug message: Generating MethodDecl...
 Codegen for Var definition...
 Debug message: Generating method call... Calling print_int
-NumberExpr(0)Debug message: Generating method call... Calling print_int
-NumberExpr(12345)Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1

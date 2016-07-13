@@ -9,10 +9,9 @@ Debug message: Generating package...
 Debug message: Generating FieldDecls...
 Debug message: Generating MethodDecl...
 Defind variable in line 3 : x
-Codegen for Assign to x
 Defind variable in line 3 : y
-Codegen for Assign to y
 Defind variable in line 3 : z
-Codegen for Assign to z
 Debug message: Generating method call... Calling print_int
+here1
 Codegen for RValue x
+Success in RValue

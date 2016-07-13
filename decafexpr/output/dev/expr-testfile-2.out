@@ -10,6 +10,12 @@ Codegen for Var definition...
 Codegen for Var definition...
 Codegen for Var definition...
 Defind variable in line 4 : x
-Codegen for Assign to x
+OpId 2
+OpId 0
+OpId 0
+OpId 2
+OpId 1
+OpId 0
 Defind variable in line 4 : x
 Codegen for RValue x
+Success in RValue

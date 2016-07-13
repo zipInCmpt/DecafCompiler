@@ -7,11 +7,20 @@ Debug message: Generating package...
 Debug message: Generating FieldDecls...
 Debug message: Generating MethodDecl...
 Debug message: Generating method call... Calling print_int
-NumberExpr(9)Debug message: Generating method call... Calling print_int
-NumberExpr(11)Debug message: Generating method call... Calling print_int
-NumberExpr(13)Debug message: Generating method call... Calling print_int
-NumberExpr(10)Debug message: Generating method call... Calling print_int
-NumberExpr(7)Debug message: Generating method call... Calling print_int
-NumberExpr(12)Debug message: Generating method call... Calling print_int
-NumberExpr(8)Debug message: Generating method call... Calling print_int
-NumberExpr(92)Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1

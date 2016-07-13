@@ -12,12 +12,12 @@ Codegen for Var definition...
 Codegen for Var definition...
 Codegen for Var definition...
 Defind variable in line 6 : a
-Codegen for Assign to a
 Defind variable in line 6 : b
-Codegen for Assign to b
 Defind variable in line 6 : c
-Codegen for Assign to c
 Defind variable in line 5 : flag
 Codegen for RValue a
+Success in RValue
 Codegen for RValue b
+Success in RValue
 Codegen for RValue c
+Success in RValue

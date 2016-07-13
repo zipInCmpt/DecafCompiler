@@ -46,13 +46,13 @@ public:
 		cout << "Defind variable in line " << lineNumber << " : " << identifierName << endl;
 	}
 	llvm::Type *getType() {
-		/*
+
 		if(type == 17) return Builder.getInt32Ty();
 		if(type == 18) return Builder.getInt1Ty();
 		if(type == 19) return Builder.getVoidTy();
-		 */
-		//else return NULL;
-		return Alloca->getType();
+		if(type == 20) return Builder.getInt8PtrTy();
+		else return Alloca->getType();
+		//return Alloca->getType();
 	}
 	llvm::Value *getAlloca() {
 		return Alloca;
@@ -61,7 +61,6 @@ public:
 	void setAlloca(llvm::Value *allocai) {
 		Alloca = allocai;
 	}
-
 };
 
 descriptor *getSymbolTable(string idName) {
@@ -276,22 +275,22 @@ string getBinaryOp (int opId) {
 
 llvm::Value* BinaryOpExpr(int opId, llvm::Value *L, llvm::Value *R) {
 	switch(opId) {
-		case 0: return Builder.CreateAdd(L, R, "AddTmp");
-		case 1: return Builder.CreateSub(L, R, "SubTmp");
-		case 2: return Builder.CreateMul(L, R, "MulTmp");
-		case 3: return Builder.CreateSDiv(L, R, "DivTmp");
-		case 4: return Builder.CreateShl(L, R, "LShiftTmp");
-		case 5: return Builder.CreateLShr(L, R, "RShitTmp");
-		case 6: return Builder.CreateSRem(L, R, "RemainTmp");
-		case 7: return Builder.CreateICmpSLT(L, R, "LTTmp");
-		case 8: return Builder.CreateICmpSGT(L, R, "GTTmp");
-		case 9: return Builder.CreateICmpSLE(L, R, "LEQTmp");
-		case 10: return Builder.CreateICmpSGE(L, R, "GEQTmp");
-		case 11: return Builder.CreateICmpEQ(L, R, "EQTmp");
-		case 12: return Builder.CreateICmpNE(L, R, "NEQTmp");
-		case 13: return Builder.CreateAnd(L, R, "AndTmp");
-		case 14: return Builder.CreateOr(L, R, "OrTmp");
-		default: return NULL;
+		case 0: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateAdd(L, R, "AddTmp");
+		case 1: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateSub(L, R, "SubTmp");
+		case 2: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateMul(L, R, "MulTmp");
+		case 3: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateSDiv(L, R, "DivTmp");
+		case 4: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateShl(L, R, "LShiftTmp");
+		case 5: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateLShr(L, R, "RShitTmp");
+		case 6: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateSRem(L, R, "RemainTmp");
+		case 7: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSLT(L, R, "LTTmp");
+		case 8: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSGT(L, R, "GTTmp");
+		case 9: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSLE(L, R, "LEQTmp");
+		case 10: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSGE(L, R, "GEQTmp");
+		case 11: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpEQ(L, R, "EQTmp");
+		case 12: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpNE(L, R, "NEQTmp");
+		case 13: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateAnd(L, R, "AndTmp");
+		case 14: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateOr(L, R, "OrTmp");
+		default: if(isDebugging) cout << "OpId " << opId << endl; return NULL;
 	}
 }
 
@@ -378,6 +377,8 @@ public:
 		if(isDebugging) cout << "Codegen for RValue " << idName << endl;
 		if(!isArray) {
 			llvm::Value *fetchedVar = getSymbolTable(idName)->getAlloca();
+			if(fetchedVar) cout << "Success in RValue" << endl;
+			else cout << "Failure in RValue" << endl;
 			return fetchedVar;
 		} else {
 			return NULL;
@@ -497,19 +498,26 @@ public:
 		//return NULL;
 		if(TheFunction==NULL) {
 			throw runtime_error("Undefined function is called.");
-			return NULL;
+			// return NULL;
 		} else {
+			cout << "here" << argumentList->stmts.size() << endl;
 			std::vector<llvm::Value *> args;
-			for (list<decafAST *>::iterator i = argumentList->stmts.begin(); i != argumentList->stmts.end(); i++) {
-				args.push_back( (*i)->Codegen() );
-				cout << (*i)->str();
+			for (list<decafAST *>::iterator i = argumentList->stmts.begin(); i != argumentList->stmts.end(); ++i) {
+				llvm::Value *tempCodeGen = (*i)->Codegen();
+				//if(tempCodeGen) cout << "Success in MethodCall?" << endl;
+				//else cout << "Failure in MethodCall" << endl;
+				//cout << "Matched Sequence: " << (*i)->str() << endl;
+				args.push_back(tempCodeGen);
+				//cout << "Matched Sequence: " << (*i)->str() << endl;
 			}
+
 			bool isVoid = TheFunction->getReturnType()->isVoidTy();
 			llvm::Value *val = Builder.CreateCall(
 			    TheFunction,
 			    args,
 			    isVoid ? "" : "calltmp"
 			);
+			//cout << "here#" << argumentList->stmts.size() << endl;
 			return val;
 		}
 	}
@@ -647,11 +655,12 @@ public:
 			if(fetchedVarDescriptor) {
 				if(isDebugging) fetchedVarDescriptor->debug();
 				llvm::Type *AllocaType = fetchedVarDescriptor->getType();
-				const llvm::PointerType *ptrTy = value->Codegen()->getType()->getPointerTo();
+				llvm::Value *temp = value->Codegen();
+				const llvm::PointerType *ptrTy = temp->getType()->getPointerTo();
 
 				if(ptrTy == AllocaType) {
 					cout << "Codegen for Assign to " << identifierName << endl;
-					llvm::Value *val = Builder.CreateStore(value->Codegen(), (llvm::AllocaInst *)fetchedVarDescriptor->getAlloca());
+					llvm::Value *val = Builder.CreateStore(temp, (llvm::AllocaInst *)fetchedVarDescriptor->getAlloca());
 					return val;
 				} else {
 					return NULL;
@@ -825,15 +834,16 @@ public:
 		if(isDebugging) cout << "Codegen for Var definition..." << endl;
 
 		llvm::Value *val = NULL;
-		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+		//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
 		descriptor *temp = getSymbolTable(identifierName);
-		temp->setAlloca(Alloca);
+		//temp->setAlloca(Alloca);
+		return Builder.CreateLoad(temp->getAlloca(), identifierName.c_str());
 
-		return Alloca;
+		//return Alloca;
 	}
 	void insertSymbolIntoSymbolTable() {
-		//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
-		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, NULL);
+		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, Alloca);
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 	}
 };

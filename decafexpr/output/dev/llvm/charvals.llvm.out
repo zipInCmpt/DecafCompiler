@@ -7,15 +7,28 @@ Debug message: Generating package...
 Debug message: Generating FieldDecls...
 Debug message: Generating MethodDecl...
 Debug message: Generating method call... Calling print_int
-NumberExpr(97)Debug message: Generating method call... Calling print_int
-NumberExpr(109)Debug message: Generating method call... Calling print_int
-NumberExpr(122)Debug message: Generating method call... Calling print_int
-NumberExpr(65)Debug message: Generating method call... Calling print_int
-NumberExpr(77)Debug message: Generating method call... Calling print_int
-NumberExpr(90)Debug message: Generating method call... Calling print_int
-NumberExpr(48)Debug message: Generating method call... Calling print_int
-NumberExpr(55)Debug message: Generating method call... Calling print_int
-NumberExpr(57)Debug message: Generating method call... Calling print_int
-NumberExpr(45)Debug message: Generating method call... Calling print_int
-NumberExpr(125)Debug message: Generating method call... Calling print_int
-NumberExpr(34)Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1
+Debug message: Generating method call... Calling print_int
+here1

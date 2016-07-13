@@ -8,5 +8,11 @@ Debug message: Generating FieldDecls...
 Debug message: Generating MethodDecl...
 Codegen for Var definition...
 Debug message: Generating method call... Calling print_int
-BinaryExpr(Leftshift,NumberExpr(8),NumberExpr(1))Debug message: Generating method call... Calling print_int
-BinaryExpr(Leftshift,NumberExpr(14),NumberExpr(1))Debug message: Generating method call... Calling print_int
+here1
+OpId 4
+Debug message: Generating method call... Calling print_int
+here1
+OpId 4
+Debug message: Generating method call... Calling print_int
+here1
+OpId 4

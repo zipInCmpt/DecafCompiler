@@ -11,12 +11,17 @@ Codegen for Var definition...
 Codegen for Var definition...
 Codegen for Var definition...
 Defind variable in line 5 : a
-Codegen for Assign to a
+OpId 5
+OpId 0
 Defind variable in line 5 : b
-Codegen for Assign to b
+OpId 2
+OpId 0
 Defind variable in line 6 : c
-Codegen for Assign to c
+OpId 14
 Defind variable in line 5 : d
-Codegen for Assign to d
+OpId 3
+OpId 0
 Debug message: Generating method call... Calling print_int
+here1
 Codegen for RValue a
+Success in RValue

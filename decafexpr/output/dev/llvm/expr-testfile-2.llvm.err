@@ -1,1 +1,0 @@
-Assertion failed: (getType()->isIntOrIntVectorTy() && "Tried to create an integer operation on a non-integer type!"), function init, file /private/tmp/llvm3820160316-88255-1gzkzcp/llvm-3.8.0.src/lib/IR/Instructions.cpp, line 1944.

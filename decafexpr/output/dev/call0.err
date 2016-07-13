@@ -1,8 +1,15 @@
-output prefix: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/call0
+output prefix: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/call0
 llvmas: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as
 llc: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc
 cc: gcc
-codegen: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr
-stdlib: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c
-generating llvm code:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr ... failed (-11)
-codegen failed
+codegen: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr
+stdlib: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c
+generating llvm code:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr ... failed (-11)
+; ModuleID = 'Test'
+
+declare void @print_int(i32)
+
+define void @test() {
+entry:
+  call void @print_int(i32 0)
+  ret codegen failed

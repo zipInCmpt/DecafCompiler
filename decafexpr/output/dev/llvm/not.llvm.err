@@ -1,1 +1,14 @@
-Assertion failed: ((i >= FTy->getNumParams() || FTy->getParamType(i) == Args[i]->getType()) && "Calling a function with a bad signature!"), function init, file /private/tmp/llvm3820160316-88255-1gzkzcp/llvm-3.8.0.src/lib/IR/Instructions.cpp, line 245.
+; ModuleID = 'Test'
+
+declare void @print_int(i32)
+
+define i32 @main() {
+entry:
+  call void @print_int(i32 0)
+  call void @print_int(i32 1)
+  call void @print_int(i32 1)
+  call void @print_int(i32 0)
+  call void @print_int(i32 0)
+  call void @print_int(i32 1)
+  ret i32 0
+}

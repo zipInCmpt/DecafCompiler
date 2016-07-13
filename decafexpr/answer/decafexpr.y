@@ -829,7 +829,7 @@ int main() {
     // remove symbol table
     // Finish off the main function. (see the WARNING above)
     // return 0 from main, which is EXIT_SUCCESS
-    Builder.CreateRet(llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)));
+    //Builder.CreateRet(llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)));
     // Validate the generated code, checking for consistency.
     //verifyFunction(*TheFunction);
     // Print out all of the generated code to stderr

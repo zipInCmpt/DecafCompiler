@@ -1,1 +1,0 @@
-Assertion failed: ((getType()->isIntegerTy() || (getType()->isVectorTy() && cast<VectorType>(getType())->getElementType()->isIntegerTy())) && "Tried to create a logical operation on a non-integral type!"), function init, file /private/tmp/llvm3820160316-88255-1gzkzcp/llvm-3.8.0.src/lib/IR/Instructions.cpp, line 1999.

@@ -25,7 +25,7 @@ DecafSymbolTableList SymbolTableList;
 /// decafAST - Base class for all abstract syntax tree nodes.
 /// TODO:Done
 
-bool isDebugging = true;
+bool isDebugging = false;
 
 class descriptor {
 	string identifierName;
@@ -377,8 +377,8 @@ public:
 		if(isDebugging) cout << "Codegen for RValue " << idName << endl;
 		if(!isArray) {
 			llvm::Value *fetchedVar = getSymbolTable(idName)->getAlloca();
-			if(fetchedVar) cout << "Success in RValue" << endl;
-			else cout << "Failure in RValue" << endl;
+			//if(fetchedVar) cout << "Success in RValue" << endl;
+			//else cout << "Failure in RValue" << endl;
 			return fetchedVar;
 		} else {
 			return NULL;
@@ -503,16 +503,22 @@ public:
 				throw runtime_error("Incorrect # arguments passed.");
 
 			std::vector<llvm::Value *> args;
-			for (list<decafAST *>::iterator i = argumentList->stmts.begin(); i != argumentList->stmts.end(); ++i) {
+			//llvm::ArgumentListType* func_args=TheFunction->getArgumentList();
+			for (list<decafAST *>::iterator i = argumentList->stmts.begin()/*,
+				llvm::ArgumentListType::iterator j = func_args->begin()*/;
+				i != argumentList->stmts.end()/*, j!=func_args->end()*/;
+				++i/*, ++*/) {
 				if(isDebugging) cout << "Argument Type: ";
 				llvm::Value *tempCodeGen = (*i)->Codegen();
 				if(isDebugging) cout << "(finishing codegen for this argument) ";
 				if(isDebugging) {
 					if(tempCodeGen->getType()==getLLVMType(17)) cout<< "int type" <<endl;//int
-					else if(tempCodeGen->getType()==getLLVMType(17)) cout<< "bool type" <<endl;//bool
-					else if(tempCodeGen->getType()==getLLVMType(17)) cout<< "void type" <<endl;//void
-					else if(tempCodeGen->getType()==getLLVMType(17)) cout<< "string type" <<endl;//string
+					else if(tempCodeGen->getType()==getLLVMType(18)) cout<< "bool type" <<endl;//bool
+					else if(tempCodeGen->getType()==getLLVMType(19)) cout<< "void type" <<endl;//void
+					else if(tempCodeGen->getType()==getLLVMType(20)) cout<< "string type" <<endl;//string
 				}
+				if(/*(*j)==getLLVMType(17) && */tempCodeGen->getType()==getLLVMType(18))
+					tempCodeGen= Builder.CreateZExt(tempCodeGen, Builder.getInt32Ty(), "zexttmp");
 				//if(tempCodeGen) cout << "Success in MethodCall?" << endl;
 				//else cout << "Failure in MethodCall" << endl;
 				//cout << "Matched Sequence: " << (*i)->str() << endl;
@@ -523,6 +529,7 @@ public:
 				else args.push_back(tempCodeGen);
 				//cout << "Matched Sequence: " << (*i)->str() << endl;
 			}
+
 
 			bool isVoid = TheFunction->getReturnType()->isVoidTy();
 			llvm::Value *val = Builder.CreateCall(
@@ -817,12 +824,17 @@ public:
 			else return string("FieldDecl(") + identifierName + "," + getString(expr) + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		if(isDebugging) cout << "FieldDecl Codegen In progress..." << endl;
+		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+		descriptor *temp = getSymbolTable(identifierName);
+		temp->setAlloca(Alloca);
+		if(isDebugging) cout << "Finish FieldDecl Codegen In progress..." << endl;
+		return Alloca;
 	}
 	void insertSymbolIntoSymbolTable() {
-		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
-		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, Alloca);
+		//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, NULL);
+		//SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 	}
 };
@@ -845,19 +857,32 @@ public:
 	}
 	llvm::Value *Codegen() {
 
-		if(isDebugging) cout << "Codegen for Var definition..." << endl;
+		if(isDebugging) cout << "Codegen for Var definition(Typed Symbol)..." << endl;
 
 		llvm::Value *val = NULL;
 		//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
 		descriptor *temp = getSymbolTable(identifierName);
 		//temp->setAlloca(Alloca);
-		return Builder.CreateLoad(temp->getAlloca(), identifierName.c_str());
+		// Zero Initialization
+		llvm::Value *tempV;
+		if(decafTypeId == 17) tempV = Builder.getInt32(0);
+		else if(decafTypeId == 19) tempV = Builder.getInt1(0);
+
+		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+
+		//val = Builder.CreateLoad(temp->getAlloca(), identifierName.c_str());
+		temp->setAlloca(Alloca);
+
+		val = Builder.CreateStore(tempV, (llvm::AllocaInst *)temp->getAlloca());
+
+		if(isDebugging) cout << "Finish Codegen for Var definition(Typed Symbol)..." << endl;
+		return val;
 
 		//return Alloca;
 	}
 	void insertSymbolIntoSymbolTable() {
-		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
-		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, Alloca);
+		//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, NULL);
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 	}
 };
@@ -904,6 +929,7 @@ public:
 	}
 	llvm::Value *Codegen() {
 
+		if(isDebugging) cout << "Block CodeGen......" << endl;
 		llvm::Value *val = NULL;
 
 		if(!isMethod) {
@@ -913,9 +939,12 @@ public:
 			if(statementList != NULL) val = statementList->Codegen();
 			SymbolTableList.pop_front();
 		} else {
+
 			if(varDeclList != NULL) val = varDeclList->Codegen();
 			if(statementList != NULL) val = statementList->Codegen();
 		}
+
+		if(isDebugging) cout << "Finished Block CodeGen......" << endl;
 
 		return val;
 	}
@@ -1108,7 +1137,10 @@ public:
 	~ConstantAST() { }
 	string str() { return string("NumberExpr(") + std::to_string(constantValue) + ")"; }
 	llvm::Value *Codegen() {
-		return llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, constantValue));
+		if(isDebugging) cout << "Starting NumberExpr Codegen" << endl;
+		llvm::Value *codegen = llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, constantValue));
+		if(isDebugging) cout << "Finished NumberExpr Codegen" << endl;
+		return codegen;
 	}
 	void insertSymbolIntoSymbolTable() {
 
@@ -1264,23 +1296,27 @@ public:
 		Builder.SetInsertPoint(BB);
 
 		if(block != NULL) {
+			if(isDebugging) cout << "Method Block CodeGen..." << endl;
 			block->Codegen();
+			if(isDebugging) cout << "Finish Method Block CodeGen..." << endl;
 		}
 
 		MethodDeclHeadAST *tempHead = (MethodDeclHeadAST *)head;
 		llvm::Value *typedefault;
 		switch(tempHead->getType()) {
-			case 17: typedefault = (llvm::Value *)Builder.getInt32Ty(); break;
+			case 17: Builder.CreateRet(llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)));; break;
 			//case 18: Builder.CreateRet(Builder.get()); break;
-			case 19: typedefault = (llvm::Value *)Builder.getVoidTy(); break;
+			case 19: Builder.CreateRet((llvm::Value *)Builder.getVoidTy()); break;
 			//case 20: typedefault = Builder.getInt8PtrTy(); break;
 		}
 
-		Builder.CreateRet(typedefault);
+		//Builder.CreateRet(typedefault);
 
 		SymbolTableList.pop_front();
 
-		verifyFunction(*func);
+		//verifyFunction(*func);
+
+		if(isDebugging) cout << "Finish Method CodeGen..." << endl;
 
 		return func;
 	}

@@ -1,5 +1,5 @@
 	.section	__TEXT,__text,regular,pure_instructions
-	.macosx_version_min 10, 11
+	.macosx_version_min 10, 10
 	.globl	_main
 	.align	4, 0x90
 _main:                                  ## @main
@@ -16,9 +16,8 @@ Ltmp0:
 	.cfi_endproc
 
 	.section	__TEXT,__cstring,cstring_literals
-	.align	4                       ## @globalstring
-L_globalstring:
-	.asciz	"\"hello, world\\n\""
+L_globalstring:                         ## @globalstring
+	.asciz	"hello, world\n"
 
 
 .subsections_via_symbols

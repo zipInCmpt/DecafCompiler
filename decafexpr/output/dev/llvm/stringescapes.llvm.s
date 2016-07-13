@@ -1,5 +1,5 @@
 	.section	__TEXT,__text,regular,pure_instructions
-	.macosx_version_min 10, 11
+	.macosx_version_min 10, 10
 	.globl	_main
 	.align	4, 0x90
 _main:                                  ## @main
@@ -18,7 +18,7 @@ Ltmp0:
 	.section	__TEXT,__cstring,cstring_literals
 	.align	4                       ## @globalstring
 L_globalstring:
-	.asciz	"\"1\\t2\\v3\\r4\\n5\\a6\\f7\\b8\\\\9\\\"10\""
+	.asciz	"1\t2\0133\r4\n5\0076\f7\b8\\9\"10"
 
 
 .subsections_via_symbols

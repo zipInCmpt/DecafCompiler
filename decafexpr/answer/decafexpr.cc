@@ -583,7 +583,32 @@ public:
 	string str() { return string("StringConstant") + "(" + decafASTString + ")"; }
 	//string rawStr() { return decafASTString; }
 	llvm::Value *Codegen() {
-		llvm::GlobalVariable *GlobalString = Builder.CreateGlobalString(decafASTString, "globalstring");
+		string str;
+		for(string::iterator i=decafASTString.begin(); i!=decafASTString.end(); ) {
+			if( (*i) == '"') {
+				i++;
+				continue;
+			}
+			else if( (*i) == '\\' ) {
+				if( (*(i+1)) == 'a' ) str+='\a';
+				else if( (*(i+1)) == 'b' ) str+='\b';
+				else if( (*(i+1)) == 't' ) str+='\t';
+				else if( (*(i+1)) == 'n' ) str+='\n';
+				else if( (*(i+1)) == 'v' ) str+='\v';
+				else if( (*(i+1)) == 'f' ) str+='\f';
+				else if( (*(i+1)) == 'r' ) str+='\r';
+				else if( (*(i+1)) == '\\' ) str+='\\';
+				else if( (*(i+1)) == '\'' ) str+='\'';
+				else if( (*(i+1)) == '\"' ) str+='\"';
+				i += 2;
+			}
+			else {
+				str+=(*i);
+				i++;
+			}
+		}
+		if(isDebugging) cout << "Generating String..." << str << endl;
+		llvm::GlobalVariable *GlobalString = Builder.CreateGlobalString(str, "globalstring");
 		llvm::Value *stringConst = Builder.CreateConstGEP2_32(GlobalString->getValueType(), GlobalString, 0, 0, "cast");
 		return stringConst;
 	}
@@ -680,7 +705,7 @@ public:
 				const llvm::PointerType *ptrTy = temp->getType()->getPointerTo();
 
 				if(ptrTy == AllocaType) {
-					cout << "Codegen for Assign to " << identifierName << endl;
+					if(isDebugging) cout << "Codegen for Assign to " << identifierName << endl;
 					llvm::Value *val = Builder.CreateStore(temp, (llvm::AllocaInst *)fetchedVarDescriptor->getAlloca());
 					return val;
 				} else {

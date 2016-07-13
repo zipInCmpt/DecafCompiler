@@ -1,22 +1,22 @@
-output prefix: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote
+output prefix: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote
 llvmas: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as
 llc: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc
 cc: gcc
-codegen: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr
-stdlib: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c
-generating llvm code:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decafexpr ... ok
+codegen: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr
+stdlib: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c
+generating llvm code:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr ... ok
 ; ModuleID = 'Test'
 
-@globalstring = private unnamed_addr constant [5 x i8] c"\22\5C\22\22\00"
+@globalstring = private unnamed_addr constant [2 x i8] c"\22\00"
 
 declare void @print_string(i8*)
 
 define i32 @main() {
 entry:
-  call void @print_string(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @globalstring, i32 0, i32 0))
+  call void @print_string(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @globalstring, i32 0, i32 0))
   ret i32 0
 }
-assembling to bitcode:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm" -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.bc" ... ok
-converting to native code:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.bc" -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.s" ... ok
-linking:gcc -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.exec" "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.s" "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c" ... ok
-running:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.exec ... ok
+assembling to bitcode:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm" -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.bc" ... ok
+converting to native code:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.bc" -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.s" ... ok
+linking:gcc -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.exec" "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.s" "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c" ... ok
+running:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/stringescapequote.llvm.exec ... ok

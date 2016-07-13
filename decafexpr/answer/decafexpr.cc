@@ -25,7 +25,7 @@ DecafSymbolTableList SymbolTableList;
 /// decafAST - Base class for all abstract syntax tree nodes.
 /// TODO:Done
 
-bool isDebugging = false;
+bool isDebugging = true;
 
 class descriptor {
 	string identifierName;
@@ -503,11 +503,12 @@ public:
 				throw runtime_error("Incorrect # arguments passed.");
 
 			std::vector<llvm::Value *> args;
-			//llvm::ArgumentListType* func_args=TheFunction->getArgumentList();
-			for (list<decafAST *>::iterator i = argumentList->stmts.begin()/*,
-				llvm::ArgumentListType::iterator j = func_args->begin()*/;
-				i != argumentList->stmts.end()/*, j!=func_args->end()*/;
-				++i/*, ++*/) {
+			//llvm::Function::ArgumentListType func_args=TheFunction->getArgumentList();
+			llvm::Function::arg_iterator j = TheFunction->arg_begin();
+
+			for (list<decafAST *>::iterator i = argumentList->stmts.begin();
+				i != argumentList->stmts.end(); ++i, ++j) {
+
 				if(isDebugging) cout << "Argument Type: ";
 				llvm::Value *tempCodeGen = (*i)->Codegen();
 				if(isDebugging) cout << "(finishing codegen for this argument) ";
@@ -517,8 +518,21 @@ public:
 					else if(tempCodeGen->getType()==getLLVMType(19)) cout<< "void type" <<endl;//void
 					else if(tempCodeGen->getType()==getLLVMType(20)) cout<< "string type" <<endl;//string
 				}
-				if(/*(*j)==getLLVMType(17) && */tempCodeGen->getType()==getLLVMType(18))
+				if(isDebugging) {
+					if((*j).getType()==getLLVMType(17)) cout<< "Func Arg: int type" <<endl;//int
+					else if((*j).getType()==getLLVMType(18)) cout<< "Func Arg: bool type" <<endl;//bool
+					else if((*j).getType()==getLLVMType(19)) cout<< "Func Arg: void type" <<endl;//void
+					else if((*j).getType()==getLLVMType(20)) cout<< "Func Arg: string type" <<endl;//string
+				}
+				if((*j).getType()==getLLVMType(17) && tempCodeGen->getType()==getLLVMType(18)) {
 					tempCodeGen= Builder.CreateZExt(tempCodeGen, Builder.getInt32Ty(), "zexttmp");
+					if(isDebugging) cout << "Promoting a bool" << endl;
+				}
+				else if( (*j).getType() != tempCodeGen->getType() )
+				{
+					throw runtime_error("Unmatched Argument Passed.");
+				}
+					
 				//if(tempCodeGen) cout << "Success in MethodCall?" << endl;
 				//else cout << "Failure in MethodCall" << endl;
 				//cout << "Matched Sequence: " << (*i)->str() << endl;
@@ -528,6 +542,7 @@ public:
 				}
 				else args.push_back(tempCodeGen);
 				//cout << "Matched Sequence: " << (*i)->str() << endl;
+
 			}
 
 

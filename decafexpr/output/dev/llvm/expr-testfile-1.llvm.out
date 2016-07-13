@@ -12,6 +12,6 @@ OpId 2
 OpId 0
 OpId 0
 Debug message: Generating method call... Calling print_int
-here1
-Codegen for RValue x
+ArgumentListSize = 1
+Argument Type: Codegen for RValue x
 Success in RValue

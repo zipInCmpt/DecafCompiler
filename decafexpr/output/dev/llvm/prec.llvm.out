@@ -22,6 +22,6 @@ Defind variable in line 5 : d
 OpId 3
 OpId 0
 Debug message: Generating method call... Calling print_int
-here1
-Codegen for RValue a
+ArgumentListSize = 1
+Argument Type: Codegen for RValue a
 Success in RValue

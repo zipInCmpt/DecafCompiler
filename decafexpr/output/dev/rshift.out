@@ -8,11 +8,17 @@ Debug message: Generating FieldDecls...
 Debug message: Generating MethodDecl...
 Codegen for Var definition...
 Debug message: Generating method call... Calling print_int
-here1
-OpId 5
+ArgumentListSize = 1
+Argument Type: OpId 5
+(finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
-OpId 5
+ArgumentListSize = 1
+Argument Type: OpId 5
+(finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
-OpId 5
+ArgumentListSize = 1
+Argument Type: OpId 5
+(finishing codegen for this argument) int type
+Method Call done...

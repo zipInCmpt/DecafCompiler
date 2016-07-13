@@ -17,6 +17,6 @@ OpId 3
 OpId 4
 OpId 1
 Debug message: Generating method call... Calling print_int
-here1
-Codegen for RValue size
+ArgumentListSize = 1
+Argument Type: Codegen for RValue size
 Success in RValue

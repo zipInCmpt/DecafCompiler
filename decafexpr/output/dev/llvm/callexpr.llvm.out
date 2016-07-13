@@ -11,8 +11,9 @@ Debug message: Generating MethodDecl...
 Codegen for Var definition...
 Defind variable in line 6 : x
 Debug message: Generating method call... Calling read_int
-here0
+ArgumentListSize = 0
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
-Codegen for RValue x
+ArgumentListSize = 1
+Argument Type: Codegen for RValue x
 Success in RValue

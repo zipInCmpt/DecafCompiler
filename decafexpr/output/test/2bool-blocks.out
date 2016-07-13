@@ -18,6 +18,6 @@ Defind variable in line 9 : y
 Defind variable in line 7 : p
 Defind variable in line 7 : q
 Debug message: Generating method call... Calling print_int
-here1
-Codegen for RValue p
+ArgumentListSize = 1
+Argument Type: Codegen for RValue p
 Success in RValue

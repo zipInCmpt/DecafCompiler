@@ -7,28 +7,54 @@ Debug message: Generating package...
 Debug message: Generating FieldDecls...
 Debug message: Generating MethodDecl...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...
 Debug message: Generating method call... Calling print_int
-here1
+ArgumentListSize = 1
+Argument Type: (finishing codegen for this argument) int type
+Method Call done...

@@ -10,6 +10,6 @@ Debug message: Generating FieldDecls...
 Debug message: Generating MethodDecl...
 Defind variable in line 3 : x
 Debug message: Generating method call... Calling print_int
-here1
-Codegen for RValue x
+ArgumentListSize = 1
+Argument Type: Codegen for RValue x
 Success in RValue

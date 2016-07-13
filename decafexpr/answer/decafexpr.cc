@@ -469,10 +469,8 @@ public:
 		return string("UnaryExpr(") + getUnaryOp(unaryOperator) + "," + getString(opNumber) + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
 		llvm::Value *opNum = opNumber->Codegen();
-		if(opNum == 0) return 0;
-
+		if(opNum == NULL) return NULL;
 		return UnaryOpExpr(unaryOperator, opNum);
 	}
 	void insertSymbolIntoSymbolTable() {
@@ -500,14 +498,29 @@ public:
 			throw runtime_error("Undefined function is called.");
 			// return NULL;
 		} else {
-			cout << "here" << argumentList->stmts.size() << endl;
+			if(isDebugging) cout << "ArgumentListSize = " << argumentList->stmts.size() << endl;
+			if(argumentList->stmts.size() != TheFunction->arg_size())
+				throw runtime_error("Incorrect # arguments passed.");
+
 			std::vector<llvm::Value *> args;
 			for (list<decafAST *>::iterator i = argumentList->stmts.begin(); i != argumentList->stmts.end(); ++i) {
+				if(isDebugging) cout << "Argument Type: ";
 				llvm::Value *tempCodeGen = (*i)->Codegen();
+				if(isDebugging) cout << "(finishing codegen for this argument) ";
+				if(isDebugging) {
+					if(tempCodeGen->getType()==getLLVMType(17)) cout<< "int type" <<endl;//int
+					else if(tempCodeGen->getType()==getLLVMType(17)) cout<< "bool type" <<endl;//bool
+					else if(tempCodeGen->getType()==getLLVMType(17)) cout<< "void type" <<endl;//void
+					else if(tempCodeGen->getType()==getLLVMType(17)) cout<< "string type" <<endl;//string
+				}
 				//if(tempCodeGen) cout << "Success in MethodCall?" << endl;
 				//else cout << "Failure in MethodCall" << endl;
 				//cout << "Matched Sequence: " << (*i)->str() << endl;
-				args.push_back(tempCodeGen);
+				if(tempCodeGen==NULL) {
+					if(isDebugging) cout << "NULL return." << endl;
+					return NULL;
+				}
+				else args.push_back(tempCodeGen);
 				//cout << "Matched Sequence: " << (*i)->str() << endl;
 			}
 
@@ -518,6 +531,7 @@ public:
 			    isVoid ? "" : "calltmp"
 			);
 			//cout << "here#" << argumentList->stmts.size() << endl;
+			if(isDebugging) cout << "Method Call done..." << endl;
 			return val;
 		}
 	}

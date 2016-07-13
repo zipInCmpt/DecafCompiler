@@ -5,6 +5,7 @@ declare void @print_int(i32)
 define void @test(i1, i1) {
 entry:
   call void @print_int(i32 2)
+  ret void
 }
 
 define i32 @main() {

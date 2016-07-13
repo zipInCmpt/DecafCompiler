@@ -25,7 +25,7 @@ DecafSymbolTableList SymbolTableList;
 /// decafAST - Base class for all abstract syntax tree nodes.
 /// TODO:Done
 
-bool isDebugging = true;
+bool isDebugging = false;
 
 class descriptor {
 	string identifierName;
@@ -1160,9 +1160,13 @@ public:
 		return string("ReturnStmt(") + getString(returnValue) + ")";
 	}
 	llvm::Value *Codegen() {
-		if(returnValue != NULL)
+		if(returnValue != NULL) {
 			return Builder.CreateRet(returnValue->Codegen());
-		else return NULL;
+		}
+		else {
+			if(isDebugging) cout << "Generating NULL return value... Finished" << endl;
+			return NULL;
+		}
 	}
 	void insertSymbolIntoSymbolTable() {
 
@@ -1342,16 +1346,29 @@ public:
 		}
 
 		MethodDeclHeadAST *tempHead = (MethodDeclHeadAST *)head;
-		llvm::Value *typedefault;
-		switch(tempHead->getType()) {
-			case 17: Builder.CreateRet(llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)));; break;
+		/*switch(tempHead->getType()) {
+			case 17: Builder.CreateRet(llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0))); break;
 			//case 18: Builder.CreateRet(Builder.get()); break;
 			case 19: Builder.CreateRet((llvm::Value *)Builder.getVoidTy()); break;
 			//case 20: typedefault = Builder.getInt8PtrTy(); break;
+		}*/
+
+		if(func->getReturnType()==getLLVMType(17)) {
+			if(isDebugging) cout << "Generating Dummy Return 0...";
+			Builder.CreateRet(llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)));
+			if(isDebugging) cout << "Finished..." << endl;
 		}
-
-		//Builder.CreateRet(typedefault);
-
+		if(func->getReturnType()==getLLVMType(18)) {
+			if(isDebugging) cout << "Generating Dummy Return true...";
+			Builder.CreateRet(llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 1)));
+			if(isDebugging) cout << "Finished..." << endl;
+		}
+		else if(func->getReturnType()==getLLVMType(19)) {
+			if(isDebugging) cout << "Generating Dummy Return void...";
+			Builder.CreateRet(NULL);
+			if(isDebugging) cout << "Finished..." << endl;
+		}
+		
 		SymbolTableList.pop_front();
 
 		//verifyFunction(*func);

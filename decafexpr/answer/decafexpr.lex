@@ -74,7 +74,39 @@ while                      { tokenpos += 5; return T_WHILE; }
                    }
 
  }
-[0-9]+|0[x|X][0-9a-fA-F]+  { yylval.numericalValue = atoi(yytext); return T_INTCONSTANT; }  // T_INTCONSTANT
+[0-9]+|0[x|X][0-9a-fA-F]+
+{
+    if(strlen(yytext) > 1) {
+        if(yytext[1] == 'x' | yytext[1] == 'X') {
+            int temp = 0;
+            for(int i = strlen(yytext)-1, j = 1; i > 1; i--, j++) {
+                switch(yytext[i]) {
+                    case '0': temp += 0*j; break;
+                    case '1': temp += 1*j; break;
+                    case '2': temp += 2*j; break;
+                    case '3': temp += 3*j; break;
+                    case '4': temp += 4*j; break;
+                    case '5': temp += 5*j; break;
+                    case '6': temp += 6*j; break;
+                    case '7': temp += 7*j; break;
+                    case '8': temp += 8*j; break;
+                    case '9': temp += 9*j; break;
+                    case 'a': temp += 10*j; break;
+                    case 'b': temp += 11*j; break;
+                    case 'c': temp += 12*j; break;
+                    case 'd': temp += 13*j; break;
+                    case 'e': temp += 14*j; break;
+                    case 'f': temp += 15*j; break;
+                }
+            }
+            yylval.numericalValue = temp;
+            return T_INTCONSTANT;
+        } else {
+            yylval.numericalValue = atoi(yytext); return T_INTCONSTANT;
+        }
+    }
+    yylval.numericalValue = atoi(yytext); return T_INTCONSTANT;
+}  // T_INTCONSTANT
 [a-zA-Z\_][a-zA-Z\_0-9]*   { yylval.sval = new string(yytext); return T_ID; }   // T_ID
 \{                         { tokenpos += 1; return T_LCB; }
 \}                         { tokenpos += 1; return T_RCB; }

@@ -74,32 +74,39 @@ while                      { tokenpos += 5; return T_WHILE; }
                    }
 
  }
-[0-9]+|0[x|X][0-9a-fA-F]+
-{
+[0-9]+|0[x|X][0-9a-fA-F]+     {
     if(strlen(yytext) > 1) {
         if(yytext[1] == 'x' | yytext[1] == 'X') {
             int temp = 0;
-            for(int i = strlen(yytext)-1, j = 1; i > 1; i--, j++) {
+            //cout << strlen(yytext) << endl;
+            for(int i = 2; i < strlen(yytext); i++) {
                 switch(yytext[i]) {
-                    case '0': temp += 0*j; break;
-                    case '1': temp += 1*j; break;
-                    case '2': temp += 2*j; break;
-                    case '3': temp += 3*j; break;
-                    case '4': temp += 4*j; break;
-                    case '5': temp += 5*j; break;
-                    case '6': temp += 6*j; break;
-                    case '7': temp += 7*j; break;
-                    case '8': temp += 8*j; break;
-                    case '9': temp += 9*j; break;
-                    case 'a': temp += 10*j; break;
-                    case 'b': temp += 11*j; break;
-                    case 'c': temp += 12*j; break;
-                    case 'd': temp += 13*j; break;
-                    case 'e': temp += 14*j; break;
-                    case 'f': temp += 15*j; break;
+                    case '0': temp = temp*16 + 0; break;
+                    case '1': temp = temp*16 + 1; break;
+                    case '2': temp = temp*16 + 2; break;
+                    case '3': temp = temp*16 + 3; break;
+                    case '4': temp = temp*16 + 4; break;
+                    case '5': temp = temp*16 + 5; break;
+                    case '6': temp = temp*16 + 6; break;
+                    case '7': temp = temp*16 + 7; break;
+                    case '8': temp = temp*16 + 8; break;
+                    case '9': temp = temp*16 + 9; break;
+                    case 'a': temp = temp*16 + 10; break;
+                    case 'b': temp = temp*16 + 11; break;
+                    case 'c': temp = temp*16 + 12; break;
+                    case 'd': temp = temp*16 + 13; break;
+                    case 'e': temp = temp*16 + 14; break;
+                    case 'f': temp = temp*16 + 15; break;
+                    case 'A': temp = temp*16 + 10; break;
+                    case 'B': temp = temp*16 + 11; break;
+                    case 'C': temp = temp*16 + 12; break;
+                    case 'D': temp = temp*16 + 13; break;
+                    case 'E': temp = temp*16 + 14; break;
+                    case 'F': temp = temp*16 + 15; break;
                 }
             }
             yylval.numericalValue = temp;
+            //cout << temp << endl;
             return T_INTCONSTANT;
         } else {
             yylval.numericalValue = atoi(yytext); return T_INTCONSTANT;

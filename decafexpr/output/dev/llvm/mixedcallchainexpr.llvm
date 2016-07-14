@@ -4,17 +4,46 @@ declare void @print_int(i32)
 
 define void @test3(i1, i32) {
 entry:
+  %x = load i32, i32* %x
+  call void @print_int(i32 %x)
+  %a = load i1, i1* %a
+  %zexttmp = zext i1 %a to i32
+  call void @print_int(i32 %zexttmp)
+  ret void
 }
 
 define void @test2(i32, i1) {
 entry:
+  %x = load i32, i32* %x
+  call void @print_int(i32 %x)
+  %a = load i1, i1* %a
+  %zexttmp = zext i1 %a to i32
+  call void @print_int(i32 %zexttmp)
+  %a1 = load i1, i1* %a
+  %NotTmp = xor i1 %a1, true
+  %x2 = load i32, i32* %x
+  %AddTmp = add i32 %x2, 1
+  call void @test3(i1 %NotTmp, i32 %AddTmp)
+  ret void
 }
 
 define void @test1(i1, i32) {
 entry:
+  %x = load i32, i32* %x
+  call void @print_int(i32 %x)
+  %a = load i1, i1* %a
+  %zexttmp = zext i1 %a to i32
+  call void @print_int(i32 %zexttmp)
+  %x1 = load i32, i32* %x
+  %AddTmp = add i32 %x1, 1
+  %a2 = load i1, i1* %a
+  %NotTmp = xor i1 %a2, true
+  call void @test2(i32 %AddTmp, i1 %NotTmp)
+  ret void
 }
 
 define i32 @main() {
 entry:
+  call void @test1(i1 true, i32 1)
   ret i32 0
 }

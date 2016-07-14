@@ -4,13 +4,25 @@ declare void @print_int(i32)
 
 define void @test2(i32) {
 entry:
+  %a = load i32, i32* %a
+  call void @print_int(i32 %a)
+  store i32 %0, i32* %a
+  ret void
+  %a1 = alloca i32
 }
 
 define void @test1(i32) {
 entry:
+  %a = load i32, i32* %a1
+  call void @print_int(i32 %a)
+  %a1 = load i32, i32* %a1
+  call void @test2(i32 %a1)
+  store i32 %0, i32* %a1
+  ret void
 }
 
 define i32 @main() {
 entry:
+  call void @test1(i32 1)
   ret i32 0
 }

@@ -1,3 +1,3 @@
-/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as: /Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/method1.llvm:7:1: error: expected instruction opcode
-}
-^
+/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/method1.llvm:12:22: error: use of undefined value '%a'
+  store i32 %0, i32* %a
+                     ^

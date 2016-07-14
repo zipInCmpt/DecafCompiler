@@ -13,6 +13,7 @@ define void @f() {
 entry:
   call void @print_int(i32 1)
   ret void
+  ret void
 }
 
 define i32 @main() {

@@ -4,5 +4,24 @@ llc: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc
 cc: gcc
 codegen: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr
 stdlib: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c
-generating llvm code:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr ... failed (1)
-codegen failed
+generating llvm code:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr ... ok
+; ModuleID = 'C'
+
+declare void @print_int(i32)
+
+define i32 @main() {
+entry:
+  %x = alloca i32
+  %y = alloca i32
+  store i32 1, i32* %x
+  store i32 1, i32* %y
+  %x1 = load i32, i32* %x
+  call void @print_int(i32 %x1)
+  %y2 = load i32, i32* %y
+  call void @print_int(i32 %y2)
+  ret i32 0
+}
+assembling to bitcode:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/test/llvm/1block-2var.llvm" -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/test/llvm/1block-2var.llvm.bc" ... ok
+converting to native code:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/test/llvm/1block-2var.llvm.bc" -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/test/llvm/1block-2var.llvm.s" ... ok
+linking:gcc -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/test/llvm/1block-2var.llvm.exec" "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/test/llvm/1block-2var.llvm.s" "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c" ... ok
+running:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/test/llvm/1block-2var.llvm.exec ... ok

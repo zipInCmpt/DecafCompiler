@@ -8,7 +8,7 @@ _main:                                  ## @main
 	pushq	%rax
 Ltmp0:
 	.cfi_def_cfa_offset 16
-	movl	$0, 4(%rsp)
+	movl	$1, 4(%rsp)
 	leaq	L_globalstring(%rip), %rdi
 	callq	_print_string
 	xorl	%eax, %eax

@@ -4,5 +4,13 @@ declare void @print_int(i32)
 
 define i32 @main() {
 entry:
+  %x = alloca i32
+  %y = alloca i32
+  store i32 102, i32* %x
+  store i32 97, i32* %y
+  %x1 = load i32, i32* %x
+  %y2 = load i32, i32* %y
+  %SubTmp = sub i32 %x1, %y2
+  call void @print_int(i32 %SubTmp)
   ret i32 0
 }

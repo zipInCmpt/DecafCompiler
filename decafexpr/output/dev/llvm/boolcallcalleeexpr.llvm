@@ -4,9 +4,15 @@ declare void @print_int(i32)
 
 define void @test(i1) {
 entry:
+  %a = load i1, i1* %a
+  %zexttmp = zext i1 %a to i32
+  call void @print_int(i32 %zexttmp)
+  store i1 %0, i1* %a
+  ret void
 }
 
 define i32 @main() {
 entry:
+  call void @test(i1 true)
   ret i32 0
 }

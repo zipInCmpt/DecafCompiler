@@ -5,6 +5,8 @@ declare void @print_int(i32)
 define void @test(i1, i1) {
 entry:
   call void @print_int(i32 2)
+  store i1 %0, i1* %a
+  store i1 %1, i1* %b
   ret void
 }
 

@@ -4,5 +4,28 @@ llc: /usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc
 cc: gcc
 codegen: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr
 stdlib: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c
-generating llvm code:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr ... failed (-11)
-codegen failed
+generating llvm code:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decafexpr ... ok
+; ModuleID = 'Test'
+
+declare void @print_int(i32)
+
+define i32 @main() {
+entry:
+  %x = alloca i1
+  %y = alloca i1
+  %z = alloca i1
+  store i1 true, i1* %x
+  store i1 true, i1* %y
+  %x1 = load i1, i1* %x
+  %y2 = load i1, i1* %y
+  %AndTmp = and i1 %x1, %y2
+  store i1 %AndTmp, i1* %z
+  %z3 = load i1, i1* %z
+  %zexttmp = zext i1 %z3 to i32
+  call void @print_int(i32 %zexttmp)
+  ret i32 0
+}
+assembling to bitcode:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-5.llvm" -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-5.llvm.bc" ... ok
+converting to native code:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-5.llvm.bc" -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-5.llvm.s" ... ok
+linking:gcc -o "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-5.llvm.exec" "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-5.llvm.s" "/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/answer/decaf-stdlib.c" ... ok
+running:/Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/expr-testfile-5.llvm.exec ... ok

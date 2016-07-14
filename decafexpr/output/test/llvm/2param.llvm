@@ -4,9 +4,19 @@ declare void @print_int(i32)
 
 define i32 @foo(i32, i32) {
 entry:
+  store i32 1, i32* %x
+  store i32 1, i32* %y
+  %x = load i32, i32* %x
+  call void @print_int(i32 %x)
+  %y = load i32, i32* %y
+  call void @print_int(i32 %y)
+  store i32 %0, i32* %x
+  store i32 %1, i32* %y
+  ret i32 0
 }
 
 define i32 @main() {
 entry:
+  %calltmp = call i32 @foo(i32 1, i32 2)
   ret i32 0
 }

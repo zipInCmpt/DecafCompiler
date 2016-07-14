@@ -1,3 +1,0 @@
-/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/boolcallcallerexpr.llvm:8:20: error: use of undefined value '%a'
-  store i1 %0, i1* %a
-                   ^

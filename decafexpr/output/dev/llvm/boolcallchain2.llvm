@@ -4,22 +4,23 @@ declare void @print_int(i32)
 
 define void @test2(i1) {
 entry:
-  %a = load i1, i1* %a
-  %zexttmp = zext i1 %a to i32
-  call void @print_int(i32 %zexttmp)
+  %a = alloca i1
   store i1 %0, i1* %a
+  %a1 = load i1, i1* %a
+  %zexttmp = zext i1 %a1 to i32
+  call void @print_int(i32 %zexttmp)
   ret void
-  %a1 = alloca i1
 }
 
 define void @test1(i1) {
 entry:
-  %a = load i1, i1* %a1
-  %zexttmp = zext i1 %a to i32
+  %a = alloca i1
+  store i1 %0, i1* %a
+  %a1 = load i1, i1* %a
+  %zexttmp = zext i1 %a1 to i32
   call void @print_int(i32 %zexttmp)
-  %a1 = load i1, i1* %a1
-  call void @test2(i1 %a1)
-  store i1 %0, i1* %a1
+  %a2 = load i1, i1* %a
+  call void @test2(i1 %a2)
   ret void
 }
 

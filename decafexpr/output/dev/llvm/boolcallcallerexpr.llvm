@@ -4,8 +4,9 @@ declare void @print_int(i32)
 
 define void @test(i1) {
 entry:
-  call void @print_int(i32 1)
+  %a = alloca i1
   store i1 %0, i1* %a
+  call void @print_int(i32 1)
   ret void
 }
 

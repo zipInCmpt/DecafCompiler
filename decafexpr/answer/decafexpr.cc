@@ -683,6 +683,7 @@ public:
 	string getName() { return strs->getName(); }
 	int getTypeId() { return strs->getType(); }
 	llvm::Value *Codegen() {
+		if(isDebugging) cout << "In IDTypeStringSpecialAST" << endl;
 		return strs->Codegen();
 	}
 	void insertSymbolIntoSymbolTable() {
@@ -1358,33 +1359,23 @@ public:
 		//checkTable(currentST);
 		if(isDebugging) printf("Debug message: Generating MethodDecl...\n");
 
-		head->Codegen();
 
 		llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), "entry", func);
 		// Symbol table
 		Builder.SetInsertPoint(BB);
 
-		if(block != NULL) {
-			if(isDebugging) cout << "Method Block CodeGen..." << endl;
-			block->Codegen();
-			if(isDebugging) cout << "Finish Method Block CodeGen..." << endl;
-		}
-
-		// Passing args
-		//int i=0;
-
+		head->Codegen();
 		map<string, descriptor* >::iterator i = currentST->begin();
 		for(auto &Arg : func->args()) {
 			Builder.CreateStore(&Arg, (*i).second->getAlloca());
 			i++;
 		}
 
-		/*switch(tempHead->getType()) {
-			case 17: Builder.CreateRet(llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0))); break;
-			//case 18: Builder.CreateRet(Builder.get()); break;
-			case 19: Builder.CreateRet((llvm::Value *)Builder.getVoidTy()); break;
-			//case 20: typedefault = Builder.getInt8PtrTy(); break;
-		}*/
+		if(block != NULL) {
+			if(isDebugging) cout << "Method Block CodeGen..." << endl;
+			block->Codegen();
+			if(isDebugging) cout << "Finish Method Block CodeGen..." << endl;
+		}
 
 		if(func->getReturnType()==getLLVMType(17)) {
 			if(isDebugging) cout << "Generating Dummy Return 0...";

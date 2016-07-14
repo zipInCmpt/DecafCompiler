@@ -8,6 +8,8 @@ _test:                                  ## @test
 	pushq	%rax
 Ltmp0:
 	.cfi_def_cfa_offset 16
+	andl	$1, %edi
+	movb	%dil, 7(%rsp)
 	movl	$1, %edi
 	callq	_print_int
 	popq	%rax

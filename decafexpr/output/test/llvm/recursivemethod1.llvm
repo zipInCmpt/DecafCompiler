@@ -4,13 +4,14 @@ declare void @print_int(i32)
 
 define i32 @test(i32) {
 entry:
+  %x = alloca i32
+  store i32 %0, i32* %x
   %y = alloca i32
   store i32 10, i32* %y
-  %x = load i32, i32* %x
-  %y1 = load i32, i32* %y
-  %AddTmp = add i32 %x, %y1
+  %x1 = load i32, i32* %x
+  %y2 = load i32, i32* %y
+  %AddTmp = add i32 %x1, %y2
   ret i32 %AddTmp
-  store i32 %0, i32* %x
   ret i32 0
 }
 

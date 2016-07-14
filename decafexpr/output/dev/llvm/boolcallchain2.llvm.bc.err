@@ -1,3 +1,0 @@
-/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as: /Users/Sei/SFU/CMPT379/DecafCompiler/decafexpr/output/dev/llvm/boolcallchain2.llvm:7:3: error: instruction forward referenced with type 'i1*'
-  %a = load i1, i1* %a
-  ^

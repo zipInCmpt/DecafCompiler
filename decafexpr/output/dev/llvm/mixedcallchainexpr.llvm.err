@@ -1,1 +1,61 @@
-Assertion failed: (getOperand(0)->getType() == cast<PointerType>(getOperand(1)->getType())->getElementType() && "Ptr must be a pointer to Val type!"), function AssertOK, file /private/tmp/llvm3820160316-88255-1gzkzcp/llvm-3.8.0.src/lib/IR/Instructions.cpp, line 1304.
+; ModuleID = 'Test'
+
+declare void @print_int(i32)
+
+define void @test3(i1, i32) {
+entry:
+  %a = alloca i1
+  %x = alloca i32
+  store i1 %0, i1* %a
+  store i32 %1, i32* %x
+  %x1 = load i32, i32* %x
+  call void @print_int(i32 %x1)
+  %a2 = load i1, i1* %a
+  %zexttmp = zext i1 %a2 to i32
+  call void @print_int(i32 %zexttmp)
+  ret void
+}
+
+define void @test2(i32, i1) {
+entry:
+  %x = alloca i32
+  %a = alloca i1
+  store i32 %0, i32* %x
+  store i1 %1, i1* %a
+  %x1 = load i32, i32* %x
+  call void @print_int(i32 %x1)
+  %a2 = load i1, i1* %a
+  %zexttmp = zext i1 %a2 to i32
+  call void @print_int(i32 %zexttmp)
+  %a3 = load i1, i1* %a
+  %NotTmp = xor i1 %a3, true
+  %x4 = load i32, i32* %x
+  %AddTmp = add i32 %x4, 1
+  call void @test3(i1 %NotTmp, i32 %AddTmp)
+  ret void
+}
+
+define void @test1(i1, i32) {
+entry:
+  %a = alloca i1
+  %x = alloca i32
+  store i1 %0, i1* %a
+  store i32 %1, i32* %x
+  %x1 = load i32, i32* %x
+  call void @print_int(i32 %x1)
+  %a2 = load i1, i1* %a
+  %zexttmp = zext i1 %a2 to i32
+  call void @print_int(i32 %zexttmp)
+  %x3 = load i32, i32* %x
+  %AddTmp = add i32 %x3, 1
+  %a4 = load i1, i1* %a
+  %NotTmp = xor i1 %a4, true
+  call void @test2(i32 %AddTmp, i1 %NotTmp)
+  ret void
+}
+
+define i32 @main() {
+entry:
+  call void @test1(i1 true, i32 1)
+  ret i32 0
+}

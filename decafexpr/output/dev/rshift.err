@@ -20,4 +20,5 @@ entry:
 assembling to bitcode:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llvm-as "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/rshift.llvm" -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/rshift.llvm.bc" ... ok
 converting to native code:/usr/local/Cellar/llvm38/3.8.0/lib/llvm-3.8/bin/llc "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/rshift.llvm.bc" -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/rshift.llvm.s" ... ok
 linking:gcc -o "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/rshift.llvm.exec" "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/rshift.llvm.s" "/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/answer/decaf-stdlib.c" ... ok
+ld: warning: object file (/var/folders/6l/4w793k193_z5lr9j_yrnfp1r0000gn/T/rshift-a68b76.o) was built for newer OSX version (10.12) than being linked (10.11)
 running:/Users/Jerry/Develop/SFU/compiler/DecafCompiler/decafexpr/output/dev/llvm/rshift.llvm.exec ... ok

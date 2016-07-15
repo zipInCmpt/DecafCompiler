@@ -671,6 +671,10 @@ public:
 		descriptor *newDecp = new descriptor(decafASTString, methodType, linepos, NULL);
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(decafASTString, newDecp));
 	}
+
+	string getIDName() {
+		return decafASTString;
+	}
 };
 
 /// TODO: Done
@@ -688,6 +692,10 @@ public:
 	}
 	void insertSymbolIntoSymbolTable() {
 		strs->insertSymbolIntoSymbolTable();
+	}
+
+	string getIDName() {
+		return strs->getIDName();
 	}
 };
 
@@ -1279,6 +1287,10 @@ public:
 			if((*i) != NULL) (*i)->insertSymbolIntoSymbolTable();
 		}
 	}
+
+	list<IDTypeStringSpecialAST* > getArgList() {
+		return stmts;
+	}
 };
 
 // Method Decl
@@ -1332,6 +1344,11 @@ public:
 	int getType() {
 		return methodTypeId;
 	}
+
+	list<IDTypeStringSpecialAST* > getParamList()
+	{
+		return paramList->getArgList();
+	}
 };
 
 class MethodDeclAST : public decafAST {
@@ -1364,10 +1381,16 @@ public:
 		// Symbol table
 		Builder.SetInsertPoint(BB);
 
-		head->Codegen();
-		map<string, descriptor* >::iterator i = currentST->begin();
+		MethodDeclHeadAST* h=(MethodDeclHeadAST *)head;
+
+		h->Codegen();
+
+		list<IDTypeStringSpecialAST* > argList=h->getParamList();
+		list<IDTypeStringSpecialAST* >::iterator i = argList.begin();
+		descriptor* fetchedVar;
 		for(auto &Arg : func->args()) {
-			Builder.CreateStore(&Arg, (*i).second->getAlloca());
+			fetchedVar = getSymbolTable((*i)->getIDName());
+			Builder.CreateStore(&Arg, fetchedVar->getAlloca());
 			i++;
 		}
 

@@ -1,5 +1,5 @@
 	.section	__TEXT,__text,regular,pure_instructions
-	.macosx_version_min 10, 11
+	.macosx_version_min 10, 12
 	.globl	_main
 	.align	4, 0x90
 _main:                                  ## @main
@@ -10,9 +10,9 @@ Ltmp0:
 	.cfi_def_cfa_offset 16
 	xorl	%edi, %edi
 	callq	_print_int
-	xorl	%edi, %edi
+	movl	$6575, %edi             ## imm = 0x19AF
 	callq	_print_int
-	xorl	%edi, %edi
+	movl	$-6575, %edi            ## imm = 0xFFFFFFFFFFFFE651
 	callq	_print_int
 	xorl	%eax, %eax
 	popq	%rcx

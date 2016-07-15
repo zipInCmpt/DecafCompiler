@@ -1,0 +1,27 @@
+; ModuleID = 'foo'
+
+@globalstring = private unnamed_addr constant [4 x i8] c"foo\00"
+
+declare void @print_int(i32)
+
+declare void @print_string(i8*)
+
+define i1 @foo() {
+entry:
+  call void @print_string(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @globalstring, i32 0, i32 0))
+  ret i1 false
+  ret i1 true
+}
+
+define i32 @main() {
+entry:
+  %flag = alloca i1
+  %calltmp = call i1 @foo()
+  %AndTmp = and i1 %calltmp, false
+  %OrTmp = or i1 true, %AndTmp
+  store i1 %OrTmp, i1* %flag
+  %flag1 = load i1, i1* %flag
+  %zexttmp = zext i1 %flag1 to i32
+  call void @print_int(i32 %zexttmp)
+  ret i32 0
+}

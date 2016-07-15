@@ -8,9 +8,16 @@ _main:                                  ## @main
 	subq	$24, %rsp
 Ltmp0:
 	.cfi_def_cfa_offset 32
+	movl	$0, 20(%rsp)
+	movb	$0, 19(%rsp)
 	movl	$958, 20(%rsp)          ## imm = 0x3BE
-	movl	$-28660, 12(%rsp)       ## imm = 0xFFFFFFFFFFFF900C
-	movl	$28660, 20(%rsp)        ## imm = 0x6FF4
+	movl	$0, 12(%rsp)
+	imull	$-30, 20(%rsp), %eax
+	leal	80(%rax), %ecx
+	movl	%ecx, 12(%rsp)
+	movl	$-80, %ecx
+	subl	%eax, %ecx
+	movl	%ecx, 20(%rsp)
 	movb	$0, 19(%rsp)
 	movl	20(%rsp), %edi
 	callq	_print_int

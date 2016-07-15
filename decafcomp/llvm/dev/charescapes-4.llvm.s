@@ -5,6 +5,7 @@
 _main:                                  ## @main
 	.cfi_startproc
 ## BB#0:                                ## %entry
+	movl	$0, -4(%rsp)
 	movl	$10, -4(%rsp)
 	xorl	%eax, %eax
 	retq

@@ -6,6 +6,7 @@ _test:                                  ## @test
 	.cfi_startproc
 ## BB#0:                                ## %entry
 	movl	%edi, -4(%rsp)
+	movl	$0, -8(%rsp)
 	movl	$10, -8(%rsp)
 	movl	-4(%rsp), %eax
 	addl	$10, %eax
@@ -20,6 +21,7 @@ _main:                                  ## @main
 	pushq	%rax
 Ltmp0:
 	.cfi_def_cfa_offset 16
+	movl	$0, 4(%rsp)
 	movl	$1, 4(%rsp)
 	movl	$1, %edi
 	callq	_test

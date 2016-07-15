@@ -11,6 +11,7 @@ entry:
 define i32 @main() {
 entry:
   %x = alloca i32
+  store i32 0, i32* %x
   %calltmp = call i32 @test()
   store i32 %calltmp, i32* %x
   %x1 = load i32, i32* %x

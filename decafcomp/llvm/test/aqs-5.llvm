@@ -5,5 +5,6 @@ entry:
   %size = alloca i32
   store i32 %0, i32* %size
   %i = alloca i32
+  store i32 0, i32* %i
   ret void
 }

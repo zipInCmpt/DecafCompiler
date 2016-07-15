@@ -7,6 +7,7 @@ entry:
   %x = alloca i32
   store i32 %0, i32* %x
   %y = alloca i32
+  store i32 0, i32* %y
   store i32 undef, i32* %y
   %x1 = load i32, i32* %x
   %y2 = load i32, i32* %y
@@ -18,6 +19,7 @@ entry:
 define i32 @main() {
 entry:
   %x = alloca i32
+  store i32 0, i32* %x
   store i32 1, i32* %x
   %x1 = load i32, i32* %x
   call void @test(i32 %x1)

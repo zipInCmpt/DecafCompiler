@@ -8,6 +8,9 @@ _main:                                  ## @main
 	pushq	%rax
 Ltmp0:
 	.cfi_def_cfa_offset 16
+	movl	$0, 4(%rsp)
+	movb	$0, 3(%rsp)
+	movb	$0, 2(%rsp)
 	movl	$958, 4(%rsp)           ## imm = 0x3BE
 	movl	$-958, 4(%rsp)          ## imm = 0xFFFFFFFFFFFFFC42
 	movb	$1, 3(%rsp)

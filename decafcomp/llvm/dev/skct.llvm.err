@@ -16,6 +16,7 @@ entry:
 define i32 @main() {
 entry:
   %flag = alloca i1
+  store i1 false, i1* %flag
   %calltmp = call i1 @foo()
   %AndTmp = and i1 %calltmp, false
   %OrTmp = or i1 true, %AndTmp

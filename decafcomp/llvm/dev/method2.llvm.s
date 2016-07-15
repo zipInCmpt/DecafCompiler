@@ -10,6 +10,7 @@ Ltmp0:
 	.cfi_def_cfa_offset 32
 	movl	%edi, 20(%rsp)
 	movl	%esi, 16(%rsp)
+	movl	$0, 12(%rsp)
 	movl	$1, 12(%rsp)
 	movl	20(%rsp), %edi
 	callq	_print_int
@@ -29,6 +30,7 @@ _main:                                  ## @main
 	pushq	%rax
 Ltmp1:
 	.cfi_def_cfa_offset 16
+	movl	$0, 4(%rsp)
 	movl	$1, 4(%rsp)
 	movl	$1, %edi
 	callq	_print_int

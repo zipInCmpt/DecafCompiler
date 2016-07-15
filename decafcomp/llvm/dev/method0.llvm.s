@@ -8,6 +8,7 @@ _test:                                  ## @test
 	pushq	%rax
 Ltmp0:
 	.cfi_def_cfa_offset 16
+	movl	$0, 4(%rsp)
 	movl	$1, 4(%rsp)
 	movl	$1, %edi
 	callq	_print_int
@@ -25,6 +26,7 @@ _main:                                  ## @main
 	pushq	%rax
 Ltmp1:
 	.cfi_def_cfa_offset 16
+	movl	$0, 4(%rsp)
 	movl	$1, 4(%rsp)
 	movl	$1, %edi
 	callq	_print_int

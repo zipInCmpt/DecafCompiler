@@ -950,6 +950,10 @@ RValue
 
 		descriptor *fetchedVar = getSymbolTable(identifierName);
 		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+		llvm::Value *zero;
+		if(decafTypeId == 17) zero = llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0));
+		else if(decafTypeId == 18) zero = llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 0));
+		Builder.CreateStore(zero, Alloca);
 		if(isDebugging) cout << "Allocating " << identifierName << endl;
 		fetchedVar->setAlloca(Alloca);
 

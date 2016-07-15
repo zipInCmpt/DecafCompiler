@@ -6,6 +6,7 @@ _initList:                              ## @initList
 	.cfi_startproc
 ## BB#0:                                ## %entry
 	movl	%edi, -4(%rsp)
+	movl	$0, -8(%rsp)
 	retq
 	.cfi_endproc
 

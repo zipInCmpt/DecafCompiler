@@ -9,6 +9,7 @@ _test:                                  ## @test
 Ltmp0:
 	.cfi_def_cfa_offset 16
 	movl	%edi, 4(%rsp)
+	movl	$0, (%rsp)
 	callq	_test
 	popq	%rax
 	retq
@@ -22,6 +23,7 @@ _main:                                  ## @main
 	pushq	%rax
 Ltmp1:
 	.cfi_def_cfa_offset 16
+	movl	$0, 4(%rsp)
 	movl	$1, 4(%rsp)
 	movl	$1, %edi
 	callq	_test

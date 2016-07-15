@@ -8,6 +8,7 @@ _main:                                  ## @main
 	pushq	%rax
 Ltmp0:
 	.cfi_def_cfa_offset 16
+	movl	$0, 4(%rsp)
 	callq	_read_int
 	imull	$100, %eax, %edi
 	movl	%edi, 4(%rsp)

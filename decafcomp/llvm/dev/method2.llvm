@@ -9,6 +9,7 @@ entry:
   store i32 %0, i32* %a
   store i32 %1, i32* %b
   %x = alloca i32
+  store i32 0, i32* %x
   store i32 1, i32* %x
   %a1 = load i32, i32* %a
   call void @print_int(i32 %a1)
@@ -22,6 +23,7 @@ entry:
 define i32 @main() {
 entry:
   %x = alloca i32
+  store i32 0, i32* %x
   store i32 1, i32* %x
   %x1 = load i32, i32* %x
   call void @print_int(i32 %x1)

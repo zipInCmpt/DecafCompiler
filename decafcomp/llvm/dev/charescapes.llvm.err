@@ -5,6 +5,7 @@ declare void @print_int(i32)
 define i32 @main() {
 entry:
   %c = alloca i32
+  store i32 0, i32* %c
   store i32 9, i32* %c
   %c1 = load i32, i32* %c
   call void @print_int(i32 %c1)

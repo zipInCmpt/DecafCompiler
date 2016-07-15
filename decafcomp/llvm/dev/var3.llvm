@@ -5,8 +5,11 @@ declare void @print_int(i32)
 define i32 @main() {
 entry:
   %x = alloca i32
+  store i32 0, i32* %x
   %y = alloca i32
+  store i32 0, i32* %y
   %z = alloca i32
+  store i32 0, i32* %z
   store i32 0, i32* %x
   store i32 0, i32* %y
   store i32 0, i32* %z

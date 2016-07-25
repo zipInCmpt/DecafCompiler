@@ -1069,13 +1069,21 @@ public:
 		if(!ConditionCode)
 			return NULL;
 
-		ConditionCode = Builder.CreateICmpEQ(ConditionCode, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)), "IfCond");
+		// Check the type of the condition code
+		if(ConditionCode->getType() == getLLVMType(17)) // Int
+			ConditionCode = Builder.CreateICmpSGT(ConditionCode, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)), "IfCond");
+		else if(ConditionCode->getType() == getLLVMType(18)) // bool
+			ConditionCode = Builder.CreateICmpEQ(ConditionCode, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 1)), "IfCond");
+		else
+			throw runtime_error("Semantic error: Condition of If must be a boolean type.");
+
+		//ConditionCode = Builder.CreateICmpEQ(ConditionCode, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)), "IfCond");
 		llvm::Function *TheFunction = Builder.GetInsertBlock()->getParent();
 
 		llvm::BasicBlock *ThenBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "Then", TheFunction);
 		llvm::BasicBlock *EBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "Else");
 		llvm::BasicBlock *MergeBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "IfCont");
-		Builder.CreateCondBr(ConditionCode, ThenBlock, ElseBlock);
+		Builder.CreateCondBr(ConditionCode, ThenBlock, EBlock);
 
 		Builder.SetInsertPoint(ThenBlock);
 

@@ -18,7 +18,7 @@ entry:
   store i32 %0, i32* %n
   %n1 = load i32, i32* %n
   %EQTmp = icmp eq i32 %n1, 1
-  %IfCond = icmp eq i1 %EQTmp, false
+  %IfCond = icmp eq i1 %EQTmp, true
   br i1 %IfCond, label %Then, label %Else
 
 Then:                                             ; preds = %entry

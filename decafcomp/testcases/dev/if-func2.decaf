@@ -1,7 +1,7 @@
 extern func print_int(int) void;
 package C {
-    func f() int {
-        return(1);
+    func f() bool {
+        return(true);
     }
 	func main() void {
 	    var x int;

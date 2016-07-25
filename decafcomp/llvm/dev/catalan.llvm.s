@@ -32,7 +32,7 @@ Ltmp3:
 	.cfi_offset %rbx, -16
 	movl	%edi, 12(%rsp)
 	cmpl	$1, %edi
-	jne	LBB1_1
+	je	LBB1_1
 ## BB#3:                                ## %Else
 	movl	12(%rsp), %ebx
 	leal	-1(%rbx), %edi

@@ -1,1 +1,56 @@
-Assertion failed: (getOperand(0)->getType() == getOperand(1)->getType() && "Both operands to ICmp instruction are not of the same type!"), function AssertOK, file /private/tmp/llvm3820160316-8183-11u7j5k/llvm-3.8.0.src/include/llvm/IR/Instructions.h, line 1109.
+; ModuleID = 'GreatestCommonDivisor'
+
+declare void @print_int(i32)
+
+define i32 @main() {
+entry:
+  %z = alloca i32
+  store i32 0, i32* %z
+  %a = load i32, i32* %a
+  %b = load i32, i32* %b
+  %calltmp = call i32 @gcd(i32 %a, i32 %b)
+  call void @print_int(i32 %calltmp)
+  ret i32 0
+}
+
+define i1 @iszero(i32, i32) {
+entry:
+  %a = alloca i32
+  %b = alloca i32
+  store i32 %0, i32* %a
+  store i32 %1, i32* %b
+  %b1 = load i32, i32* %b
+  %EQTmp = icmp eq i32 %b1, 0
+  %IfCond = icmp eq i1 %EQTmp, true
+  br i1 %IfCond, label %Then, label %Else
+
+Then:                                             ; preds = %entry
+  %a2 = load i32, i32* %a
+  ret i32 %a2
+  br label %IfCont
+
+Else:                                             ; preds = %entry
+  %b3 = load i32, i32* %b
+  %a4 = load i32, i32* %a
+  %b5 = load i32, i32* %b
+  %RemainTmp = srem i32 %a4, %b5
+  %calltmp = call i32 @gcd(i32 %b3, i32 %RemainTmp)
+  ret i32 %calltmp
+  br label %IfCont
+
+IfCont:                                           ; preds = %Else, %Then
+  ret i1 true
+}
+
+define i32 @gcd(i32, i32) {
+entry:
+  %a = alloca i32
+  %b = alloca i32
+  store i32 %0, i32* %a
+  store i32 %1, i32* %b
+  %a1 = load i32, i32* %a
+  %b2 = load i32, i32* %b
+  %calltmp = call i1 @iszero(i32 %a1, i32 %b2)
+  ret i1 %calltmp
+  ret i32 0
+}

@@ -5,7 +5,7 @@
 _f:                                     ## @f
 	.cfi_startproc
 ## BB#0:                                ## %entry
-	movl	$1, %eax
+	movb	$1, %al
 	retq
 	.cfi_endproc
 
@@ -19,13 +19,13 @@ Ltmp0:
 	.cfi_def_cfa_offset 16
 	movl	$0, 4(%rsp)
 	callq	_f
-	testl	%eax, %eax
-	je	LBB1_2
-## BB#1:                                ## %Then
-	movl	$1, 4(%rsp)
-	jmp	LBB1_3
-LBB1_2:                                 ## %Else
+	testb	$1, %al
+	jne	LBB1_1
+## BB#2:                                ## %Else
 	movl	$2, 4(%rsp)
+	jmp	LBB1_3
+LBB1_1:                                 ## %Then
+	movl	$1, 4(%rsp)
 LBB1_3:                                 ## %IfCont
 	movl	4(%rsp), %edi
 	callq	_print_int

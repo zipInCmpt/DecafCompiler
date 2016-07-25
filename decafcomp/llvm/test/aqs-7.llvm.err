@@ -1,10 +1,1 @@
-; ModuleID = 'QuickSort'
-
-define void @quickSort(i32, i32) {
-entry:
-  %left = alloca i32
-  %right = alloca i32
-  store i32 %0, i32* %left
-  store i32 %1, i32* %right
-  ret void
-}
+Assertion failed: (getOperand(0)->getType() == getOperand(1)->getType() && "Both operands to ICmp instruction are not of the same type!"), function AssertOK, file /private/tmp/llvm3820160316-8183-11u7j5k/llvm-3.8.0.src/include/llvm/IR/Instructions.h, line 1109.

@@ -64,13 +64,7 @@ INFO:root:dev/forward2.out Correct!
 INFO:root:Checking dev/charvals-11.out
 INFO:root:dev/charvals-11.out Correct!
 INFO:root:Checking dev/var4.out
-INFO:root:Diff between reference and your output for dev/var4.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--00001111
-+0014783800861111
+INFO:root:dev/var4.out Correct!
 INFO:root:Checking dev/stringescapes-3.out
 INFO:root:dev/stringescapes-3.out Correct!
 INFO:root:Checking dev/5.ret

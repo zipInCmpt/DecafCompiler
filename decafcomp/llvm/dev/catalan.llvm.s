@@ -22,8 +22,28 @@ Ltmp0:
 _fact:                                  ## @fact
 	.cfi_startproc
 ## BB#0:                                ## %entry
-	movl	%edi, -4(%rsp)
-	xorl	%eax, %eax
+	pushq	%rbx
+Ltmp1:
+	.cfi_def_cfa_offset 16
+	subq	$16, %rsp
+Ltmp2:
+	.cfi_def_cfa_offset 32
+Ltmp3:
+	.cfi_offset %rbx, -16
+	movl	%edi, 12(%rsp)
+	cmpl	$1, %edi
+	jne	LBB1_1
+## BB#3:                                ## %Else
+	movl	12(%rsp), %ebx
+	leal	-1(%rbx), %edi
+	callq	_fact
+	imull	%ebx, %eax
+	jmp	LBB1_2
+LBB1_1:                                 ## %Then
+	movl	$1, %eax
+LBB1_2:                                 ## %Then
+	addq	$16, %rsp
+	popq	%rbx
 	retq
 	.cfi_endproc
 
@@ -33,17 +53,17 @@ _choose:                                ## @choose
 	.cfi_startproc
 ## BB#0:                                ## %entry
 	pushq	%rbp
-Ltmp1:
+Ltmp4:
 	.cfi_def_cfa_offset 16
 	pushq	%rbx
-Ltmp2:
+Ltmp5:
 	.cfi_def_cfa_offset 24
 	pushq	%rax
-Ltmp3:
+Ltmp6:
 	.cfi_def_cfa_offset 32
-Ltmp4:
+Ltmp7:
 	.cfi_offset %rbx, -24
-Ltmp5:
+Ltmp8:
 	.cfi_offset %rbp, -16
 	movl	%edi, 4(%rsp)
 	movl	%esi, (%rsp)
@@ -73,7 +93,7 @@ _cat:                                   ## @cat
 	.cfi_startproc
 ## BB#0:                                ## %entry
 	pushq	%rax
-Ltmp6:
+Ltmp9:
 	.cfi_def_cfa_offset 16
 	movl	%edi, %eax
 	movl	%eax, 4(%rsp)

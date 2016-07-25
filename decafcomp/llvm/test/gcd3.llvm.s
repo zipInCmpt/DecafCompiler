@@ -28,9 +28,25 @@ Ltmp1:
 _gcd:                                   ## @gcd
 	.cfi_startproc
 ## BB#0:                                ## %entry
-	movl	%edi, -4(%rsp)
-	movl	%esi, -8(%rsp)
-	xorl	%eax, %eax
+	pushq	%rax
+Ltmp2:
+	.cfi_def_cfa_offset 16
+	movl	%edi, 4(%rsp)
+	movl	%esi, (%rsp)
+	testl	%esi, %esi
+	jne	LBB1_1
+## BB#2:                                ## %Else
+	movl	(%rsp), %edi
+	movl	4(%rsp), %eax
+	cltd
+	idivl	%edi
+	movl	%edx, %esi
+	callq	_gcd
+	popq	%rcx
+	retq
+LBB1_1:                                 ## %Then
+	movl	4(%rsp), %eax
+	popq	%rcx
 	retq
 	.cfi_endproc
 

@@ -1,10 +1,15 @@
+extern func print_int(int) void;
 package C {
     func f() int {
         return(1);
     }
 	func main() void {
+	    var x int;
 		if (f()) {
 			x = 1;
+		} else {
+		    x = 2;
 		}
+		print_int(x);
 	}
 }

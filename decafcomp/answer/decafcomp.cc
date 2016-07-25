@@ -37,7 +37,7 @@ void outputCurrentSymTabList()
 /// decafAST - Base class for all abstract syntax tree nodes.
 /// TODO:Done
 
-bool isDebugging = false;
+bool isDebugging = true;
 
 class descriptor {
 	string identifierName;
@@ -82,19 +82,31 @@ public:
 	{
 		return identifierName;
 	}
+
+	int getLineNum() {
+		return lineNumber;
+	}
 };
 
 descriptor *getSymbolTable(string idName) {
 
 	DecafSymbolTable::iterator fetchedObject;
-	for(DecafSymbolTableList::iterator i = SymbolTableList.begin(); i != SymbolTableList.end(); i++) {
-		DecafSymbolTable::iterator fetchedObject;
-		if((fetchedObject = (*i)->find(idName)) != (*i)->end()) {
-			return fetchedObject->second;
+	for(DecafSymbolTableList::iterator i = SymbolTableList.begin(); i != SymbolTableList.end(); ++i) {
+		//DecafSymbolTable::iterator fetchedObject;
+		if(isDebugging) cout << "Serching table..." << endl;
+		if((*i)) {
+			fetchedObject = (*i)->find(idName);
+			if(fetchedObject != (*i)->end()) {
+				if(isDebugging) cout << "FetchedObject: Found " << idName << endl;
+				return fetchedObject->second;
+			} else {
+				if(isDebugging) cout << "Table not found..." << endl;
+			}
 		}
 	}
-	return NULL;
 
+	if(isDebugging) cout << "Not found: " << idName << endl;
+	return NULL;
 }
 
 void checkTable(DecafSymbolTable *table) {
@@ -390,15 +402,17 @@ public:
 		}
 	}
 	llvm::Value *Codegen() {
-		if(!isArray) {
-			descriptor *fetchedVar = getSymbolTable(idName);
-			if(fetchedVar==NULL) {
-				throw runtime_error("Undefined var.");
-			}
-			else return fetchedVar->getValue();
-		} else {
-			return NULL;
-		};
+		descriptor *fetchedVar = getSymbolTable(idName);
+		if(fetchedVar==NULL) {
+			throw runtime_error("Undefined Variable." + idName);
+		}
+		else {
+			if(!isArray) {
+				return fetchedVar->getValue();
+			} else {
+				return fetchedVar->getValue();;
+			};
+		}
 	}
 	void insertSymbolIntoSymbolTable() {
 
@@ -736,30 +750,28 @@ public:
 		}
 	}
 	llvm::Value *Codegen() {
+		if(isDebugging) cout << "Codegen for AssignAST... "<< endl;
 		if(!isArray) {
+			if(isDebugging) cout << "Now Assigning " << identifierName << "..."<< endl;
 			descriptor *fetchedVar = getSymbolTable(identifierName);
-			if(isDebugging) cout << "Now Assigning..." << endl;
 			if(fetchedVar) {
-				/*if(isDebugging) fetchedVarDescriptor->debug();
-				llvm::Type *AllocaType = fetchedVarDescriptor->getType();
-				llvm::Value *temp = value->Codegen();
-				const llvm::PointerType *ptrTy = temp->getType()->getPointerTo();
-
-				if(ptrTy == AllocaType) {
-					if(isDebugging) cout << "Codegen for Assign to " << identifierName << endl;
-					llvm::Value *val = Builder.CreateStore(temp, (llvm::AllocaInst *)fetchedVarDescriptor->getAlloca());
-					return val;
-				} else {
-					return NULL;
-				}*/
-					return Builder.CreateStore(value->Codegen(), fetchedVar->getAlloca());
-					return NULL;
+				if(isDebugging) cout << "Fetched Variable " << identifierName << " on line " << fetchedVar->getLineNum() << endl;
+				return Builder.CreateStore(value->Codegen(), fetchedVar->getAlloca());
 			} else {
-				throw runtime_error("Undefined variable.");
+				if(isDebugging) cout << "Undefined variable " + identifierName << "..." << endl;
+				throw runtime_error("Undefined variable." + identifierName);
 				return NULL;
 			}
-		} else
-			return NULL;
+		} else {
+			// Array Assign
+			descriptor *fetchedVar = getSymbolTable(identifierName);
+			if(fetchedVar) {
+				return Builder.CreateStore(value->Codegen(), fetchedVar->getAlloca());
+			} else {
+				throw runtime_error("Undefined variable." + identifierName);
+				return NULL;
+			}
+		}
 	}
 	void insertSymbolIntoSymbolTable() {
 
@@ -850,9 +862,9 @@ public:
 		}
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		return llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, size));
 	}
+
 	void insertSymbolIntoSymbolTable() {
 
 	}
@@ -889,14 +901,6 @@ public:
 		return NULL;
 	}
 	void insertSymbolIntoSymbolTable() {
-		//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
-
-		// Initialization
-		//llvm::Value *tempV;
-		//if(decafTypeId == 17) tempV = (llvm::Value *)Builder.getInt32(0);
-		//else if(decafTypeId == 18) tempV = (llvm::Value *)Builder.getInt1(0);
-		//Builder.CreateStore(tempV, (llvm::Value *)Alloca);
-
 		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, NULL);
 		//SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
@@ -920,34 +924,6 @@ public:
 		return string("VarDef(") + identifierName + "," + getDecafType(decafTypeId) + ")";
 	}
 	llvm::Value *Codegen() {
-
-		/*if(isDebugging) cout << "Codegen for Var definition(Typed Symbol) for" << identifierName << "..." << endl;
-
-		llvm::Value *val = NULL;
-		//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
-		descriptor *temp = getSymbolTable(identifierName);
-		if(isDebugging) cout << "Get" << temp->getIDName() << "from symbol table..." << endl;
-		//temp->setAlloca(Alloca);
-		// Zero Initialization
-		llvm::Value *tempV;
-		if(decafTypeId == 17) tempV = (llvm::Value *)Builder.getInt32(0);
-		else if(decafTypeId == 18) tempV = (llvm::Value *)Builder.getInt1(0);
-
-		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
-		if(isDebugging) cout << "Finish Allocating" << endl;
-
-		//val = Builder.CreateLoad(temp->getAlloca(), identifierName.c_str());
-		temp->setAlloca(Alloca);
-
-		val = Builder.CreateStore(tempV, (llvm::Value *)Alloca);
-RValue
-		if(isDebugging) cout << "Finish Codegen for Var definition(Typed Symbol)..." << endl;
-		return val;
-
-		//return Alloca;*/
-		//descriptor *temp = getSymbolTable(identifierName);
-		//return temp->getValue();
-
 		descriptor *fetchedVar = getSymbolTable(identifierName);
 		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
 		llvm::Value *zero;
@@ -959,15 +935,8 @@ RValue
 
 		return NULL;
 	}
+
 	void insertSymbolIntoSymbolTable() {
-		//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
-
-		// Initialization
-		//llvm::Value *tempV;
-		//if(decafTypeId == 17) tempV = (llvm::Value *)Builder.getInt32(0);
-		//else if(decafTypeId == 18) tempV = (llvm::Value *)Builder.getInt1(0);
-		//Builder.CreateStore(tempV, (llvm::Value *)Alloca);
-
 		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, NULL);
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 	}
@@ -1021,11 +990,12 @@ public:
 		if(!isMethod) {
 			SymbolTableList.push_front(currentST);
 			//if(!isMethod) checkTable(currentST);
+			if(isDebugging) cout << "Block CodeGen for VarDeclList......" << endl;
 			if(varDeclList != NULL) val = varDeclList->Codegen();
+			if(isDebugging) cout << "Block CodeGen for StmtList......" << endl;
 			if(statementList != NULL) val = statementList->Codegen();
 			SymbolTableList.pop_front();
 		} else {
-
 			if(varDeclList != NULL) val = varDeclList->Codegen();
 			if(statementList != NULL) val = statementList->Codegen();
 		}
@@ -1094,43 +1064,66 @@ public:
 		return string("IfStmt(") + getString(condition) + "," + getString(ifBlock) + "," + getString(ElseBlock) + ")";
 	}
 	llvm::Value *Codegen() {
-/*
+
 		llvm::Value *ConditionCode = condition->Codegen();
 		if(!ConditionCode)
 			return NULL;
 
-		ConditionCode = Builder.CreateFCmpONE(ConditionCode, llvm::ConstantFP::get(llvm::getGlobalContext(), llvm::APFloat(0.0)), "IfCond");
+		ConditionCode = Builder.CreateICmpEQ(ConditionCode, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)), "IfCond");
 		llvm::Function *TheFunction = Builder.GetInsertBlock()->getParent();
 
 		llvm::BasicBlock *ThenBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "Then", TheFunction);
 		llvm::BasicBlock *EBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "Else");
 		llvm::BasicBlock *MergeBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "IfCont");
-		Builder.CreateCondBr(ConditionCode, ThenBlock, EBlock);
+		Builder.CreateCondBr(ConditionCode, ThenBlock, ElseBlock);
 
 		Builder.SetInsertPoint(ThenBlock);
 
+		if(isDebugging) cout << "Preparing to do code generation for If block..." << endl;
+
 		llvm::Value *ThenCode = ifBlock->Codegen();
-		if(!ThenCode) return NULL;
+		//if(!ThenCode) return NULL;
 		Builder.CreateBr(MergeBlock);
 		ThenBlock = Builder.GetInsertBlock();
-		TheFunction->getBasicBlockList().push_back(EBlock);
-		Builder.SetInsertPoint(EBlock);
 
-		llvm::Value *ElseCode = ElseBlock->Codegen();
-		if(!ElseCode) return NULL;
-		Builder.CreateBr(MergeBlock);
-		EBlock = Builder.GetInsertBlock();
-		TheFunction->getBasicBlockList().push_back(MergeBlock);
-		Builder.SetInsertPoint(MergeBlock);
+		if(isDebugging) cout << "Finished code generation for If block..." << endl;
 
-		llvm::PHINode *node = Builder.CreatePHI(llvm::Type::getDoubleTy(llvm::getGlobalContext()), 2, "IfTmp");
-		node->addIncoming(ThenCode, ThenBlock);
-		node->addIncoming(ElseCode, EBlock);
+		//llvm::PHINode *node;
 
-		return node;
-		*/
-		return NULL;
+		if(ElseBlock == NULL) {
+			if(isDebugging) cout << "Else block is NULL..." << endl;
+			/*
+			node = Builder.CreatePHI(llvm::Type::getInt32Ty(llvm::getGlobalContext()), 2, "IfTmp");
+			node->addIncoming(ThenCode, ThenBlock);
+			//node->addIncoming(ElseCode, EBlock);
+			if(isDebugging) cout << "Finished to do code generation for PHI node..." << endl;
+			 */
+		} else {
+			if(isDebugging) cout << "Preparing to do code generation for Else block..." << endl;
+
+			TheFunction->getBasicBlockList().push_back(EBlock);
+			Builder.SetInsertPoint(EBlock);
+			llvm::Value *ElseCode = ElseBlock->Codegen();
+
+			if(ElseCode) {
+				Builder.CreateBr(MergeBlock);
+				EBlock = Builder.GetInsertBlock();
+				TheFunction->getBasicBlockList().push_back(MergeBlock);
+				Builder.SetInsertPoint(MergeBlock);
+				/*
+				node = Builder.CreatePHI(llvm::Type::getInt32Ty(llvm::getGlobalContext()), 2, "IfTmp");
+				if(isDebugging) cout << "here no bug" << endl;
+				node->addIncoming(ThenCode, ThenBlock);
+				if(isDebugging) cout << "here2 no bug" << endl;
+				node->addIncoming(ElseCode, EBlock);
+				if(isDebugging) cout << "Finished to do code generation for PHI node..." << endl;
+				 */
+			}
+		}
+		//return node;
+		return MergeBlock;
 	}
+
 	void insertSymbolIntoSymbolTable() {
 
 	}

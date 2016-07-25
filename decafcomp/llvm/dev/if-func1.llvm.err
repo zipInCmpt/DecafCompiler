@@ -1,11 +1,1 @@
-; ModuleID = 'C'
-
-define void @f() {
-entry:
-  ret void
-}
-
-define void @main() {
-entry:
-  ret void
-}
+Assertion failed: (getOperand(0)->getType() == getOperand(1)->getType() && "Both operands to ICmp instruction are not of the same type!"), function AssertOK, file /private/tmp/llvm3820160316-8183-11u7j5k/llvm-3.8.0.src/include/llvm/IR/Instructions.h, line 1109.

@@ -16,6 +16,25 @@ define i32 @fact(i32) {
 entry:
   %n = alloca i32
   store i32 %0, i32* %n
+  %n1 = load i32, i32* %n
+  %EQTmp = icmp eq i32 %n1, 1
+  %IfCond = icmp eq i1 %EQTmp, false
+  br i1 %IfCond, label %Then, label %Else
+
+Then:                                             ; preds = %entry
+  ret i32 1
+  br label %IfCont
+
+Else:                                             ; preds = %entry
+  %n2 = load i32, i32* %n
+  %n3 = load i32, i32* %n
+  %SubTmp = sub i32 %n3, 1
+  %calltmp = call i32 @fact(i32 %SubTmp)
+  %MulTmp = mul i32 %n2, %calltmp
+  ret i32 %MulTmp
+  br label %IfCont
+
+IfCont:                                           ; preds = %Else, %Then
   ret i32 0
 }
 

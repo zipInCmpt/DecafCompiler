@@ -51,7 +51,6 @@ public:
 		type = targetType;
 		lineNumber = lineNo;
 		Alloca = allocai;
-		//cout << "Defined variable in line " << lineNumber << " : " << identifierName << endl;
 	}
 	~descriptor() { }
 	void debug() {
@@ -404,13 +403,22 @@ public:
 	llvm::Value *Codegen() {
 		descriptor *fetchedVar = getSymbolTable(idName);
 		if(fetchedVar==NULL) {
-			throw runtime_error("Undefined Variable." + idName);
+			throw runtime_error("Undefined Variable: " + idName + ".");
 		}
 		else {
 			if(!isArray) {
+				// Not Array
 				return fetchedVar->getValue();
 			} else {
-				return fetchedVar->getValue();;
+				// Array
+				llvm::GlobalVariable *fetchedArray = (llvm::GlobalVariable *)fetchedVar->getAlloca();
+				llvm::ArrayType *arraytype = (llvm::ArrayType *)fetchedArray->getValueType();
+				llvm::Value *arrayLoc = Builder.CreateStructGEP(arraytype, fetchedArray, 0, "arrayloc");
+				llvm::Value *ArrayIndex = arrayIndex->Codegen();
+				llvm::Value *ArrayIndexPar = Builder.CreateGEP(Builder.getInt32Ty(), arrayLoc, ArrayIndex, "arrayindex");
+				llvm::Value *loadTmp = Builder.CreateLoad(ArrayIndexPar, "loadtmp");
+
+				return loadTmp;
 			};
 		}
 	}
@@ -759,16 +767,25 @@ public:
 				return Builder.CreateStore(value->Codegen(), fetchedVar->getAlloca());
 			} else {
 				if(isDebugging) cout << "Undefined variable " + identifierName << "..." << endl;
-				throw runtime_error("Undefined variable." + identifierName);
+				throw runtime_error("Undefined variable:" + identifierName + ".");
 				return NULL;
 			}
 		} else {
 			// Array Assign
 			descriptor *fetchedVar = getSymbolTable(identifierName);
 			if(fetchedVar) {
-				return Builder.CreateStore(value->Codegen(), fetchedVar->getAlloca());
+
+				llvm::GlobalVariable *fetchedArray = (llvm::GlobalVariable *)fetchedVar->getAlloca();
+				llvm::ArrayType *arraytype = (llvm::ArrayType *)fetchedArray->getValueType();
+
+				llvm::Value *arrayLoc = Builder.CreateStructGEP(arraytype, fetchedArray, 0, "arrayloc");
+				llvm::Value *arrayIndex = index->Codegen();
+				llvm::Value *ArrayIndexPar = Builder.CreateGEP(Builder.getInt32Ty(), arrayLoc, arrayIndex, "arrayindex");
+				llvm::Value *arrayStore = Builder.CreateStore(value->Codegen(), ArrayIndexPar);
+
+				return arrayStore;
 			} else {
-				throw runtime_error("Undefined variable." + identifierName);
+				throw runtime_error("Undefined variable: " + identifierName + ".");
 				return NULL;
 			}
 		}
@@ -865,6 +882,10 @@ public:
 		return llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, size));
 	}
 
+	int getValue() {
+		return size;
+	}
+
 	void insertSymbolIntoSymbolTable() {
 
 	}
@@ -875,34 +896,60 @@ public:
 class FieldDeclAST : public decafAST {
 	string identifierName;
 	int decafTypeId;
-	bool isGlobal;
+	bool hasAssign;
 	decafAST *expr;
 	int linepos;
+	bool isArray;
 public:
-	FieldDeclAST(string idName, int typeId, decafAST *exprNode, bool global, int pos) { identifierName = idName; decafTypeId = typeId; isGlobal = global; expr = exprNode; linepos = pos; }
+	FieldDeclAST(string idName, int typeId, decafAST *exprNode, bool global, int pos, bool array) { identifierName = idName; decafTypeId = typeId; hasAssign = global; expr = exprNode; linepos = pos; isArray = array; }
 	~FieldDeclAST() { }
 	string str() {
-		if(isGlobal)
+		if(hasAssign)
 			return string("AssignGlobalVar(") + identifierName + "," + getDecafType(decafTypeId) + "," + getString(expr) + ")";
 		else
 			if (decafTypeId != -1) return string("FieldDecl(") + identifierName + "," + getDecafType(decafTypeId) + "," + getString(expr) + ")";
 			else return string("FieldDecl(") + identifierName + "," + getString(expr) + ")";
 	}
 	llvm::Value *Codegen() {
-		//if(isDebugging) cout << "FieldDecl Codegen In progress..." << endl;
-		//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
-		//descriptor *temp = getSymbolTable(identifierName);
-		//temp->setAlloca(Alloca);
-		//if(isDebugging) cout << "Finish FieldDecl Codegen In progress..." << endl;
-		//return temp->getValue();
-		descriptor *fetchedVar=getSymbolTable(identifierName);
-		llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
-		fetchedVar->setAlloca(Alloca);
-		return NULL;
+
+		if(isArray) {
+
+			descriptor *fetchedVar=getSymbolTable(identifierName);
+			if(!fetchedVar) throw runtime_error("Symbol table error. Undefined variable.");
+
+			llvm::ArrayType *theArray;
+			FieldSizeAST *temp = (FieldSizeAST *)expr;
+
+			if(decafTypeId == 17) { // Int
+				// Definition
+				theArray = llvm::ArrayType::get(Builder.getInt32Ty(), temp->getValue());
+			} else if(decafTypeId == 18) { // Bool
+				theArray = llvm::ArrayType::get(Builder.getInt1Ty(), temp->getValue());
+			} else {
+				throw runtime_error("Semantic error: Invalid type for Array. Only int and bool is supported.");
+			}
+			// Zero Init
+			llvm::Constant *zero = llvm::Constant::getNullValue(theArray);
+			// Declaration
+			llvm::GlobalVariable *globalArray = new llvm::GlobalVariable(*TheModule, theArray, false, llvm::GlobalValue::ExternalLinkage, zero, identifierName);
+
+			fetchedVar->setAlloca(globalArray);
+
+		} else {
+			descriptor *fetchedVar=getSymbolTable(identifierName);
+			llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+
+			if(hasAssign) {
+				Builder.CreateStore(expr->Codegen(), Alloca);
+			} else {
+
+			}
+			fetchedVar->setAlloca(Alloca);
+			return NULL;
+		}
 	}
 	void insertSymbolIntoSymbolTable() {
 		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, NULL);
-		//SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 		SymbolTableList.front()->insert(std::pair<string, descriptor* >(identifierName, newDescp));
 	}
 };
@@ -1064,12 +1111,12 @@ public:
 		return string("IfStmt(") + getString(condition) + "," + getString(ifBlock) + "," + getString(ElseBlock) + ")";
 	}
 	llvm::Value *Codegen() {
-
+		// If no condition code, return null
 		llvm::Value *ConditionCode = condition->Codegen();
 		if(!ConditionCode)
 			return NULL;
 
-		// Check the type of the condition code
+		// Check the type of the condition code and do different jobs
 		if(ConditionCode->getType() == getLLVMType(17)) // Int
 			ConditionCode = Builder.CreateICmpSGT(ConditionCode, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)), "IfCond");
 		else if(ConditionCode->getType() == getLLVMType(18)) // bool
@@ -1077,9 +1124,8 @@ public:
 		else
 			throw runtime_error("Semantic error: Condition of If must be a boolean type.");
 
-		//ConditionCode = Builder.CreateICmpEQ(ConditionCode, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)), "IfCond");
+		// Create blocks for Then and Else
 		llvm::Function *TheFunction = Builder.GetInsertBlock()->getParent();
-
 		llvm::BasicBlock *ThenBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "Then", TheFunction);
 		llvm::BasicBlock *EBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "Else");
 		llvm::BasicBlock *MergeBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "IfCont");
@@ -1090,22 +1136,13 @@ public:
 		if(isDebugging) cout << "Preparing to do code generation for If block..." << endl;
 
 		llvm::Value *ThenCode = ifBlock->Codegen();
-		//if(!ThenCode) return NULL;
 		Builder.CreateBr(MergeBlock);
 		ThenBlock = Builder.GetInsertBlock();
 
 		if(isDebugging) cout << "Finished code generation for If block..." << endl;
 
-		//llvm::PHINode *node;
-
 		if(ElseBlock == NULL) {
 			if(isDebugging) cout << "Else block is NULL..." << endl;
-			/*
-			node = Builder.CreatePHI(llvm::Type::getInt32Ty(llvm::getGlobalContext()), 2, "IfTmp");
-			node->addIncoming(ThenCode, ThenBlock);
-			//node->addIncoming(ElseCode, EBlock);
-			if(isDebugging) cout << "Finished to do code generation for PHI node..." << endl;
-			 */
 		} else {
 			if(isDebugging) cout << "Preparing to do code generation for Else block..." << endl;
 
@@ -1118,17 +1155,8 @@ public:
 				EBlock = Builder.GetInsertBlock();
 				TheFunction->getBasicBlockList().push_back(MergeBlock);
 				Builder.SetInsertPoint(MergeBlock);
-				/*
-				node = Builder.CreatePHI(llvm::Type::getInt32Ty(llvm::getGlobalContext()), 2, "IfTmp");
-				if(isDebugging) cout << "here no bug" << endl;
-				node->addIncoming(ThenCode, ThenBlock);
-				if(isDebugging) cout << "here2 no bug" << endl;
-				node->addIncoming(ElseCode, EBlock);
-				if(isDebugging) cout << "Finished to do code generation for PHI node..." << endl;
-				 */
 			}
 		}
-		//return node;
 		return MergeBlock;
 	}
 

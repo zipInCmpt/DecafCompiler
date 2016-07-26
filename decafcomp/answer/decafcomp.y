@@ -223,18 +223,9 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
 
             while($2->size() > 0) {
                    string name = $2->pop_front();
-                   //llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($3), nullptr, name);
-                   FieldDeclAST *fieldNode = new FieldDeclAST(name, $3, size, false, lineno);
-                   //fieldNode->insertSymbolIntoSymbolTable();
-                   //fieldNode->insertSymbolIntoSymbolTable(name, newVariableDecpr);
+                   FieldDeclAST *fieldNode = new FieldDeclAST(name, $3, size, false, lineno, false);
                    fieldDeclList->push_front(fieldNode);
-                   //cout << fieldNode->str() << endl;
-                   //delete fieldNode;
-
-                   //currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
-
             }
-            //FieldDeclAST *node = new FieldDeclAST(*$2, $3, exprNode, false);
             $$ = fieldDeclList;
          }
         | T_VAR IdentifierType T_SEMICOLON
@@ -243,7 +234,7 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
                 decafStmtList *fieldDeclList = new decafStmtList();
                 FieldSizeAST *size = new FieldSizeAST(-1, false);
 
-                FieldDeclAST *fieldNode = new FieldDeclAST($2->getName(), $2->getTypeId(), size, false, lineno);
+                FieldDeclAST *fieldNode = new FieldDeclAST($2->getName(), $2->getTypeId(), size, false, lineno, false);
                 //fieldNode->insertSymbolIntoSymbolTable();
                 fieldDeclList->push_front(fieldNode);
                 $$ = fieldDeclList;
@@ -255,13 +246,8 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
 
             while($2->size() > 0) {
                 string name = $2->pop_front();
-                FieldDeclAST *fieldNode = new FieldDeclAST(name, $6, size, false, lineno);
-                //fieldNode->insertSymbolIntoSymbolTable();
+                FieldDeclAST *fieldNode = new FieldDeclAST(name, $6, size, false, lineno, true);
                 fieldDeclList->push_front(fieldNode);
-
-                //llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($6), nullptr, name);
-                //descriptor *newVariableDecpr = new descriptor(name, $6, lineno, Alloca);
-                //currentST.insert(std::pair<string, descriptor* >(name, newVariableDecpr));
             }
 
             $$ = fieldDeclList;
@@ -269,14 +255,10 @@ FieldDecl: T_VAR Identifiers Type T_SEMICOLON
         | T_VAR IdentifierType T_ASSIGN Constant T_SEMICOLON
         {
                 decafStmtList *fieldDeclList = new decafStmtList();
-                FieldDeclAST *node = new FieldDeclAST($2->getName(), $2->getTypeId(), $4, true, lineno);
+                FieldDeclAST *node = new FieldDeclAST($2->getName(), $2->getTypeId(), $4, true, lineno, false);
                 //node->insertSymbolIntoSymbolTable();
                 fieldDeclList->push_front(node);
                 $$ = fieldDeclList;
-
-                //llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType($2->getTypeId()), nullptr, $2->getName());
-                //descriptor *newVariableDecpr = new descriptor($2->getName(), $2->getTypeId(), lineno, Alloca);
-                //currentST.insert(std::pair<string, descriptor* >($2->getName(), newVariableDecpr));
         }
         ;
 

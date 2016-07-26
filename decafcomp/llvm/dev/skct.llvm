@@ -17,12 +17,32 @@ define i32 @main() {
 entry:
   %flag = alloca i1
   store i1 false, i1* %flag
+  br i1 true, label %True, label %False
+
+True:                                             ; preds = %entry
+  br label %BooleanShortCircuit4
+
+False:                                            ; preds = %entry
   %calltmp = call i1 @foo()
-  %AndTmp = and i1 %calltmp, false
-  %OrTmp = or i1 true, %AndTmp
-  store i1 %OrTmp, i1* %flag
-  %flag1 = load i1, i1* %flag
-  %zexttmp = zext i1 %flag1 to i32
+  %LHS = icmp eq i1 %calltmp, true
+  %LHS1 = icmp eq i1 %calltmp, true
+  br i1 %LHS1, label %True2, label %False3
+
+True2:                                            ; preds = %False
+  br label %BooleanShortCircuit
+
+False3:                                           ; preds = %False
+  br label %BooleanShortCircuit
+
+BooleanShortCircuit:                              ; preds = %False3, %True2
+  %phival = phi i1 [ false, %True2 ], [ false, %False3 ]
+  br label %BooleanShortCircuit4
+
+BooleanShortCircuit4:                             ; preds = %BooleanShortCircuit, %True
+  %phival5 = phi i1 [ true, %True ], [ %phival, %BooleanShortCircuit ]
+  store i1 %phival5, i1* %flag
+  %flag6 = load i1, i1* %flag
+  %zexttmp = zext i1 %flag6 to i32
   call void @print_int(i32 %zexttmp)
   ret i32 0
 }

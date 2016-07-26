@@ -8,10 +8,17 @@ _test:                                  ## @test
 	pushq	%rax
 Ltmp0:
 	.cfi_def_cfa_offset 16
-	andl	$1, %edi
-	movb	%dil, 7(%rsp)
-	movzbl	7(%rsp), %edi
-	andl	$1, %edi
+	movb	%dil, %al
+	andb	$1, %al
+	movb	%al, 7(%rsp)
+	notb	%dil
+	movb	$1, %al
+	testb	$1, %dil
+	je	LBB0_2
+## BB#1:                                ## %False
+	xorl	%eax, %eax
+LBB0_2:                                 ## %BooleanShortCircuit
+	movzbl	%al, %edi
 	callq	_print_int
 	popq	%rax
 	retq

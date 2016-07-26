@@ -13,11 +13,22 @@ entry:
   store i1 true, i1* %x
   store i1 true, i1* %y
   %x1 = load i1, i1* %x
-  %y2 = load i1, i1* %y
-  %AndTmp = and i1 %x1, %y2
-  store i1 %AndTmp, i1* %z
-  %z3 = load i1, i1* %z
-  %zexttmp = zext i1 %z3 to i32
+  %LHS = icmp eq i1 %x1, true
+  %LHS2 = icmp eq i1 %x1, true
+  br i1 %LHS2, label %True, label %False
+
+True:                                             ; preds = %entry
+  %y3 = load i1, i1* %y
+  br label %BooleanShortCircuit
+
+False:                                            ; preds = %entry
+  br label %BooleanShortCircuit
+
+BooleanShortCircuit:                              ; preds = %False, %True
+  %phival = phi i1 [ %y3, %True ], [ false, %False ]
+  store i1 %phival, i1* %z
+  %z4 = load i1, i1* %z
+  %zexttmp = zext i1 %z4 to i32
   call void @print_int(i32 %zexttmp)
   ret i32 0
 }

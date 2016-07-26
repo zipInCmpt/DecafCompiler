@@ -18,14 +18,36 @@ entry:
   store i1 false, i1* %b
   store i1 true, i1* %c
   %a1 = load i1, i1* %a
-  %b2 = load i1, i1* %b
-  %c3 = load i1, i1* %c
-  %NotTmp = xor i1 %c3, true
-  %AndTmp = and i1 %b2, %NotTmp
-  %OrTmp = or i1 %a1, %AndTmp
-  store i1 %OrTmp, i1* %flag
+  %LHS = icmp eq i1 %a1, true
+  %LHS2 = icmp eq i1 %a1, true
+  br i1 %LHS2, label %True, label %False
+
+True:                                             ; preds = %entry
+  br label %BooleanShortCircuit9
+
+False:                                            ; preds = %entry
+  %b3 = load i1, i1* %b
+  %LHS4 = icmp eq i1 %b3, true
+  %LHS5 = icmp eq i1 %b3, true
+  br i1 %LHS5, label %True6, label %False8
+
+True6:                                            ; preds = %False
+  %c7 = load i1, i1* %c
+  %NotTmp = xor i1 %c7, true
+  br label %BooleanShortCircuit
+
+False8:                                           ; preds = %False
+  br label %BooleanShortCircuit
+
+BooleanShortCircuit:                              ; preds = %False8, %True6
+  %phival = phi i1 [ %NotTmp, %True6 ], [ false, %False8 ]
+  br label %BooleanShortCircuit9
+
+BooleanShortCircuit9:                             ; preds = %BooleanShortCircuit, %True
+  %phival10 = phi i1 [ true, %True ], [ %phival, %BooleanShortCircuit ]
+  store i1 %phival10, i1* %flag
   store i32 0, i32* %size
-  %size4 = load i32, i32* %size
-  call void @print_int(i32 %size4)
+  %size11 = load i32, i32* %size
+  call void @print_int(i32 %size11)
   ret i32 0
 }

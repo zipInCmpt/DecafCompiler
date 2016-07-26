@@ -37,7 +37,7 @@ void outputCurrentSymTabList()
 /// decafAST - Base class for all abstract syntax tree nodes.
 /// TODO:Done
 
-bool isDebugging = true;
+bool isDebugging = false;
 
 class descriptor {
 	string identifierName;
@@ -111,6 +111,16 @@ descriptor *getSymbolTable(string idName) {
 void checkTable(DecafSymbolTable *table) {
 	for(DecafSymbolTable::iterator i = table->begin(); i != table->end(); i++) {
 		(*i).second->debug();
+	}
+}
+
+llvm::Type* getLLVMType(int typeIndex) {
+	switch (typeIndex) {
+		case 17: return Builder.getInt32Ty();
+		case 18: return Builder.getInt1Ty();
+		case 19: return Builder.getVoidTy();
+		case 20: return Builder.getInt8PtrTy();
+		default: return NULL;
 	}
 }
 
@@ -300,23 +310,115 @@ string getBinaryOp (int opId) {
 	}
 }
 
-llvm::Value* BinaryOpExpr(int opId, llvm::Value *L, llvm::Value *R) {
+llvm::Value* BinaryOpExpr(int opId, decafAST *LHS, decafAST *RHS) {
 	switch(opId) {
-		case 0: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateAdd(L, R, "AddTmp");
-		case 1: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateSub(L, R, "SubTmp");
-		case 2: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateMul(L, R, "MulTmp");
-		case 3: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateSDiv(L, R, "DivTmp");
-		case 4: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateShl(L, R, "LShiftTmp");
-		case 5: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateLShr(L, R, "RShitTmp");
-		case 6: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateSRem(L, R, "RemainTmp");
-		case 7: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSLT(L, R, "LTTmp");
-		case 8: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSGT(L, R, "GTTmp");
-		case 9: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSLE(L, R, "LEQTmp");
-		case 10: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSGE(L, R, "GEQTmp");
-		case 11: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpEQ(L, R, "EQTmp");
-		case 12: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpNE(L, R, "NEQTmp");
-		case 13: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateAnd(L, R, "AndTmp");
-		case 14: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateOr(L, R, "OrTmp");
+		case 0: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateAdd(LHS->Codegen(), RHS->Codegen(), "AddTmp");
+		case 1: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateSub(LHS->Codegen(), RHS->Codegen(), "SubTmp");
+		case 2: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateMul(LHS->Codegen(), RHS->Codegen(), "MulTmp");
+		case 3: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateSDiv(LHS->Codegen(), RHS->Codegen(), "DivTmp");
+		case 4: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateShl(LHS->Codegen(), RHS->Codegen(), "LShiftTmp");
+		case 5: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateLShr(LHS->Codegen(), RHS->Codegen(), "RShitTmp");
+		case 6: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateSRem(LHS->Codegen(), RHS->Codegen(), "RemainTmp");
+		case 7: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSLT(LHS->Codegen(), RHS->Codegen(), "LTTmp");
+		case 8: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSGT(LHS->Codegen(), RHS->Codegen(), "GTTmp");
+		case 9: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSLE(LHS->Codegen(), RHS->Codegen(), "LEQTmp");
+		case 10: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpSGE(LHS->Codegen(), RHS->Codegen(), "GEQTmp");
+		case 11: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpEQ(LHS->Codegen(), RHS->Codegen(), "EQTmp");
+		case 12: if(isDebugging) cout << "OpId " << opId << endl; return Builder.CreateICmpNE(LHS->Codegen(), RHS->Codegen(), "NEQTmp");
+		case 13: {
+			llvm::Value *ConditionCode;
+			llvm::Value *L = LHS->Codegen();
+
+			if(L->getType() == getLLVMType(18)) // bool
+				ConditionCode = Builder.CreateICmpEQ(L, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 1)), "LHS");
+			else
+				throw runtime_error("Semantic error: Invalid operand on LHS.");
+
+			if(L->getType() == getLLVMType(18)) {
+				llvm::Value *ConditionCode = Builder.CreateICmpEQ(L, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 1)), "LHS");
+
+				llvm::Function *TheFunction = Builder.GetInsertBlock()->getParent();
+				llvm::BasicBlock *ThenBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "True", TheFunction);
+				llvm::BasicBlock *EBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "False");
+				llvm::BasicBlock *MergeBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "BooleanShortCircuit");
+				Builder.CreateCondBr(ConditionCode, ThenBlock, EBlock);
+
+				Builder.SetInsertPoint(ThenBlock);
+				llvm::Value *R = RHS->Codegen();
+
+				if(R->getType() != getLLVMType(18))
+					throw runtime_error("Semantic error: Invalid operand on RHS.");
+
+				Builder.CreateBr(MergeBlock);
+				ThenBlock = Builder.GetInsertBlock();
+
+				TheFunction->getBasicBlockList().push_back(EBlock);
+				Builder.SetInsertPoint(EBlock);
+				llvm::Value *tempFalse = Builder.getInt1(0);
+
+				Builder.CreateBr(MergeBlock);
+				EBlock = Builder.GetInsertBlock();
+				TheFunction->getBasicBlockList().push_back(MergeBlock);
+				Builder.SetInsertPoint(MergeBlock);
+
+				llvm::PHINode *phinode = Builder.CreatePHI(getLLVMType(18), 2, "phival");
+				phinode->addIncoming(R, ThenBlock);
+				phinode->addIncoming(tempFalse, EBlock);
+
+				return phinode;
+			} else {
+				throw runtime_error("Semantic error: Invalid type on boolean operands.");
+			}
+
+			if(isDebugging) cout << "OpId " << opId << endl;
+
+		}
+		case 14: {
+			llvm::Value *ConditionCode;
+			llvm::Value *L = LHS->Codegen();
+
+			if (L->getType() == getLLVMType(18)) // bool
+				ConditionCode = Builder.CreateICmpEQ(L, llvm::ConstantInt::get(llvm::getGlobalContext(),
+																			   llvm::APInt(1, 1)), "LHS");
+			else
+				throw runtime_error("Semantic error: Invalid operand on LHS.");
+
+			if (L->getType() == getLLVMType(18)) {
+				llvm::Value *ConditionCode = Builder.CreateICmpEQ(L, llvm::ConstantInt::get(llvm::getGlobalContext(),
+																							llvm::APInt(1, 1)), "LHS");
+
+				llvm::Function *TheFunction = Builder.GetInsertBlock()->getParent();
+				llvm::BasicBlock *ThenBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "True", TheFunction);
+				llvm::BasicBlock *EBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "False");
+				llvm::BasicBlock *MergeBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(),
+																		"BooleanShortCircuit");
+				Builder.CreateCondBr(ConditionCode, ThenBlock, EBlock);
+
+				Builder.SetInsertPoint(ThenBlock);
+				llvm::Value *tempTrue = Builder.getInt1(1);
+
+				Builder.CreateBr(MergeBlock);
+				ThenBlock = Builder.GetInsertBlock();
+
+				TheFunction->getBasicBlockList().push_back(EBlock);
+				Builder.SetInsertPoint(EBlock);
+
+				llvm::Value *R = RHS->Codegen();
+				if (R->getType() != getLLVMType(18))
+					throw runtime_error("Semantic error: Invalid operand on RHS.");
+
+				Builder.CreateBr(MergeBlock);
+				EBlock = Builder.GetInsertBlock();
+				TheFunction->getBasicBlockList().push_back(MergeBlock);
+				Builder.SetInsertPoint(MergeBlock);
+
+				llvm::PHINode *phinode = Builder.CreatePHI(getLLVMType(18), 2, "phival");
+				phinode->addIncoming(tempTrue, ThenBlock);
+				phinode->addIncoming(R, EBlock);
+
+				return phinode;
+			}
+		}
 		default: if(isDebugging) cout << "OpId " << opId << endl; return NULL;
 	}
 }
@@ -358,15 +460,7 @@ string getMethodType (int typeIndex) {
 	}
 }
 
-llvm::Type* getLLVMType(int typeIndex) {
-	switch (typeIndex) {
-		case 17: return Builder.getInt32Ty();
-		case 18: return Builder.getInt1Ty();
-		case 19: return Builder.getVoidTy();
-		case 20: return Builder.getInt8PtrTy();
-		default: return NULL;
-	}
-}
+
 
 /// TODO: Done
 class BoolConstantAST : public decafAST {
@@ -480,11 +574,13 @@ public:
 		return string("BinaryExpr(") + getBinaryOp(binaryOperator) + "," + getString(leftValueNode) + "," + getString(rightValueNode) + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *L = leftValueNode->Codegen();
-		llvm::Value *R = rightValueNode->Codegen();
-		if(L == 0 || R == 0) return 0;
+		//llvm::Value *L = leftValueNode->Codegen();
+		//llvm::Value *R = rightValueNode->Codegen();
+		if(leftValueNode == NULL || rightValueNode == NULL) {
+			throw runtime_error("Semantic error: Missing operands in binary expressions.");
+		}
 
-		return BinaryOpExpr(binaryOperator, L, R);
+		return BinaryOpExpr(binaryOperator, leftValueNode, rightValueNode);
 	}
 	void insertSymbolIntoSymbolTable() {
 
@@ -1446,6 +1542,7 @@ public:
 		else if(func->getReturnType()==getLLVMType(19)) {
 			if(isDebugging) cout << "Generating Dummy Return void...";
 			Builder.CreateRet(NULL);
+			//Builder.CreateRet(llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)));
 			if(isDebugging) cout << "Finished..." << endl;
 		}
 		

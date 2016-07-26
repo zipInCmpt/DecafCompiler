@@ -7,7 +7,19 @@ entry:
   %a = alloca i1
   store i1 %0, i1* %a
   %a1 = load i1, i1* %a
-  %zexttmp = zext i1 %a1 to i32
+  %LHS = icmp eq i1 %a1, true
+  %LHS2 = icmp eq i1 %a1, true
+  br i1 %LHS2, label %True, label %False
+
+True:                                             ; preds = %entry
+  br label %BooleanShortCircuit
+
+False:                                            ; preds = %entry
+  br label %BooleanShortCircuit
+
+BooleanShortCircuit:                              ; preds = %False, %True
+  %phival = phi i1 [ true, %True ], [ false, %False ]
+  %zexttmp = zext i1 %phival to i32
   call void @print_int(i32 %zexttmp)
   ret void
 }

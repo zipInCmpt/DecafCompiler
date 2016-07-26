@@ -12,6 +12,16 @@ entry:
 
 define i32 @main() {
 entry:
-  call void @test(i1 true)
+  br i1 true, label %True, label %False
+
+True:                                             ; preds = %entry
+  br label %BooleanShortCircuit
+
+False:                                            ; preds = %entry
+  br label %BooleanShortCircuit
+
+BooleanShortCircuit:                              ; preds = %False, %True
+  %phival = phi i1 [ true, %True ], [ false, %False ]
+  call void @test(i1 %phival)
   ret i32 0
 }

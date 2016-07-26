@@ -20,7 +20,7 @@ Ltmp0:
 	.align	4, 0x90
 _main:                                  ## @main
 	.cfi_startproc
-## BB#0:                                ## %entry
+## BB#0:                                ## %BooleanShortCircuit
 	pushq	%rax
 Ltmp1:
 	.cfi_def_cfa_offset 16

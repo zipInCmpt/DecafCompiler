@@ -1,6 +1,7 @@
 extern func print_int(int) void;
 package C {
     func f() bool {
+        print_int(5);
         return(true);
     }
 	func main() void {

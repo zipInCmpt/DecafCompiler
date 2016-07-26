@@ -4,6 +4,7 @@ declare void @print_int(i32)
 
 define i1 @f() {
 entry:
+  call void @print_int(i32 5)
   ret i1 true
   ret i1 true
 }

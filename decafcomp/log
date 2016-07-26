@@ -365,13 +365,7 @@ INFO:root:
 INFO:root:Checking dev/assignmismatch-intofchar-ok.out
 INFO:root:dev/assignmismatch-intofchar-ok.out Correct!
 INFO:root:Checking dev/skct.out
-INFO:root:Diff between reference and your output for dev/skct.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--1
-+foo1
+INFO:root:dev/skct.out Correct!
 INFO:root:Checking dev/method0-prev.ret
 INFO:root:dev/method0-prev.ret Correct!
 INFO:root:Checking dev/blt.out

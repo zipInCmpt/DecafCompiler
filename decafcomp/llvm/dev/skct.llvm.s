@@ -19,12 +19,11 @@ Ltmp0:
 	.align	4, 0x90
 _main:                                  ## @main
 	.cfi_startproc
-## BB#0:                                ## %entry
+## BB#0:                                ## %BooleanShortCircuit4
 	pushq	%rax
 Ltmp1:
 	.cfi_def_cfa_offset 16
 	movb	$0, 7(%rsp)
-	callq	_foo
 	movb	$1, 7(%rsp)
 	movzbl	7(%rsp), %edi
 	andl	$1, %edi

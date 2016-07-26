@@ -13,7 +13,16 @@ Ltmp0:
 	movb	$0, 5(%rsp)
 	movb	$1, 7(%rsp)
 	movb	$1, 6(%rsp)
-	movb	7(%rsp), %al
+	movzbl	7(%rsp), %eax
+	andl	$1, %eax
+	cmpl	$1, %eax
+	je	LBB0_2
+## BB#1:
+	xorl	%eax, %eax
+	jmp	LBB0_3
+LBB0_2:                                 ## %True
+	movb	6(%rsp), %al
+LBB0_3:                                 ## %BooleanShortCircuit
 	andb	$1, %al
 	movb	%al, 5(%rsp)
 	movzbl	5(%rsp), %edi

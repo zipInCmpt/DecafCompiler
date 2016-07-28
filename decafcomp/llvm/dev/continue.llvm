@@ -2,5 +2,14 @@
 
 define void @f() {
 entry:
+  br label %WhileCond
+
+WhileCond:                                        ; preds = %While, %entry
+  br i1 true, label %While, label %WhileEnd
+
+While:                                            ; preds = %WhileCond
+  br label %WhileCond
+
+WhileEnd:                                         ; preds = %WhileCond
   ret void
 }

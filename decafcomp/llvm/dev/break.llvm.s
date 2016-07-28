@@ -4,7 +4,7 @@
 	.align	4, 0x90
 _f:                                     ## @f
 	.cfi_startproc
-## BB#0:                                ## %entry
+## BB#0:                                ## %WhileEnd
 	retq
 	.cfi_endproc
 

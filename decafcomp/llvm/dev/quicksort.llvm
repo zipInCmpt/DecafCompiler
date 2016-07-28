@@ -1,0 +1,287 @@
+; ModuleID = 'QuickSort'
+
+@list = global [100 x i32] zeroinitializer
+@globalstring = private unnamed_addr constant [2 x i8] c"\0A\00"
+@globalstring.1 = private unnamed_addr constant [7 x i8] c"List:\0A\00"
+@globalstring.2 = private unnamed_addr constant [2 x i8] c" \00"
+@globalstring.3 = private unnamed_addr constant [16 x i8] c"After sorting:\0A\00"
+
+declare void @print_string(i8*)
+
+declare void @print_int(i32)
+
+define void @cr() {
+entry:
+  call void @print_string(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @globalstring, i32 0, i32 0))
+  ret void
+}
+
+define void @displayList(i32, i32) {
+entry:
+  %start = alloca i32
+  %len = alloca i32
+  store i32 %0, i32* %start
+  store i32 %1, i32* %len
+  %j = alloca i32
+  store i32 0, i32* %j
+  call void @print_string(i8* getelementptr inbounds ([7 x i8], [7 x i8]* @globalstring.1, i32 0, i32 0))
+  br label %ForBegin
+
+ForBegin:                                         ; preds = %entry
+  %start1 = load i32, i32* %start
+  store i32 %start1, i32* %j
+  br label %ForCond
+
+ForCond:                                          ; preds = %ForAfter, %ForBegin
+  %j2 = load i32, i32* %j
+  %start3 = load i32, i32* %start
+  %len4 = load i32, i32* %len
+  %AddTmp = add i32 %start3, %len4
+  %LTTmp = icmp slt i32 %j2, %AddTmp
+  %IfCond = icmp eq i1 %LTTmp, true
+  br i1 %IfCond, label %ForExec, label %ForEnd
+
+ForExec:                                          ; preds = %ForCond
+  %j5 = load i32, i32* %j
+  %arrayindex = getelementptr i32, i32* getelementptr inbounds ([100 x i32], [100 x i32]* @list, i32 0, i32 0), i32 %j5
+  %loadtmp = load i32, i32* %arrayindex
+  call void @print_int(i32 %loadtmp)
+  call void @print_string(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @globalstring.2, i32 0, i32 0))
+  %j6 = load i32, i32* %j
+  %start7 = load i32, i32* %start
+  %SubTmp = sub i32 %j6, %start7
+  %AddTmp8 = add i32 %SubTmp, 1
+  %RemainTmp = srem i32 %AddTmp8, 20
+  %EQTmp = icmp eq i32 %RemainTmp, 0
+  %LHS = icmp eq i1 %EQTmp, true
+  %LHS9 = icmp eq i1 %EQTmp, true
+  br i1 %LHS9, label %True, label %False
+
+True:                                             ; preds = %ForExec
+  br label %BooleanShortCircuit
+
+False:                                            ; preds = %ForExec
+  %j10 = load i32, i32* %j
+  %AddTmp11 = add i32 %j10, 1
+  %start12 = load i32, i32* %start
+  %len13 = load i32, i32* %len
+  %AddTmp14 = add i32 %start12, %len13
+  %EQTmp15 = icmp eq i32 %AddTmp11, %AddTmp14
+  br label %BooleanShortCircuit
+
+BooleanShortCircuit:                              ; preds = %False, %True
+  %phival = phi i1 [ true, %True ], [ %EQTmp15, %False ]
+  %IfCond16 = icmp eq i1 %phival, true
+  br i1 %IfCond16, label %Then, label %Else
+
+Then:                                             ; preds = %BooleanShortCircuit
+  call void @cr()
+  br label %IfCont
+  br label %ForAfter
+
+ForAfter:                                         ; preds = %Then
+  %j17 = load i32, i32* %j
+  %AddTmp18 = add i32 %j17, 1
+  store i32 %AddTmp18, i32* %j
+  br label %ForCond
+
+ForEnd:                                           ; preds = %ForCond
+  ret void
+}
+
+define void @initList(i32) {
+entry:
+  %size = alloca i32
+  store i32 %0, i32* %size
+  %i = alloca i32
+  store i32 0, i32* %i
+  br label %ForBegin
+
+ForBegin:                                         ; preds = %entry
+  store i32 0, i32* %i
+  br label %ForCond
+
+ForCond:                                          ; preds = %ForAfter, %ForBegin
+  %i1 = load i32, i32* %i
+  %size2 = load i32, i32* %size
+  %LTTmp = icmp slt i32 %i1, %size2
+  %IfCond = icmp eq i1 %LTTmp, true
+  br i1 %IfCond, label %ForExec, label %ForEnd
+
+ForExec:                                          ; preds = %ForCond
+  %i3 = load i32, i32* %i
+  %arrayindex = getelementptr i32, i32* getelementptr inbounds ([100 x i32], [100 x i32]* @list, i32 0, i32 0), i32 %i3
+  %i4 = load i32, i32* %i
+  %MulTmp = mul i32 %i4, 2382983
+  %RemainTmp = srem i32 %MulTmp, 100
+  store i32 %RemainTmp, i32* %arrayindex
+  br label %ForAfter
+
+ForAfter:                                         ; preds = %ForExec
+  %i5 = load i32, i32* %i
+  %AddTmp = add i32 %i5, 1
+  store i32 %AddTmp, i32* %i
+  br label %ForCond
+
+ForEnd:                                           ; preds = %ForCond
+  ret void
+}
+
+define void @swap(i32, i32) {
+entry:
+  %leftPtr = alloca i32
+  %rightPtr = alloca i32
+  store i32 %0, i32* %leftPtr
+  store i32 %1, i32* %rightPtr
+  %temp = alloca i32
+  store i32 0, i32* %temp
+  %leftPtr1 = load i32, i32* %leftPtr
+  %arrayindex = getelementptr i32, i32* getelementptr inbounds ([100 x i32], [100 x i32]* @list, i32 0, i32 0), i32 %leftPtr1
+  %loadtmp = load i32, i32* %arrayindex
+  store i32 %loadtmp, i32* %temp
+  %leftPtr2 = load i32, i32* %leftPtr
+  %arrayindex3 = getelementptr i32, i32* getelementptr inbounds ([100 x i32], [100 x i32]* @list, i32 0, i32 0), i32 %leftPtr2
+  %rightPtr4 = load i32, i32* %rightPtr
+  %arrayindex5 = getelementptr i32, i32* getelementptr inbounds ([100 x i32], [100 x i32]* @list, i32 0, i32 0), i32 %rightPtr4
+  %loadtmp6 = load i32, i32* %arrayindex5
+  store i32 %loadtmp6, i32* %arrayindex3
+  %rightPtr7 = load i32, i32* %rightPtr
+  %arrayindex8 = getelementptr i32, i32* getelementptr inbounds ([100 x i32], [100 x i32]* @list, i32 0, i32 0), i32 %rightPtr7
+  %temp9 = load i32, i32* %temp
+  store i32 %temp9, i32* %arrayindex8
+  ret void
+}
+
+define void @quickSort(i32, i32) {
+entry:
+  %left = alloca i32
+  %right = alloca i32
+  store i32 %0, i32* %left
+  store i32 %1, i32* %right
+  %right1 = load i32, i32* %right
+  %left2 = load i32, i32* %left
+  %SubTmp = sub i32 %right1, %left2
+  %LEQTmp = icmp sle i32 %SubTmp, 0
+  %IfCond = icmp eq i1 %LEQTmp, true
+  br i1 %IfCond, label %Then, label %Else
+
+Then:                                             ; preds = %entry
+  ret void
+  br label %IfCont
+  ret void
+}
+
+define void @main() {
+entry:
+  %size = alloca i32
+  store i32 0, i32* %size
+  store i32 100, i32* %size
+  %size1 = load i32, i32* %size
+  call void @initList(i32 %size1)
+  %size2 = load i32, i32* %size
+  call void @displayList(i32 0, i32 %size2)
+  %size3 = load i32, i32* %size
+  %SubTmp = sub i32 %size3, 1
+  call void @quickSort(i32 0, i32 %SubTmp)
+  call void @print_string(i8* getelementptr inbounds ([16 x i8], [16 x i8]* @globalstring.3, i32 0, i32 0))
+  %size4 = load i32, i32* %size
+  call void @displayList(i32 0, i32 %size4)
+  ret void
+}
+
+define i32 @partition(i32, i32, i32) {
+entry:
+  %left = alloca i32
+  %right = alloca i32
+  %pivot = alloca i32
+  store i32 %0, i32* %left
+  store i32 %1, i32* %right
+  store i32 %2, i32* %pivot
+  %leftPtr = alloca i32
+  store i32 0, i32* %leftPtr
+  %rightPtr = alloca i32
+  store i32 0, i32* %rightPtr
+  %left1 = load i32, i32* %left
+  %SubTmp = sub i32 %left1, 1
+  store i32 %SubTmp, i32* %leftPtr
+  %right2 = load i32, i32* %right
+  store i32 %right2, i32* %rightPtr
+  br label %WhileCond
+
+WhileCond:                                        ; preds = %Then27, %entry
+  br i1 true, label %While, label %WhileEnd28
+
+While:                                            ; preds = %WhileCond
+  br label %WhileCond3
+
+WhileCond3:                                       ; preds = %Then, %While
+  br i1 true, label %While4, label %WhileEnd
+
+While4:                                           ; preds = %WhileCond3
+  %leftPtr5 = load i32, i32* %leftPtr
+  %AddTmp = add i32 %leftPtr5, 1
+  store i32 %AddTmp, i32* %leftPtr
+  %leftPtr6 = load i32, i32* %leftPtr
+  %arrayindex = getelementptr i32, i32* getelementptr inbounds ([100 x i32], [100 x i32]* @list, i32 0, i32 0), i32 %leftPtr6
+  %loadtmp = load i32, i32* %arrayindex
+  %pivot7 = load i32, i32* %pivot
+  %GEQTmp = icmp sge i32 %loadtmp, %pivot7
+  %IfCond = icmp eq i1 %GEQTmp, true
+  br i1 %IfCond, label %Then, label %Else
+
+Then:                                             ; preds = %While4
+  br label %WhileEnd
+  br label %IfCont
+  br label %WhileCond3
+
+WhileEnd:                                         ; preds = %Then, %WhileCond3
+  br label %WhileCond8
+
+WhileCond8:                                       ; preds = %Then21, %WhileEnd
+  br i1 true, label %While9, label %WhileEnd22
+
+While9:                                           ; preds = %WhileCond8
+  %rightPtr10 = load i32, i32* %rightPtr
+  %LEQTmp = icmp sle i32 %rightPtr10, 0
+  %IfCond11 = icmp eq i1 %LEQTmp, true
+  br i1 %IfCond11, label %Then12, label %Else
+
+Then12:                                           ; preds = %While9
+  br label %WhileEnd22
+  br label %IfCont
+  %rightPtr13 = load i32, i32* %rightPtr
+  %SubTmp14 = sub i32 %rightPtr13, 1
+  store i32 %SubTmp14, i32* %rightPtr
+  %rightPtr15 = load i32, i32* %rightPtr
+  %arrayindex16 = getelementptr i32, i32* getelementptr inbounds ([100 x i32], [100 x i32]* @list, i32 0, i32 0), i32 %rightPtr15
+  %loadtmp17 = load i32, i32* %arrayindex16
+  %pivot18 = load i32, i32* %pivot
+  %LEQTmp19 = icmp sle i32 %loadtmp17, %pivot18
+  %IfCond20 = icmp eq i1 %LEQTmp19, true
+  br i1 %IfCond20, label %Then21, label %Else
+
+Then21:                                           ; preds = %Then12
+  br label %WhileEnd22
+  br label %IfCont
+  br label %WhileCond8
+
+WhileEnd22:                                       ; preds = %Then21, %Then12, %WhileCond8
+  %leftPtr23 = load i32, i32* %leftPtr
+  %rightPtr24 = load i32, i32* %rightPtr
+  %GEQTmp25 = icmp sge i32 %leftPtr23, %rightPtr24
+  %IfCond26 = icmp eq i1 %GEQTmp25, true
+  br i1 %IfCond26, label %Then27, label %Else
+
+Then27:                                           ; preds = %WhileEnd22
+  br label %WhileEnd28
+  br label %IfCont
+  br label %WhileCond
+
+WhileEnd28:                                       ; preds = %Then27, %WhileCond
+  %leftPtr29 = load i32, i32* %leftPtr
+  %right30 = load i32, i32* %right
+  call void @swap(i32 %leftPtr29, i32 %right30)
+  %leftPtr31 = load i32, i32* %leftPtr
+  ret i32 %leftPtr31
+  ret i32 0
+}

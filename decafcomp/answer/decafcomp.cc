@@ -1180,8 +1180,20 @@ public:
 		else return string("");
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		//llvm::Function *TheFunction = Builder.GetInsertBlock()->getParent();
+		if(typeId == 20) {
+			// Break
+			descriptor *temp = getSymbolTable("while");
+			llvm::BasicBlock *breakblock = (llvm::BasicBlock *)temp->getAlloca();
+			Builder.CreateBr(breakblock);
+		} else if(typeId == 21) {
+			// Continue
+			descriptor *temp = getSymbolTable("for");
+			llvm::BasicBlock *forBlock = (llvm::BasicBlock *)temp->getAlloca();
+			Builder.CreateBr(forBlock);
+		} else {
+			throw runtime_error("Semantic error: unknown reason.");
+		}
 	}
 	void insertSymbolIntoSymbolTable() {
 
@@ -1237,21 +1249,20 @@ public:
 
 		if(isDebugging) cout << "Finished code generation for If block..." << endl;
 
-		if(ElseBlock == NULL) {
+		if(false) {
 			if(isDebugging) cout << "Else block is NULL..." << endl;
 		} else {
 			if(isDebugging) cout << "Preparing to do code generation for Else block..." << endl;
 
 			TheFunction->getBasicBlockList().push_back(EBlock);
 			Builder.SetInsertPoint(EBlock);
-			llvm::Value *ElseCode = ElseBlock->Codegen();
+			llvm::Value *ElseCode = NULL;
+			if(ElseBlock) ElseCode = ElseBlock->Codegen();
 
-			if(ElseCode) {
-				Builder.CreateBr(MergeBlock);
-				EBlock = Builder.GetInsertBlock();
-				TheFunction->getBasicBlockList().push_back(MergeBlock);
-				Builder.SetInsertPoint(MergeBlock);
-			}
+			Builder.CreateBr(MergeBlock);
+			EBlock = Builder.GetInsertBlock();
+			TheFunction->getBasicBlockList().push_back(MergeBlock);
+			Builder.SetInsertPoint(MergeBlock);
 		}
 		return MergeBlock;
 	}
@@ -1278,8 +1289,39 @@ public:
 		return string("WhileStmt(") + getString(condition) + "," + getString(whileBlock) + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+
+		llvm::Function *TheFunction = Builder.GetInsertBlock()->getParent();
+		llvm::BasicBlock *WhileCondBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "WhileCond", TheFunction);
+		llvm::BasicBlock *WhileExecBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "While");
+		llvm::BasicBlock *FinishBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "WhileEnd");
+
+		descriptor *tempBlock = new descriptor("while", -1, -1, FinishBlock);
+		SymbolTableList.front()->insert(std::pair<string, descriptor* >("while", tempBlock));
+
+		Builder.CreateBr(WhileCondBlock);
+		Builder.SetInsertPoint(WhileCondBlock);
+
+		llvm::Value *ConditionCode = condition->Codegen();
+
+		if(ConditionCode->getType() == getLLVMType(17)) // Int 
+			 ConditionCode = Builder.CreateICmpSGT(ConditionCode, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)), "IfCond"); 
+		else if(ConditionCode->getType() == getLLVMType(18)) // bool 
+			 ConditionCode = Builder.CreateICmpEQ(ConditionCode, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 1)), "IfCond");
+		else
+			throw runtime_error("Semantic error: Condition of While must be a boolean type.");
+
+		Builder.CreateCondBr(ConditionCode, WhileExecBlock, FinishBlock);
+
+		TheFunction->getBasicBlockList().push_back(WhileExecBlock);
+		Builder.SetInsertPoint(WhileExecBlock);
+		llvm::Value *WhileCode = whileBlock->Codegen();
+		Builder.CreateBr(WhileCondBlock);
+
+		TheFunction->getBasicBlockList().push_back(FinishBlock);
+		Builder.SetInsertPoint(FinishBlock);
+
+		SymbolTableList.front()->erase("while");
+		return FinishBlock;
 	}
 	void insertSymbolIntoSymbolTable() {
 
@@ -1309,8 +1351,54 @@ public:
 		return string("ForStmt(") + preAssignList->str() + "," + getString(condition) + "," +loopAssignList->str() + "," + getString(Block) + ")";
 	}
 	llvm::Value *Codegen() {
-		llvm::Value *val = NULL;
-		return val;
+		llvm::Function *TheFunction = Builder.GetInsertBlock()->getParent();
+		llvm::BasicBlock *ForBeginBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "ForBegin", TheFunction);
+		llvm::BasicBlock *ForCondBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "ForCond");
+		llvm::BasicBlock *ForExecBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "ForExec");
+		llvm::BasicBlock *ForAfterBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "ForAfter");
+		llvm::BasicBlock *FinishBlock = llvm::BasicBlock::Create(llvm::getGlobalContext(), "ForEnd");
+
+		descriptor *tempBlock = new descriptor("while", -1, -1, FinishBlock);
+		descriptor *tempABlock = new descriptor("for", -1, -1, ForAfterBlock);
+		SymbolTableList.front()->insert(std::pair<string, descriptor* >("while", tempBlock));
+		SymbolTableList.front()->insert(std::pair<string, descriptor* >("for", tempABlock));
+
+		Builder.CreateBr(ForBeginBlock);
+		Builder.SetInsertPoint(ForBeginBlock);
+
+		llvm::Value *preAssignCode = preAssignList->Codegen();
+
+		Builder.CreateBr(ForCondBlock);
+		TheFunction->getBasicBlockList().push_back(ForCondBlock);
+		Builder.SetInsertPoint(ForCondBlock);
+
+		llvm::Value *ConditionCode = condition->Codegen();
+
+		if(ConditionCode->getType() == getLLVMType(17)) // Int 
+			ConditionCode = Builder.CreateICmpSGT(ConditionCode, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0)), "IfCond"); 
+		else if(ConditionCode->getType() == getLLVMType(18)) // bool 
+			ConditionCode = Builder.CreateICmpEQ(ConditionCode, llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 1)), "IfCond");
+		else
+			throw runtime_error("Semantic error: Condition of For must be a boolean type.");
+
+		Builder.CreateCondBr(ConditionCode, ForExecBlock, FinishBlock);
+
+		TheFunction->getBasicBlockList().push_back(ForExecBlock);
+		Builder.SetInsertPoint(ForExecBlock);
+		llvm::Value *ForBlockCode = Block->Codegen();
+
+		Builder.CreateBr(ForAfterBlock);
+		TheFunction->getBasicBlockList().push_back(ForAfterBlock);
+		Builder.SetInsertPoint(ForAfterBlock);
+		llvm::Value *AfterAssignCode = loopAssignList->Codegen();
+
+		Builder.CreateBr(ForCondBlock);
+		TheFunction->getBasicBlockList().push_back(FinishBlock);
+		Builder.SetInsertPoint(FinishBlock);
+
+		SymbolTableList.front()->erase("while");
+
+		return FinishBlock;
 	}
 	void insertSymbolIntoSymbolTable() {
 

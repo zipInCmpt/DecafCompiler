@@ -5,7 +5,10 @@
 _f:                                     ## @f
 	.cfi_startproc
 ## BB#0:                                ## %entry
-	retq
+	.align	4, 0x90
+LBB0_1:                                 ## %WhileCond
+                                        ## =>This Inner Loop Header: Depth=1
+	jmp	LBB0_1
 	.cfi_endproc
 
 

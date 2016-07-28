@@ -1,17 +1,7 @@
-extern func print_int(int) void;
 package C {
 	func f() void {
-	    var x int;
-		while (x < 10) {
-			x = x + 1;
-			if(x == 5) {
-			    break;
-			}
-			print_int(x);
+		while (true) {
+			x = 1;
 		}
-	}
-
-	func main() void {
-	    f();
 	}
 }

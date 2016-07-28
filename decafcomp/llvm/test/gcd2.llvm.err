@@ -1,13 +1,16 @@
 ; ModuleID = 'GreatestCommonDivisor'
 
+@a = global i32 10
+@b = global i32 20
+
 declare void @print_int(i32)
 
 define i32 @main() {
 entry:
   %z = alloca i32
   store i32 0, i32* %z
-  %a = load i32, i32* %a
-  %b = load i32, i32* %b
+  %a = load i32, i32* @a
+  %b = load i32, i32* @b
   %calltmp = call i32 @gcd(i32 %a, i32 %b)
   call void @print_int(i32 %calltmp)
   ret i32 0

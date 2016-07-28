@@ -1007,9 +1007,7 @@ public:
 			else return string("FieldDecl(") + identifierName + "," + getString(expr) + ")";
 	}
 	llvm::Value *Codegen() {
-
 		if(isArray) {
-
 			descriptor *fetchedVar=getSymbolTable(identifierName);
 			if(!fetchedVar) throw runtime_error("Symbol table error. Undefined variable.");
 
@@ -1033,16 +1031,26 @@ public:
 
 		} else {
 			descriptor *fetchedVar=getSymbolTable(identifierName);
-			llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+			//llvm::AllocaInst *Alloca = Builder.CreateAlloca(getLLVMType(decafTypeId), nullptr, identifierName);
+			//fetchedVar->setAlloca(Alloca);
+
+			llvm::Constant *ValueVar;
 
 			if(hasAssign) {
-				Builder.CreateStore(expr->Codegen(), Alloca);
+				//Builder.CreateStore(expr->Codegen(), Alloca);
+				ValueVar = (llvm::Constant *)expr->Codegen();
 			} else {
-
+				llvm::Value *zero;
+				if(decafTypeId == 17) ValueVar = llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(32, 0));
+				else if(decafTypeId == 18) ValueVar = llvm::ConstantInt::get(llvm::getGlobalContext(), llvm::APInt(1, 0));
+				//Builder.CreateStore(zero, Alloca);
 			}
-			fetchedVar->setAlloca(Alloca);
-			return NULL;
+
+			llvm::GlobalVariable *globalVar = new llvm::GlobalVariable(*TheModule, getLLVMType(decafTypeId), false, llvm::GlobalValue::ExternalLinkage, ValueVar, identifierName);
+			fetchedVar->setAlloca(globalVar);
+			//return NULL;
 		}
+		return NULL;
 	}
 	void insertSymbolIntoSymbolTable() {
 		descriptor *newDescp = new descriptor(identifierName, decafTypeId, linepos, NULL);

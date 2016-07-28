@@ -50,5 +50,16 @@ LBB1_1:                                 ## %Then
 	retq
 	.cfi_endproc
 
+	.section	__DATA,__data
+	.globl	_a                      ## @a
+	.align	2
+_a:
+	.long	10                      ## 0xa
+
+	.globl	_b                      ## @b
+	.align	2
+_b:
+	.long	20                      ## 0x14
+
 
 .subsections_via_symbols

@@ -209,6 +209,12 @@ public:
 	}
 	llvm::Value *Codegen() {
 		SymbolTableList.push_front(currentST);
+		// Check main function
+		DecafSymbolTable::iterator fetchedObject = currentST->find("main");
+		if(fetchedObject == currentST->end()) {
+			throw runtime_error("Syntax Error: No main function.");
+		}
+
 		if(isDebugging) cout << "Generating package..." << endl;
 		//checkTable(currentST);
 		llvm::Value *val = NULL;

@@ -160,7 +160,7 @@ while                      { tokenpos += 5; return T_WHILE; }
 %%
 
 int yyerror(const char *s) {
-  cerr << lineno << ": " << s << " at char " << tokenpos << endl;
+  cout << "Syntax Error :" << " at line " << lineno << " char " << tokenpos << endl;
   return 1;
 }
 

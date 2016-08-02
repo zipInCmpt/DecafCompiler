@@ -1,5 +1,5 @@
 	.section	__TEXT,__text,regular,pure_instructions
-	.macosx_version_min 10, 12
+	.macosx_version_min 10, 10
 	.globl	_test3
 	.align	4, 0x90
 _test3:                                 ## @test3

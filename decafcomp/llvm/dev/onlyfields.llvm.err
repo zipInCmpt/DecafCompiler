@@ -1,3 +1,0 @@
-; ModuleID = 'QuickSort'
-
-@x = global i32 0

@@ -15,4 +15,4 @@ The code is implemented by Jiaqi Li and Jingmin Zhu with collaboration on differ
 * The code is based on the 3 previous assignments we have built on our own.
 
 ###New Test Case
-* Please find in the newTestcase folder the test cases created on our own.
+* Please find in this docs folder the test cases created on our own.

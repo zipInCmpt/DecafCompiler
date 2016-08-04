@@ -1,0 +1,80 @@
+extern func print_int(int) void;
+extern func read_int() int;
+
+package pro
+{
+	var a [10]int;
+	var tmp [10]int;
+
+	func merge(h int, t int) void
+	{
+		var mid,i,j,k int;
+		mid=(h+t)/2;
+		i=h;
+		k=h;
+		j=mid+1;
+		while(i<=mid || j<=t)
+		{
+			if(i<=mid)
+			{
+				if(j<=t)
+				{
+					if(a[i]<a[j])
+					{
+						tmp[k]=a[i];
+						i=i+1;
+						k=k+1;
+					}
+					else
+					{
+						tmp[k]=a[j];
+						j=j+1;
+						k=k+1;
+					}
+				}
+				else
+				{
+					tmp[k]=a[i];
+					i=i+1;
+					k=k+1;
+				}
+			}
+			else
+			{
+				tmp[k]=a[j];
+				j=j+1;
+				k=k+1;
+			}
+		}
+		for(k=h; k<=t; k=k+1)
+		{
+			a[k]=tmp[k];
+		}
+	}
+
+	func mergesort(h int, t int) void
+	{
+		var mid int;
+		if(h>=t) {return;}
+		mid=(h+t)/2;
+		mergesort(h,mid);
+		mergesort(mid+1,t);
+		merge(h,t);
+	}
+
+	func main() int
+	{
+		var n,i int;
+		n=read_int();
+		for(i=0; i<n; i=i+1)
+		{
+			a[i]=read_int();
+		}
+		mergesort(0,n-1);
+		for(i=0; i<n; i=i+1)
+		{
+			print_int(a[i]);
+		}
+		return (0);
+	}
+}

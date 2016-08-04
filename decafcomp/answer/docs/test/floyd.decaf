@@ -1,0 +1,38 @@
+extern func read_int() int;
+extern func print_int(int) void;
+
+package floyd
+{
+	var a [100]int;
+	var n int;
+	func main() int
+	{
+		var i,j,k int;
+		var s,t int;
+		n=read_int();
+		for(i=0; i<n; i=i+1)
+		{
+			for(j=0; j<n; j=j+1)
+			{
+				a[i*n+j]=read_int();
+			}
+		}
+		s=read_int();
+		t=read_int();
+		for(k=0; k<n; k=k+1)
+		{
+			for(i=0; i<n; i=i+1)
+			{
+				for(j=0; j<n; j=j+1)
+				{
+					if(a[i*n+j]>a[i*n+k]+a[k*n+j])
+					{
+						a[i*n+j]=a[i*n+k]+a[k*n+j];
+					}
+				}
+			}
+		}
+		print_int(a[s*n+t]);
+		return (0);
+	}
+}

@@ -1,10 +1,10 @@
 extern func print_int(int) void;
 extern func read_int() int;
-//extern func print_string(string) void;
+extern func print_string(string) void;
 
 package knapsack
 {
-	var w,c [5]int;
+	var w,c [10]int;
 	var opt [20]int;
 
 	func main() int

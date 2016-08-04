@@ -21,6 +21,7 @@ typedef list<DecafSymbolTable* > DecafSymbolTableList;
 
 //DecafSymbolTable GlobalCurrentST;
 DecafSymbolTableList SymbolTableList;
+string currentFunctionCall;
 
 void outputCurrentSymTabList()
 {
@@ -866,10 +867,16 @@ public:
 			descriptor *fetchedVar = getSymbolTable(identifierName);
 			if(fetchedVar) {
 				if(isDebugging) cout << "Fetched Variable " << identifierName << " on line " << fetchedVar->getLineNum() << endl;
-				return Builder.CreateStore(value->Codegen(), fetchedVar->getAlloca());
+				llvm::Value *rvalue = value->Codegen();
+				llvm::Value *alloca = fetchedVar->getAlloca();
+				llvm::PointerType *ptrTy = rvalue->getType()->getPointerTo();
+				if(ptrTy == alloca->getType())
+					return Builder.CreateStore(value->Codegen(), fetchedVar->getAlloca());
+				else
+					throw runtime_error("Semantic error: Assign wrong type value to a variable.");
 			} else {
 				if(isDebugging) cout << "Undefined variable " + identifierName << "..." << endl;
-				throw runtime_error("Undefined variable:" + identifierName + ".");
+				throw runtime_error("Semantic error: Undefined variable:" + identifierName + ".");
 				return NULL;
 			}
 		} else {
@@ -1439,11 +1446,27 @@ public:
 		return string("ReturnStmt(") + getString(returnValue) + ")";
 	}
 	llvm::Value *Codegen() {
+
+		if(currentFunctionCall.compare("") == 0) {
+			throw runtime_error("Symantic error.");
+		}
+
+		llvm::Function *TheFunction = TheModule->getFunction(currentFunctionCall);
+		if(isDebugging) cout << "Now return for function call: " << currentFunctionCall << endl;
+
 		if(returnValue != NULL) {
-			return Builder.CreateRet(returnValue->Codegen());
+			if(isDebugging) cout << "Start Return Value Code generation..." << endl;
+			llvm::Value *retValue = returnValue->Codegen();
+			if(retValue != NULL && TheFunction->getReturnType() == retValue->getType())
+				return Builder.CreateRet(retValue);
+			else
+				throw runtime_error("Semantic error: Return type mismatch.");
 		}
 		else {
-			return Builder.CreateRet(NULL);
+			if(TheFunction->getReturnType() == Builder.getVoidTy())
+				return Builder.CreateRet(NULL);
+			else
+				throw runtime_error("Semantic error: Return type mismatch.");
 		}
 	}
 	void insertSymbolIntoSymbolTable() {
@@ -1553,6 +1576,7 @@ public:
 		//return string("Method(") + identifierName + "," + getMethodType(methodTypeId) + "," + paramList->str()+ "," ; //+ block->str() + ")";
 	}
 	llvm::Value *Codegen() {
+		currentFunctionCall = identifierName;
 		return paramList->Codegen();
 	}
 	void insertSymbolIntoSymbolTable() {
@@ -1659,6 +1683,8 @@ public:
 		//verifyFunction(*func);
 
 		if(isDebugging) cout << "Finish Method CodeGen..." << endl;
+
+		currentFunctionCall = "";
 
 		return func;
 	}

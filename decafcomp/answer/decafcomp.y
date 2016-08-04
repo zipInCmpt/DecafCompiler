@@ -18,49 +18,9 @@ bool printAST = false;
 
 // this global variable contains all the generated code
 static llvm::Module *TheModule;
-
 // this is the method used to construct the LLVM intermediate code (IR)
 static llvm::IRBuilder<> Builder(llvm::getGlobalContext());
-// the calls to getGlobalContext() in the init above and in the
-// following code ensures that we are incrementally generating
-// instructions in the right order
-
-// dummy main function
-// WARNING: this is not how you should implement code generation
-// for the main function!
-// You should write the codegen for the main method as
-// part of the codegen for method declarations (MethodDecl)
 static llvm::Function *TheFunction = 0;
-
-// we have to create a main function
-llvm::Function *gen_main_def() {
-    // create the top-level definition for main
-    llvm::FunctionType *FT = llvm::FunctionType::get(llvm::IntegerType::get(llvm::getGlobalContext(), 32), false);
-    llvm::Function *TheFunction = llvm::Function::Create(FT, llvm::Function::ExternalLinkage, "main", TheModule);
-    if (TheFunction == 0) {
-        throw runtime_error("empty function block");
-    }
-    // Create a new basic block which contains a sequence of LLVM instructions
-    llvm::BasicBlock *BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), "entry", TheFunction);
-    // All subsequent calls to IRBuilder will place instructions in this location
-    Builder.SetInsertPoint(BB);
-    return TheFunction;
-}
-/*
-llvm::Function *genPrintIntDef() {
-    // create a extern definition for print_int
-    std::vector<llvm::Type*> args;
-    args.push_back(Builder.getInt32Ty()); // print_int takes one i32 argument
-    return llvm::Function::Create(llvm::FunctionType::get(Builder.getVoidTy(), args, false), llvm::Function::ExternalLinkage, "print_int", TheModule);
-}
-
-llvm::Function *genPrintStringDef() {
-    // create a extern definition for print_string
-    std::vector<llvm::Type*> args;
-    args.push_back(Builder.getInt8PtrTy()); // print_string takes one string argument
-    return llvm::Function::Create(llvm::FunctionType::get(Builder.getVoidTy(), args, false), llvm::Function::ExternalLinkage, "print_string", TheModule);
-}
-*/
 
 #include "decafcomp.cc"
 
@@ -167,7 +127,7 @@ program: extern_list decafpackage
             prog->Codegen();
         }
         catch (std::runtime_error &e) {
-            cout << "semantic error: " << e.what() << endl;
+            cout << e.what() << endl;
             //cout << prog->str() << endl;
             exit(EXIT_FAILURE);
         }
@@ -201,9 +161,6 @@ decafpackage: T_PACKAGE T_ID stbegin stend
     { $$ = new PackageAST(*$2, new decafStmtList(), new decafStmtList());  delete $2; }
             | T_PACKAGE T_ID stbegin FieldDecls MethodDecls stend
         { $$ = new PackageAST(*$2, $4, $5);  delete $2; }
-//    | T_PACKAGE { exit(EXIT_FAILURE); }
-//    | T_PACKAGE T_ID { exit(EXIT_FAILURE); }
-
     ;
 
 /// TODO: Finished

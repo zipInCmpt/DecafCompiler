@@ -70,7 +70,10 @@ while                      { tokenpos += 5; return T_WHILE; }
 \/\/[ ]*[^\n]*[\n]*        {
 
                    for(int i = 0; i < strlen(yytext); i++) {
-                        if(yytext[i] == '\n') lineno++;
+                        if(yytext[i] == '\n') {
+                            lineno++;
+                            tokenpos = 0;
+                        }
                    }
 
  }
@@ -144,14 +147,20 @@ while                      { tokenpos += 5; return T_WHILE; }
 [\r\t\v\f ]*\n[\n\t\f\r\a\v\b ]* ; {
 
                    for(int i = 0; i < strlen(yytext); i++) {
-                        if(yytext[i] == '\n') lineno++;
+                        if(yytext[i] == '\n') {
+                            lineno++;
+                            tokenpos = 0;
+                        }
                    }
 
  }
 [\n]+  {
 
                           for(int i = 0; i < strlen(yytext); i++) {
-                               if(yytext[i] == '\n') lineno++;
+                               if(yytext[i] == '\n') {
+                                     lineno++;
+                                     tokenpos = 0;
+                               }
                           }
 
         }

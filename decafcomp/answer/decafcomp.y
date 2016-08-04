@@ -201,8 +201,8 @@ decafpackage: T_PACKAGE T_ID stbegin stend
     { $$ = new PackageAST(*$2, new decafStmtList(), new decafStmtList());  delete $2; }
             | T_PACKAGE T_ID stbegin FieldDecls MethodDecls stend
         { $$ = new PackageAST(*$2, $4, $5);  delete $2; }
-    | T_PACKAGE { exit(EXIT_FAILURE); }
-    | T_PACKAGE T_ID { exit(EXIT_FAILURE); }
+//    | T_PACKAGE { exit(EXIT_FAILURE); }
+//    | T_PACKAGE T_ID { exit(EXIT_FAILURE); }
 
     ;
 

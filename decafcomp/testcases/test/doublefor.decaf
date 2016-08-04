@@ -1,4 +1,4 @@
-extern func read_int() int;
+extern func print_int(int) void;
 
 package pro
 {

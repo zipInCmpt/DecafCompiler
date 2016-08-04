@@ -1,0 +1,61 @@
+; ModuleID = 'fib'
+
+declare void @print_int(i32)
+
+declare i32 @read_int()
+
+define i32 @fib(i32) {
+entry:
+  %n = alloca i32
+  store i32 %0, i32* %n
+  %n1 = load i32, i32* %n
+  %EQTmp = icmp eq i32 %n1, 0
+  %LHS = icmp eq i1 %EQTmp, true
+  %LHS2 = icmp eq i1 %EQTmp, true
+  br i1 %LHS2, label %True, label %False
+
+True:                                             ; preds = %entry
+  br label %BooleanShortCircuit
+
+False:                                            ; preds = %entry
+  %n3 = load i32, i32* %n
+  %EQTmp4 = icmp eq i32 %n3, 1
+  br label %BooleanShortCircuit
+
+BooleanShortCircuit:                              ; preds = %False, %True
+  %phival = phi i1 [ true, %True ], [ %EQTmp4, %False ]
+  %IfCond = icmp eq i1 %phival, true
+  br i1 %IfCond, label %Then, label %Else
+
+Then:                                             ; preds = %BooleanShortCircuit
+  %n5 = load i32, i32* %n
+  ret i32 %n5
+  br label %IfCont
+
+Else:                                             ; preds = %BooleanShortCircuit
+  br label %IfCont
+
+IfCont:                                           ; preds = %Else, %Then
+  %n6 = load i32, i32* %n
+  %SubTmp = sub i32 %n6, 1
+  %calltmp = call i32 @fib(i32 %SubTmp)
+  %n7 = load i32, i32* %n
+  %SubTmp8 = sub i32 %n7, 2
+  %calltmp9 = call i32 @fib(i32 %SubTmp8)
+  %AddTmp = add i32 %calltmp, %calltmp9
+  ret i32 %AddTmp
+  ret i32 0
+}
+
+define i32 @main() {
+entry:
+  %n = alloca i32
+  store i32 0, i32* %n
+  %calltmp = call i32 @read_int()
+  store i32 %calltmp, i32* %n
+  %n1 = load i32, i32* %n
+  %calltmp2 = call i32 @fib(i32 %n1)
+  call void @print_int(i32 %calltmp2)
+  ret i32 0
+  ret i32 0
+}

@@ -13,7 +13,7 @@ package bubblesort
 		{
 			a[i]=read_int();
 		}
-		
+
 		for(i=0; i<n-1; i=i+1)
 		{
 			for(j=i+1; j<n; j=j+1)

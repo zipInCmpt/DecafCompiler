@@ -92,14 +92,14 @@ descriptor *getSymbolTable(string idName) {
 	DecafSymbolTable::iterator fetchedObject;
 	for(DecafSymbolTableList::iterator i = SymbolTableList.begin(); i != SymbolTableList.end(); ++i) {
 		//DecafSymbolTable::iterator fetchedObject;
-		if(isDebugging) cout << "Serching table..." << endl;
+		if(isDebugging) cout << "Searching table..." << endl;
 		if((*i)) {
 			fetchedObject = (*i)->find(idName);
 			if(fetchedObject != (*i)->end()) {
 				if(isDebugging) cout << "FetchedObject: Found " << idName << endl;
 				return fetchedObject->second;
 			} else {
-				if(isDebugging) cout << "Table not found..." << endl;
+				if(isDebugging) cout << "Table not found..." << idName << endl;
 			}
 		}
 	}
@@ -1282,7 +1282,10 @@ public:
 	}
 
 	void insertSymbolIntoSymbolTable() {
-
+		if(ifBlock != NULL)
+			ifBlock->insertSymbolIntoSymbolTable();
+		if(ElseBlock != NULL)
+			ElseBlock->insertSymbolIntoSymbolTable();
 	}
 };
 
@@ -1338,7 +1341,8 @@ public:
 		return FinishBlock;
 	}
 	void insertSymbolIntoSymbolTable() {
-
+		if(whileBlock != NULL)
+			whileBlock->insertSymbolIntoSymbolTable();
 	}
 };
 
@@ -1414,8 +1418,10 @@ public:
 
 		return FinishBlock;
 	}
-	void insertSymbolIntoSymbolTable() {
 
+	void insertSymbolIntoSymbolTable() {
+		if(Block != NULL)
+			Block->insertSymbolIntoSymbolTable();
 	}
 };
 

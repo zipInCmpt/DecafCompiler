@@ -1,77 +1,22 @@
 INFO:root:path=test1
 INFO:root:Checking test1/combination.out
-INFO:root:Diff between reference and your output for test1/combination.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--70
-+1
+INFO:root:test1/combination.out Correct!
 INFO:root:Checking test1/floyd.out
-INFO:root:Diff between reference and your output for test1/floyd.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--6
-+0
+INFO:root:test1/floyd.out Correct!
 INFO:root:Checking test1/print.out
-INFO:root:Diff between reference and your output for test1/print.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1,9 +1,4 @@
--*
- **
--***
- ****
--*****
- ******
--*******
- ********
--*********
+INFO:root:test1/print.out Correct!
 INFO:root:Checking test1/merge.out
-INFO:root:Diff between reference and your output for test1/merge.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--0123456789
-+1356
+INFO:root:test1/merge.out Correct!
 INFO:root:Checking test1/fib.out
 INFO:root:test1/fib.out Correct!
 INFO:root:Checking test1/bubblesort.out
-INFO:root:Diff between reference and your output for test1/bubblesort.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--0123456789
-+1356
+INFO:root:test1/bubblesort.out Correct!
 INFO:root:Checking test1/qsort.out
-INFO:root:Diff between reference and your output for test1/qsort.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--0123456789
-+1356
+INFO:root:test1/qsort.out Correct!
 INFO:root:Checking test1/multiknapsack.out
-INFO:root:Diff between reference and your output for test1/multiknapsack.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--70
-+20
+INFO:root:test1/multiknapsack.out Correct!
 INFO:root:Checking test1/knapsack.out
-INFO:root:Diff between reference and your output for test1/knapsack.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +1 @@
--70
-+10
+INFO:root:test1/knapsack.out Correct!
 INFO:root:Checking test1/doublefor.out
 INFO:root:test1/doublefor.out Correct!
 INFO:root:path=dev

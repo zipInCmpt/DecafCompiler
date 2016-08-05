@@ -722,11 +722,6 @@ Binarys: Expr T_PLUS Expr
     BinaryExprAST *node = new BinaryExprAST(9, $1, $3);
     $$ = node;
 }
-        | T_MINUS Expr %prec T_UMINUS
-        {
-                UnaryExprAST *node = new UnaryExprAST(15, $2);
-        $$ = node;
-        }
         | T_NOT Expr
         {
              UnaryExprAST *node = new UnaryExprAST(16, $2);

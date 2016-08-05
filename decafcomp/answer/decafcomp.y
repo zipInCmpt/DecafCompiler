@@ -133,10 +133,7 @@ program: extern_list decafpackage
         }
         delete prog;
     }
-    |
-{
-    exit(EXIT_FAILURE);
-}
+
     ;
 
 /// TODO: Finished

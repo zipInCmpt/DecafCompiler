@@ -1,0 +1,8 @@
+package RETS {
+  func foo() int { return ; }
+
+  func main() int {
+    var x int;
+    x = foo();
+  }
+}

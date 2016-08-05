@@ -1,0 +1,7 @@
+package AC0 {
+  func main() void {
+    while(1) {
+      break;
+    }
+  }
+}

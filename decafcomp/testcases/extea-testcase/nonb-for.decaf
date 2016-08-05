@@ -1,0 +1,9 @@
+package AC0 {
+  func main() void {
+    var x int;
+    for (x=1; 1; x=x+1) {
+      print_int(x);
+      break;
+    }
+  }
+}

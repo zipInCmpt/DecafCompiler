@@ -1,0 +1,42 @@
+extern func print_int(int) void;
+extern func read_int() int;
+//extern func print_string(string) void;
+
+package multiknapsack
+{
+	var w,c [5]int;
+	var opt [20]int;
+
+	func main() int
+	{
+		var n,m int;
+		var i,j int;
+		n=read_int();
+		for(i=0; i<n; i=i+1)
+		{
+			c[i]=read_int();
+			w[i]=read_int();
+		}
+		m=read_int();
+
+		for(j=0; j<=m; j=j+1)
+		{
+			opt[j]=0;
+		}
+
+		for(i=0; i<n; i=i+1)
+		{
+			for(j=c[i]; j<=m; j=j+1)
+			{
+				if(opt[j-c[i]]+w[i]>opt[j])
+				{
+					opt[j]=opt[j-c[i]]+w[i];
+				}
+			}
+		}
+
+		print_int(opt[m]);
+
+		return (0);
+	}
+}

@@ -1,0 +1,24 @@
+extern func print_int(int) void;
+package C {
+	func main() void {
+    var x bool;
+    x = false;
+    if (x) {
+      var x1 bool;
+      x1 = true;
+      if (x1) {
+        print_int(1);
+      } else {
+        print_int(2);
+      }
+    } else {
+      var x1 bool;
+      x1 = false;
+      if (x1) {
+        print_int(3);
+      } else {
+        print_int(4);
+        }
+    }
+	}
+}

@@ -1,0 +1,4 @@
+package LA{
+  var w[0xa] int;
+  func main() void {}
+}

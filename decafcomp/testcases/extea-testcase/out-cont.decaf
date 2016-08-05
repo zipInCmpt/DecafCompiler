@@ -1,0 +1,5 @@
+package OB {
+  func main() void{
+    continue;
+  }
+}

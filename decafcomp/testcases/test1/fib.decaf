@@ -1,0 +1,20 @@
+extern func print_int(int) void;
+extern func read_int() int;
+
+package fib
+{
+
+	func fib(n int) int
+	{
+		if( n == 0 || n==1 ) {return (n);}
+		return ( fib(n-1)+fib(n-2) );
+	}
+
+	func main() int
+	{
+		var n int;
+		n=read_int();
+		print_int(fib(n));
+		return (0);
+	}
+}

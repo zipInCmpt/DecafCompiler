@@ -1,0 +1,7 @@
+extern func print_int(int) void;
+
+package AG {
+  func main() int {
+    print_int(1, 2);
+  }
+}

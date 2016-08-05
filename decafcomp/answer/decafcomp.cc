@@ -871,7 +871,7 @@ public:
 				llvm::Value *alloca = fetchedVar->getAlloca();
 				llvm::PointerType *ptrTy = rvalue->getType()->getPointerTo();
 				if(ptrTy == alloca->getType())
-					return Builder.CreateStore(value->Codegen(), fetchedVar->getAlloca());
+					return Builder.CreateStore(rvalue, alloca);
 				else
 					throw runtime_error("Semantic error: Assign wrong type value to a variable.");
 			} else {
@@ -886,11 +886,12 @@ public:
 
 				llvm::GlobalVariable *fetchedArray = (llvm::GlobalVariable *)fetchedVar->getAlloca();
 				llvm::ArrayType *arraytype = (llvm::ArrayType *)fetchedArray->getValueType();
+				llvm::Value *rvalue = value->Codegen();
 
 				llvm::Value *arrayLoc = Builder.CreateStructGEP(arraytype, fetchedArray, 0, "arrayloc");
 				llvm::Value *arrayIndex = index->Codegen();
 				llvm::Value *ArrayIndexPar = Builder.CreateGEP(Builder.getInt32Ty(), arrayLoc, arrayIndex, "arrayindex");
-				llvm::Value *arrayStore = Builder.CreateStore(value->Codegen(), ArrayIndexPar);
+				llvm::Value *arrayStore = Builder.CreateStore(rvalue, ArrayIndexPar);
 
 				return arrayStore;
 			} else {
@@ -1205,11 +1206,17 @@ public:
 		if(typeId == 20) {
 			// Break
 			descriptor *temp = getSymbolTable("while");
+			if(temp == NULL) {
+				throw runtime_error("Semantic error: Break must be in loops.");
+			}
 			llvm::BasicBlock *breakblock = (llvm::BasicBlock *)temp->getAlloca();
 			Builder.CreateBr(breakblock);
 		} else if(typeId == 21) {
 			// Continue
 			descriptor *temp = getSymbolTable("for");
+			if(temp == NULL) {
+				throw runtime_error("Semantic error: Continue must be in loops.");
+			}
 			llvm::BasicBlock *forBlock = (llvm::BasicBlock *)temp->getAlloca();
 			Builder.CreateBr(forBlock);
 		} else {

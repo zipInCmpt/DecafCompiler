@@ -1,0 +1,6 @@
+package MT {
+  func main() int {
+    var x bool;
+    x = 10;
+  }
+}

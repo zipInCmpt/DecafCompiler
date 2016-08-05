@@ -1,0 +1,24 @@
+extern func read_int() int;
+extern func print_int(int) void;
+
+package combination
+{
+	var ans int=1;
+	func main() int
+	{
+		var n,r int;
+		var i int;
+		n=read_int();
+		r=read_int();
+		for(i=n-r+1; i<=n; i=i+1)
+		{
+			ans=ans*i;
+		}
+		for(i=2; i<=r; i=i+1)
+		{
+			ans=ans/i;
+		}
+		print_int(ans);
+		return (0);
+	}
+}

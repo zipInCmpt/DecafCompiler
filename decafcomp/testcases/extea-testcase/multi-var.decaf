@@ -1,0 +1,6 @@
+package DS{
+  var x int;
+  func main(x int) int {
+    var x int;
+  }
+}

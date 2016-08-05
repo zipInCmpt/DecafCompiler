@@ -1,0 +1,8 @@
+package AC0 {
+  var y [10] int;
+  func main() void {
+    var x int;
+    x = y[true];
+    return ;
+  }
+}

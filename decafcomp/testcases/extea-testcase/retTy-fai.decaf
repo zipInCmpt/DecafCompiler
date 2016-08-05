@@ -1,0 +1,7 @@
+package RETF {
+  func bar() void {}
+
+  func main() int {
+    return (bar());
+  }
+}

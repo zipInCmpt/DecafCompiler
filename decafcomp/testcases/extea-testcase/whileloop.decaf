@@ -1,0 +1,18 @@
+extern func print_int(int) void;
+package C {
+	func main() void {
+		while (true) {
+      var x,y int;
+			x = 1;
+      y = 2;
+      while (true) {
+       var x int;
+       x = 2;
+       print_int(x);
+       print_int(y);
+       break;
+      }
+      break;
+		}
+	}
+}

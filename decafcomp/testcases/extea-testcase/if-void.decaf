@@ -1,0 +1,7 @@
+package IM {
+  func dd() void {}
+
+  func main() int {
+    if (dd()) {}
+  }
+}

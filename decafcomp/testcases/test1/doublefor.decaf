@@ -1,0 +1,17 @@
+extern func print_int(int) void;
+
+package pro
+{
+	func main() int
+	{
+		var i,j int;
+		for(i=0; i<10; i=i+1)
+		{
+			for(j=0; j<i; j=j+1)
+			{
+				print_int(j);
+			}
+		}
+		return (0);
+	}
+}
